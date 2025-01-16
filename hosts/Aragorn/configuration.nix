@@ -108,7 +108,7 @@ Math Thingy Setup
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     wireplumber.enable = true;
@@ -128,8 +128,6 @@ Math Thingy Setup
   
   # Fingerprint Sensor
   services.fprintd.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   
   # Setup portals (for interapplication workflows)
   xdg.portal.enable = true;
@@ -137,9 +135,6 @@ Math Thingy Setup
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

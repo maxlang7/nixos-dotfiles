@@ -3,14 +3,14 @@
 
   inputs = {
     # Default to the nixos-unstable branch
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Latest stable branch of nixpkgs, used for version rollback
     # The current latest version is 24.11
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
     # You can also use a specific git commit hash to lock the version
-    #nixpkgs-fd40cef8d.url = "github:nixos/nixpkgs/fd40cef8d797670e203a27a91e4b8e6decf0b90c";
+    # nixpkgs-fd40cef8d.url = "github:nixos/nixpkgs/fd40cef8d797670e203a27a91e4b8e6decf0b90c";
   };
 
   outputs = inputs@{
@@ -21,7 +21,7 @@
     ...
   }: {
     nixosConfigurations = {
-      my-nixos = nixpkgs.lib.nixosSystem rec {
+      Aragorn = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         # The `specialArgs` parameter passes the
         # non-default nixpkgs instances to other nix modules
@@ -36,19 +36,14 @@
             # installation of non-free software.
             config.allowUnfree = true;
           };
-        #   pkgs-fd40cef8d = import nixpkgs-fd40cef8d {
-        #     inherit system;
-        #     config.allowUnfree = true;
-        #   };
-        # };
+        };
 
-        # modules = [
-        #   ./hosts/my-nixos
+        modules = [
+          ./hosts/Aragorn/configuration.nix
 
-        #   # Omit other configurations...
-        # ];
+          # Omit other configurations...
+        ];
       };
     };
   };
-};
 }
