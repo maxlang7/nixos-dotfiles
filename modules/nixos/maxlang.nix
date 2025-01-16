@@ -16,7 +16,8 @@
       playerctl
       hyprpaper
       wlsunset
-      #Apps
+      
+      # Apps
       kitty
       brave
       discord
@@ -42,20 +43,19 @@
       fastfetch
       cbonsai
       qpdf
-      #xdotool
-
       #For Ingrid Testing
-      xorg.libX11
-      xorg.libXrandr
-      xorg.libXext
-      xorg.libxcb
-      glibc
-      vulkan-loader
-      vulkan-tools
-      mesa
-      nss
-      python3
-      python312Packages.aw-client
+      # xdotool
+      # xorg.libX11
+      # xorg.libXrandr
+      # xorg.libXext
+      # xorg.libxcb1
+      # glibc
+      # vulkan-loader
+      # vulkan-tools
+      # mesa
+      # nss
+      # python3
+      # python312Packages.aw-client
       #steam-run
       (vscode-with-extensions.override {
           vscode = vscodium;
