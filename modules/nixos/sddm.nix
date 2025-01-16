@@ -1,15 +1,15 @@
-{config, pkgs, ...}:
+{config, pkgs, pkgs-unstable, ...}:
 {
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
     theme = "where_is_my_sddm_theme";
-    package = pkgs.kdePackages.sddm;
+    package = pkgs-unstable.kdePackages.sddm;
     extraPackages = [ 
-      pkgs.kdePackages.qt5compat
+      pkgs-unstable.kdePackages.qt5compat
     ];
   };
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs-unstable; [
     (where-is-my-sddm-theme.override {
           themeConfig.General = {
             background = toString ../../images/abbey_broad.jpeg;
