@@ -21,7 +21,6 @@
       kitty
       brave
       discord
-      firefox
       mpv
       image-roll
       todoist-electron

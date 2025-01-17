@@ -18,6 +18,7 @@ Math Thingy Setup
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
       ../../modules/nixos/sddm.nix
+      ../../modules/nixos/firefox.nix
       #inputs.home-manager.nixosModules.default
     ];
   nix = {
