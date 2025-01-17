@@ -15,12 +15,11 @@ Math Thingy Setup
       ./hardware-configuration.nix
       ../../modules/nixos/battery_management.nix
       ../../modules/nixos/terminal_utils.nix
-      ../../modules/nixos/bwlang.nix
+      #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
       ../../modules/nixos/sddm.nix
       #inputs.home-manager.nixosModules.default
     ];
-
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
     gc = {
@@ -74,11 +73,7 @@ Math Thingy Setup
   };
 
   # Enable the X11 windowing system.
-  services.xserver = {
-    enable=true;
-    displayManager.gdm.enable = false;
-    desktopManager.gnome.enable = true;
-  };
+
 
   # Enable Hyprland
   programs.hyprland = {
