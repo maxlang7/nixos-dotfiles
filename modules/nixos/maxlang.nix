@@ -16,7 +16,10 @@
       playerctl
       hyprpaper
       wlsunset
-      
+      pavucontrol
+      trashy
+      powertop
+
       # Apps
       kitty
       brave
@@ -28,20 +31,17 @@
       remnote
       inkscape
       gimp
-      pavucontrol
       xfce.thunar
-      thunderbird
       activitywatch
       aw-watcher-window-wayland
       supersonic-wayland
-      powertop
-      trashy
       yt-dlp
+      pdfarranger
       wine
       winetricks
+      # Fun Little Terminal GUI
       fastfetch
       cbonsai
-      qpdf
       #For Ingrid Testing
       # xdotool
       # xorg.libX11
