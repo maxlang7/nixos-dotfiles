@@ -54,6 +54,8 @@
           (extension "sponsorblock" "sponsorBlocker@ajay.app")
           (extension "aw-watcher-web" "{ef87d84c-2127-493f-b952-5b4e744245bc}")
           (extension "the-camelizer-price-history-ch" "izer@camelcamelcamel.com")
+          (extension "better-canvas" "{8927f234-4dd9-48b1-bf76-44a9e153eee0}")
+          (extension "dark-nivgvrv" "{dd5f0c02-70f9-4e87-82fa-b4d4f8541518}")
         ];
 
         /* ---- PREFERENCES ---- */
