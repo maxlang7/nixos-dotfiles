@@ -1,0 +1,631 @@
+{
+  "categories": [
+    {
+      "data": {
+        "color": "#0F0"
+      },
+      "id": 0,
+      "name": [
+        "Work"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Wikipedia",
+        "type": "regex"
+      },
+      "name_pretty": "Work",
+      "subname": "Work",
+      "parent": null,
+      "depth": 0
+    },
+    {
+      "data": {},
+      "id": 1,
+      "name": [
+        "Work",
+        "Programming"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "GitHub|Stack Overflow|BitBucket|Gitlab|vim|Spyder|kate|Ghidra|Scite|ChatGPT|stackexchange|python|launchctl|.py",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Programming",
+      "subname": "Programming",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 2,
+      "name": [
+        "Work",
+        "Monitoring"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "ActivityWatch|aw-|Cold Turkey Blocker|localhost:5600",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Monitoring",
+      "subname": "Monitoring",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "id": 3,
+      "name": [
+        "Work",
+        "Image"
+      ],
+      "rule": {
+        "regex": "Gimp|Inkscape",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Image",
+      "subname": "Image",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 4,
+      "name": [
+        "Work",
+        "Video"
+      ],
+      "rule": {
+        "regex": "Kdenlive|iMovie",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Video",
+      "subname": "Video",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 5,
+      "name": [
+        "Work",
+        "Audio"
+      ],
+      "rule": {
+        "regex": "Audacity|Logic",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Audio",
+      "subname": "Audio",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "id": 6,
+      "name": [
+        "Work",
+        "3D"
+      ],
+      "rule": {
+        "regex": "Blender",
+        "type": "regex"
+      },
+      "name_pretty": "Work>3D",
+      "subname": "3D",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {
+        "color": "#F80"
+      },
+      "id": 7,
+      "name": [
+        "Media",
+        "Games"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Minecraft|RimWorld|Cookie Clicker|Geometry Dash",
+        "type": "regex"
+      },
+      "name_pretty": "Media>Games",
+      "subname": "Games",
+      "parent": [
+        "Media"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {
+        "color": "#F33"
+      },
+      "id": 8,
+      "name": [
+        "Media",
+        "Video"
+      ],
+      "rule": {
+        "type": "none"
+      },
+      "name_pretty": "Media>Video",
+      "subname": "Video",
+      "parent": [
+        "Media"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {
+        "color": "#FCC400"
+      },
+      "id": 9,
+      "name": [
+        "Media",
+        "Social Media"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "reddit|Facebook|Twitter|Instagram|devRant",
+        "type": "regex"
+      },
+      "name_pretty": "Media>Social Media",
+      "subname": "Social Media",
+      "parent": [
+        "Media"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {
+        "color": "#A8FC00"
+      },
+      "id": 10,
+      "name": [
+        "Media",
+        "Music"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Spotify|Deezer|Music|Amazon Music",
+        "type": "regex"
+      },
+      "name_pretty": "Media>Music",
+      "subname": "Music",
+      "parent": [
+        "Media"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {
+        "color": "#9FF"
+      },
+      "id": 11,
+      "name": [
+        "Comms"
+      ],
+      "rule": {
+        "type": "none"
+      },
+      "name_pretty": "Comms",
+      "subname": "Comms",
+      "parent": null,
+      "depth": 0
+    },
+    {
+      "data": {},
+      "id": 12,
+      "name": [
+        "Comms",
+        "IM"
+      ],
+      "rule": {
+        "regex": "Messenger|Telegram|Signal|WhatsApp|Rambox|Slack|Riot|Element|Discord|Nheko|Messages",
+        "type": "regex"
+      },
+      "name_pretty": "Comms>IM",
+      "subname": "IM",
+      "parent": [
+        "Comms"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 13,
+      "name": [
+        "Comms",
+        "Email"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Gmail|Spark Desktop",
+        "type": "regex"
+      },
+      "name_pretty": "Comms>Email",
+      "subname": "Email",
+      "parent": [
+        "Comms"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 14,
+      "name": [
+        "Media"
+      ],
+      "rule": {
+        "type": "none"
+      },
+      "name_pretty": "Media",
+      "subname": "Media",
+      "parent": null,
+      "depth": 0
+    },
+    {
+      "data": {},
+      "id": 15,
+      "name": [
+        "Work",
+        "Writing"
+      ],
+      "rule": {
+        "regex": "Google Docs|Microsoft Word",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Writing",
+      "subname": "Writing",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 16,
+      "name": [
+        "Work",
+        "Shopping"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "REI|Amazon?!Music",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Shopping",
+      "subname": "Shopping",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {
+        "color": "#FCDC00"
+      },
+      "id": 17,
+      "name": [
+        "Idle"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "loginwindow|New Tab|^$",
+        "type": "regex"
+      },
+      "name_pretty": "Idle",
+      "subname": "Idle",
+      "parent": null,
+      "depth": 0
+    },
+    {
+      "data": {},
+      "id": 18,
+      "name": [
+        "Work",
+        "School"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "SAT|Reach|papercut|bluelink",
+        "type": "regex"
+      },
+      "name_pretty": "Work>School",
+      "subname": "School",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 19,
+      "name": [
+        "Work",
+        "School",
+        "German"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "DeepL|Translate|dict.cc|German|Deutsch|GER",
+        "type": "regex"
+      },
+      "name_pretty": "Work>School>German",
+      "subname": "German",
+      "parent": [
+        "Work",
+        "School"
+      ],
+      "depth": 2
+    },
+    {
+      "data": {},
+      "id": 20,
+      "name": [
+        "Work",
+        "School",
+        "Math"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Math|Mr. Hurley|WebAssign|Khan Academy|desmos",
+        "type": "regex"
+      },
+      "name_pretty": "Work>School>Math",
+      "subname": "Math",
+      "parent": [
+        "Work",
+        "School"
+      ],
+      "depth": 2
+    },
+    {
+      "data": {},
+      "id": 21,
+      "name": [
+        "Work",
+        "School",
+        "Chemistry"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Chemistry|nonsibihighschool.org|Molecule shapes",
+        "type": "regex"
+      },
+      "name_pretty": "Work>School>Chemistry",
+      "subname": "Chemistry",
+      "parent": [
+        "Work",
+        "School"
+      ],
+      "depth": 2
+    },
+    {
+      "data": {
+        "color": "#68CCCA"
+      },
+      "id": 22,
+      "name": [
+        "Media",
+        "Articles"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "The New York Times|Washington Post!?crossword|nytimes\\.com|washingtonpost\\.com",
+        "type": "regex"
+      },
+      "name_pretty": "Media>Articles",
+      "subname": "Articles",
+      "parent": [
+        "Media"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 23,
+      "name": [
+        "Media",
+        "Articles",
+        "Chess"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "lichess.org",
+        "type": "regex"
+      },
+      "name_pretty": "Media>Articles>Chess",
+      "subname": "Chess",
+      "parent": [
+        "Media",
+        "Articles"
+      ],
+      "depth": 2
+    },
+    {
+      "data": {},
+      "id": 24,
+      "name": [
+        "Work",
+        "Planning"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Calendar|Todoist",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Planning",
+      "subname": "Planning",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 25,
+      "name": [
+        "Media",
+        "Video",
+        "Youtube"
+      ],
+      "rule": {
+        "regex": "YouTube",
+        "type": "regex"
+      },
+      "name_pretty": "Media>Video>Youtube",
+      "subname": "Youtube",
+      "parent": [
+        "Media",
+        "Video"
+      ],
+      "depth": 2
+    },
+    {
+      "data": {},
+      "id": 26,
+      "name": [
+        "Media",
+        "Video",
+        "Netflix"
+      ],
+      "rule": {
+        "regex": "Netflix",
+        "type": "regex"
+      },
+      "name_pretty": "Media>Video>Netflix",
+      "subname": "Netflix",
+      "parent": [
+        "Media",
+        "Video"
+      ],
+      "depth": 2
+    },
+    {
+      "data": {},
+      "id": 27,
+      "name": [
+        "Work",
+        "Crosswords"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Crosshare|Crossword|OneLook",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Crosswords",
+      "subname": "Crosswords",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {
+        "color": "#9F0500"
+      },
+      "id": 28,
+      "name": [
+        "Running"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Strava|Treadmill?!YouTube",
+        "type": "regex"
+      },
+      "name_pretty": "Running",
+      "subname": "Running",
+      "parent": null,
+      "depth": 0
+    },
+    {
+      "data": {},
+      "id": 29,
+      "name": [
+        "Work",
+        "RemNote"
+      ],
+      "rule": {
+        "regex": "RemNote",
+        "type": "regex"
+      },
+      "name_pretty": "Work>RemNote",
+      "subname": "RemNote",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 30,
+      "name": [
+        "Work",
+        "School",
+        "English/History"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "synonym|syonym|adjective|ENG300B|HSS300B",
+        "type": "regex"
+      },
+      "name_pretty": "Work>School>English/History",
+      "subname": "English/History",
+      "parent": [
+        "Work",
+        "School"
+      ],
+      "depth": 2
+    },
+    {
+      "data": {},
+      "id": 31,
+      "name": [
+        "Work",
+        "College"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Naviance|CollegeVine|MIT",
+        "type": "regex"
+      },
+      "name_pretty": "Work>College",
+      "subname": "College",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    },
+    {
+      "data": {},
+      "id": 32,
+      "name": [
+        "Work",
+        "Chess"
+      ],
+      "rule": {
+        "ignore_case": true,
+        "regex": "Lichess|Skype",
+        "type": "regex"
+      },
+      "name_pretty": "Work>Chess",
+      "subname": "Chess",
+      "parent": [
+        "Work"
+      ],
+      "depth": 1
+    }
+  ]
+}

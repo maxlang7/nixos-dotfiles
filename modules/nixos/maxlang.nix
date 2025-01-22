@@ -39,6 +39,8 @@
       pdfarranger
       wine
       winetricks
+      evince
+
       # Fun Little Terminal GUI
       fastfetch
       cbonsai
