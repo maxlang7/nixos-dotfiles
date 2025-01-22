@@ -34,33 +34,28 @@
         OverrideFirstRunPage = "";
         OverridePostUpdatePage = "";
         DontCheckDefaultBrowser = true;
-        DisplayBookmarksToolbar = "never"; # alternatives: "always" or "newtab"
+        DisplayBookmarksToolbar = "newtab"; # alternatives: "always" or "newtab"
         DisplayMenuBar = "default-off"; # alternatives: "always", "never" or "default-on"
         SearchBar = "unified"; # alternative: "separate"
 
-        /* ---- EXTENSIONS ---- */
-        # Check about:support for extension/add-on ID strings.
-        # Valid strings for installation_mode are "allowed", "blocked",
-        # "force_installed" and "normal_installed".
-        ExtensionSettings = {
-          "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
-          # uBlock Origin:
-          "uBlock0@raymondhill.net" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          # Privacy Badger:
-          "jid1-MnnxcxisBPnSXQ@jetpack" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
-            installation_mode = "force_installed";
-          };
-          # 1Password:
-          "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
-            installation_mode = "force_installed";
+        ExtensionSettings = with builtins;
+        let extension = shortId: uuid: {
+          name = uuid;
+          value = {
+            install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/${shortId}/latest.xpi";
+            installation_mode = "normal_installed";
           };
         };
-  
+        in listToAttrs [
+          (extension "ublock-origin" "uBlock0@raymondhill.net")
+          (extension "lastpass-password-manager" "support@lastpass.com")
+          (extension "videospeed" "{7be2ba16-0f1e-4d93-9ebc-5164397477a9}")
+          (extension "youtube-addon" "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}")
+          (extension "sponsorblock" "sponsorBlocker@ajay.app")
+          (extension "aw-watcher-web" "{ef87d84c-2127-493f-b952-5b4e744245bc}")
+          (extension "the-camelizer-price-history-ch" "izer@camelcamelcamel.com")
+        ];
+
         /* ---- PREFERENCES ---- */
         # Check about:config for options.
         Preferences = { 
