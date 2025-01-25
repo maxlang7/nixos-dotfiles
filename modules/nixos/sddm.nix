@@ -5,6 +5,12 @@
     wayland.enable = true;
     theme = "where_is_my_sddm_theme";
     package = pkgs-unstable.kdePackages.sddm;
+    settings = {
+      Autologin = {
+        Session = "Hyprland";
+        User = "maxlang";
+      };
+    };
     extraPackages = [ 
       pkgs-unstable.kdePackages.qt5compat
     ];
