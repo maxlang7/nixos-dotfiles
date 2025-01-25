@@ -40,6 +40,8 @@
       wine
       winetricks
       evince
+      darktable # Lightroom alternative
+      gnome.gnome-boxes
 
       # Fun Little Terminal GUI
       fastfetch
