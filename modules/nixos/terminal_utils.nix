@@ -8,6 +8,8 @@
     curl
     unzip
     htop
+    nh
+    nix-output-monitor
     ];
 
   environment.shellAliases = {
