@@ -28,7 +28,6 @@
       mpv
       image-roll
       todoist-electron
-      todoist
       remnote
       inkscape
       gimp
@@ -44,6 +43,7 @@
       darktable # Lightroom alternative
       gnome-boxes
       gnome-calendar
+      moneydance
       
       # Fun Little Terminal GUI
       fastfetch
@@ -59,8 +59,6 @@
       # vulkan-tools
       # mesa
       # nss
-      # python3
-      # python312Packages.aw-client
       #steam-run
       (vscode-with-extensions.override {
           vscode = vscodium;
