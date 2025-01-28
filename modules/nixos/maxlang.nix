@@ -15,6 +15,7 @@
       brightnessctl
       playerctl
       hyprpaper
+      hyprlock
       wlsunset
       pavucontrol
       trashy
@@ -41,7 +42,8 @@
       winetricks
       evince
       darktable # Lightroom alternative
-      gnome.gnome-boxes
+      gnome-boxes
+      gnome-calendar
       
       # Fun Little Terminal GUI
       fastfetch
