@@ -34,6 +34,7 @@
       xfce.thunar
       activitywatch
       aw-watcher-window-wayland
+      awatcher
       supersonic-wayland
       yt-dlp
       pdfarranger
@@ -44,7 +45,8 @@
       gnome-boxes
       gnome-calendar
       moneydance
-      
+      signal-desktop
+
       # Fun Little Terminal GUI
       fastfetch
       cbonsai
