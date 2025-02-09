@@ -1,0 +1,239 @@
+{
+   "24hrformat": {
+      "message": "Utiliser le format 24 heures"
+   },
+   "auto_end_time": {
+      "message": "Fin des temps"
+   },
+   "auto_start_time": {
+      "message": "Heure de début"
+   },
+   "automatic_dark_mode": {
+      "message": "Mode sombre programmé"
+   },
+   "back": {
+      "message": "Dos"
+   },
+   "background_colors": {
+      "message": "Arrière-plan"
+   },
+   "better_canvas": {
+      "message": "Une meilleure toile"
+   },
+   "better_todo": {
+      "message": "Meilleure liste de choses à faire"
+   },
+   "card_assignments": {
+      "message": "Affectations des cartes"
+   },
+   "card_colors": {
+      "message": "Couleurs des cartes"
+   },
+   "card_customization": {
+      "message": "Cartes"
+   },
+   "card_grades": {
+      "message": "Notes des cartes"
+   },
+   "condensed_cards": {
+      "message": "Cartes condensées"
+   },
+   "custom_font": {
+      "message": "Polices de caractères"
+   },
+   "dark_blue": {
+      "message": "Teinte bleue"
+   },
+   "dark_burn": {
+      "message": "Brûlure du globe oculaire"
+   },
+   "dark_catppuccin": {
+      "message": "Catppuccin\n Par Angel"
+   },
+   "dark_coral": {
+      "message": "Corail\n Par Superchido"
+   },
+   "dark_dark": {
+      "message": "Sombre"
+   },
+   "dark_darker": {
+      "message": "Plus sombre"
+   },
+   "dark_default": {
+      "message": "Défaut"
+   },
+   "dark_light": {
+      "message": "Lumière"
+   },
+   "dark_lighter": {
+      "message": "Plus léger"
+   },
+   "dark_lightmode": {
+      "message": "Mode clair"
+   },
+   "dark_mint": {
+      "message": "Menthe"
+   },
+   "dark_mode": {
+      "message": "Mode sombre"
+   },
+   "dark_mode_fixer": {
+      "message": "Correction du mode sombre (bêta)"
+   },
+   "dark_mode_fixer_text": {
+      "message": "Cela tentera de corriger les éventuels écarts du mode sombre sur la page actuelle."
+   },
+   "dark_pink": {
+      "message": "Rose\n Par Sayde"
+   },
+   "dark_sage": {
+      "message": "Sabia\n Par LivDoesDevStuf"
+   },
+   "dark_unicorn": {
+      "message": "Licorne"
+   },
+   "dashboard_notes": {
+      "message": "Notes du tableau de bord"
+   },
+   "device_dark": {
+      "message": "Utiliser les paramètres du mode sombre de l'appareil"
+   },
+   "disable_color": {
+      "message": "Désactiver la superposition de couleurs"
+   },
+   "dp_background_0": {
+      "message": "Contexte principal"
+   },
+   "dp_background_1": {
+      "message": "Contexte Alt"
+   },
+   "dp_background_2": {
+      "message": "Contexte Autre"
+   },
+   "dp_borders": {
+      "message": "Frontières"
+   },
+   "dp_links": {
+      "message": "Links"
+   },
+   "dp_sidebar": {
+      "message": "Barre latérale"
+   },
+   "dp_sidebar_text": {
+      "message": "Texte de la barre latérale"
+   },
+   "dp_text_0": {
+      "message": "Texte principal"
+   },
+   "dp_text_1": {
+      "message": "Texte Autre"
+   },
+   "dp_text_2": {
+      "message": "Texte alternatif"
+   },
+   "due": {
+      "message": "Exigible"
+   },
+   "edit_dark_mode": {
+      "message": "Mode sombre"
+   },
+   "enter_multiple": {
+      "message": "(Entrez plusieurs avec une virgule)"
+   },
+   "enter_url": {
+      "message": "Votre url Toile:"
+   },
+   "fix_dm_btn": {
+      "message": "Aller"
+   },
+   "fix_dm_text": {
+      "message": "Le fixateur s'exécute automatiquement sur ces pages :"
+   },
+   "full_width": {
+      "message": "Tableau de bord pleine largeur"
+   },
+   "gpa_calc_cumulative": {
+      "message": "Afficher la moyenne cumulative"
+   },
+   "gpa_calc_weighted": {
+      "message": "Afficher la moyenne pondérée"
+   },
+   "gpa_calculator": {
+      "message": "Calculateur de GPA"
+   },
+   "gpa_settings": {
+      "message": "Paramètres GPA"
+   },
+   "grade_hover": {
+      "message": "Afficher uniquement au survol"
+   },
+   "gradient_cards": {
+      "message": "Cartes dégradées"
+   },
+   "hide_completed": {
+      "message": "Masquer terminé"
+   },
+   "hide_feedback": {
+      "message": "Masquer les commentaires récents"
+   },
+   "hover_preview": {
+      "message": "Survolez pour prévisualiser les détails"
+   },
+   "manual_customization": {
+      "message": "Personnalisation manuelle"
+   },
+   "max_items": {
+      "message": "Nombre maximal d'articles : "
+   },
+   "more_options": {
+      "message": "Plus d'options"
+   },
+   "move_top": {
+      "message": "Déplacer vers le haut"
+   },
+   "presets": {
+      "message": "Préréglages"
+   },
+   "radio_sidebar_gradient": {
+      "message": "Pente"
+   },
+   "radio_sidebar_image": {
+      "message": "Image"
+   },
+   "radio_sidebar_solid": {
+      "message": "Solide"
+   },
+   "relative_due_dates": {
+      "message": "Dates d'échéance relatives"
+   },
+   "remlogo": {
+      "message": "Supprimer le logo de la barre latérale"
+   },
+   "report_issue": {
+      "message": "Signaler un problème"
+   },
+   "show_past_due": {
+      "message": "Afficher les arriérés"
+   },
+   "tab_icons": {
+      "message": "Icônes d'onglets à code couleur"
+   },
+   "text_colors": {
+      "message": "Texte"
+   },
+   "themes": {
+      "message": "Thèmes"
+   },
+   "todo_colors": {
+      "message": "Utiliser les couleurs des cartes"
+   },
+   "todo_remind": {
+      "message": "Rappels de tâches à faire"
+   },
+   "updates": {
+      "message": "Mises à jour"
+   },
+   "useddmm": {
+      "message": "Utiliser jj/mm"
+   }
+}

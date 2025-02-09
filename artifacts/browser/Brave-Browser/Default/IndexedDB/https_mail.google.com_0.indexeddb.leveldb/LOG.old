@@ -1,0 +1,12 @@
+2025/02/09-09:45:12.335 7b8 Reusing MANIFEST /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_mail.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/02/09-09:45:12.335 7b8 Recovering log #122
+2025/02/09-09:45:12.342 7b8 Reusing old log /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_mail.google.com_0.indexeddb.leveldb/000122.log 
+2025/02/09-09:45:13.533 7b9 Level-0 table #127: started
+2025/02/09-09:45:13.556 7b9 Level-0 table #127: 3083252 bytes OK
+2025/02/09-09:45:13.558 7b9 Delete type=0 #122
+2025/02/09-09:45:19.894 7b9 Compacting 1@1 + 1@2 files
+2025/02/09-09:45:19.906 7b9 Generated table #128@1: 102 keys, 205484 bytes
+2025/02/09-09:45:19.906 7b9 Compacted 1@1 + 1@2 files => 205484 bytes
+2025/02/09-09:45:19.908 7b9 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/02/09-09:45:19.908 7b9 Delete type=2 #124
+2025/02/09-09:45:19.908 7b9 Delete type=2 #127

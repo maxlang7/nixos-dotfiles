@@ -1,0 +1,17 @@
+2025/01/18-15:14:09.001 6ef Reusing MANIFEST /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_www.athletic.net_0.indexeddb.leveldb/MANIFEST-000001
+2025/01/18-15:14:09.002 6ef Recovering log #6
+2025/01/18-15:14:09.002 6ef Reusing old log /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_www.athletic.net_0.indexeddb.leveldb/000006.log 
+2025/01/18-15:14:09.084 6ef Level-0 table #11: started
+2025/01/18-15:14:09.086 6ef Level-0 table #11: 800 bytes OK
+2025/01/18-15:14:09.089 6ef Delete type=0 #6
+2025/01/18-15:14:09.089 6c9 Manual compaction at level-0 from '\x00\x04\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x05\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/18-15:14:32.862 6c7 Level-0 table #13: started
+2025/01/18-15:14:32.863 6c7 Level-0 table #13: 1079 bytes OK
+2025/01/18-15:14:32.868 6c7 Delete type=0 #10
+2025/01/18-15:14:32.868 6c7 Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at '\x00\x05\x00\x00\x05' @ 227 : 1
+2025/01/18-15:14:32.868 6c7 Compacting 1@0 + 1@1 files
+2025/01/18-15:14:32.869 6c7 Generated table #14@0: 25 keys, 755 bytes
+2025/01/18-15:14:32.869 6c7 Compacted 1@0 + 1@1 files => 755 bytes
+2025/01/18-15:14:32.874 6c7 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/01/18-15:14:32.874 6c7 Delete type=2 #13
+2025/01/18-15:14:32.875 6c7 Manual compaction at level-0 from '\x00\x05\x00\x00\x05' @ 227 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)

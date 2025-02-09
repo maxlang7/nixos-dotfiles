@@ -1,0 +1,15 @@
+2025/02/08-22:29:32.154 800 Reusing MANIFEST /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_drive.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/02/08-22:29:32.154 800 Recovering log #7
+2025/02/08-22:29:32.160 800 Reusing old log /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_drive.google.com_0.indexeddb.leveldb/000007.log 
+2025/02/08-22:53:42.118 802 Level-0 table #12: started
+2025/02/08-22:53:42.121 802 Level-0 table #12: 2122834 bytes OK
+2025/02/08-22:53:42.122 802 Delete type=0 #7
+2025/02/08-22:53:42.123 802 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2025/02/08-22:53:42.123 802 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x01\x03\x03\x01'\x002\x009\x00a\x003\x005\x007\x002\x00d\x006\x007\x00e\x007\x00a\x009\x00e\x00b\x008\x009\x00c\x002\x005\x005\x00e\x00d\x005\x00f\x00e\x00e\x005\x00d\x000\x007\x00_\x003\x00_\x005\x00:\x000\x000' @ 1666 : 0
+2025/02/08-22:53:42.123 802 Compacting 1@1 + 1@2 files
+2025/02/08-22:53:42.124 802 Generated table #13@1: 89 keys, 82824 bytes
+2025/02/08-22:53:42.124 802 Compacted 1@1 + 1@2 files => 82824 bytes
+2025/02/08-22:53:42.125 802 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/02/08-22:53:42.125 802 Delete type=2 #12
+2025/02/08-22:53:42.125 802 Delete type=2 #9
+2025/02/08-22:53:42.125 802 Manual compaction at level-1 from '\x00\x01\x03\x03\x01'\x002\x009\x00a\x003\x005\x007\x002\x00d\x006\x007\x00e\x007\x00a\x009\x00e\x00b\x008\x009\x00c\x002\x005\x005\x00e\x00d\x005\x00f\x00e\x00e\x005\x00d\x000\x007\x00_\x003\x00_\x005\x00:\x000\x000' @ 1666 : 0 .. (end); will stop at (end)
