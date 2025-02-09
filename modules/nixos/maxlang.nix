@@ -48,7 +48,6 @@
       signal-desktop
       obsidian
       lunar-client
-      minecraft
       # Fun Little Terminal GUI
       fastfetch
       cbonsai

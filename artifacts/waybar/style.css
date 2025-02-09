@@ -1,0 +1,87 @@
+* {
+	font-size: 15px;
+	font-family: monospace;
+}
+
+window#waybar {
+	background: #000000;
+	color: #000000;
+}
+#custom-powerbutton,
+#workspaces,
+#clock.1,
+#clock.2,
+#clock.3,
+#network
+#bluetooth
+#pulseaudio,
+#memory,
+#cpu,
+#battery,
+#disk,
+
+#custom-powerbutton button {
+	padding: 2px;
+	color: #FFFFFF;
+}
+
+#workspaces button {
+	padding: 0 2px;
+	color: #fdf6e3;
+}
+#workspaces button.focused {
+	color: #268bd2;
+}
+#workspaces button:hover {
+	box-shadow: inherit;
+	text-shadow: inherit;
+}
+#workspaces button:hover {
+	background: #1a1a1a;
+	border: #1a1a1a;
+	padding: 0 3px;
+}
+#clock.1 {
+	padding: 0 5px;
+	color: #FFFFFF;
+}
+
+#clock.2 {
+	padding: 0 5px;
+	color: #FFFFFF;
+}
+
+#clock.3 {
+	padding: 0 5px;
+	color: #FFFFFF;
+}
+#network {
+	padding: 0 8px;
+	color: #870000;
+}
+#bluetooth{
+	padding: 0 8px;
+	color: #af3a03;
+}
+#pulseaudio {
+	padding: 0 8px;
+	color: #b57614;
+}
+#memory {
+	color: #79740e;
+}
+#cpu {
+	color: #005f87;
+}
+#battery {
+	color: #8f3f71;
+}
+#powerbutton
+#workspaces,
+#clock,
+#pulseaudio,
+#memory,
+#cpu,
+#battery {
+	padding: 0 10px;
+}

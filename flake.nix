@@ -19,48 +19,33 @@
     nixpkgs-unstable,
     #nixpkgs-fd40cef8d,
     ...
-  }: {
-    nixosConfigurations = {
-      Aragorn = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        # The `specialArgs` parameter passes the
-        # non-default nixpkgs instances to other nix modules
-        specialArgs = {
-          # To use packages from nixpkgs-stable,
-          # we configure some parameters for it first
-          pkgs-unstable = import nixpkgs-unstable {
-            # Refer to the `system` parameter from
-            # the outer scope recursively
-            inherit system;
-            # To use Chrome, we need to allow the
-            # installation of non-free software.
-            config.allowUnfree = true;
-          };
-        };
-      Gandalf = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        # The `specialArgs` parameter passes the
-        # non-default nixpkgs instances to other nix modules
-        specialArgs = {
-          # To use packages from nixpkgs-stable,
-          # we configure some parameters for it first
-          pkgs-unstable = import nixpkgs-unstable {
-            # Refer to the `system` parameter from
-            # the outer scope recursively
-            inherit system;
-            # To use Chrome, we need to allow the
-            # installation of non-free software.
-            config.allowUnfree = true;
-          };
-        };
+  }:
+    let
+      system = "x86_64-linux";
 
-
-        modules = [
-          ./hosts/Aragorn/configuration.nix
-          ./hosts/Gandalf/configuration.nix
-          # Omit other configurations...
-        ];
+      # Function to create a NixOS system configuration
+      mkNixosSystem = { hostName, modules }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            pkgs-unstable = import nixpkgs-unstable {
+              inherit system;
+              config.allowUnfree = true;
+            };
+          };
+          modules = modules;
+        };
+    in
+    {
+      nixosConfigurations = {
+        Aragorn = mkNixosSystem {
+          hostName = "Aragorn";
+          modules = [ ./hosts/Aragorn/configuration.nix ];
+        };
+        Gandalf = mkNixosSystem {
+          hostName = "Gandalf";
+          modules = [ ./hosts/Gandalf/configuration.nix ];
+        };
       };
     };
-  };
 }
