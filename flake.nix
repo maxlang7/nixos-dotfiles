@@ -37,6 +37,23 @@
             config.allowUnfree = true;
           };
         };
+      Gandalf = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        # The `specialArgs` parameter passes the
+        # non-default nixpkgs instances to other nix modules
+        specialArgs = {
+          # To use packages from nixpkgs-stable,
+          # we configure some parameters for it first
+          pkgs-unstable = import nixpkgs-unstable {
+            # Refer to the `system` parameter from
+            # the outer scope recursively
+            inherit system;
+            # To use Chrome, we need to allow the
+            # installation of non-free software.
+            config.allowUnfree = true;
+          };
+        };
+
 
         modules = [
           ./hosts/Aragorn/configuration.nix
