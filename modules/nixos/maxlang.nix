@@ -1,27 +1,14 @@
 {config, pkgs, ...}:
 {
+  imports =
+    [
+      ./desktop_environment_apps.nix
+    ];
   users.users.maxlang = {
     isNormalUser = true;
     description = "Max Langhorst";
     extraGroups = [ "networkmanager" "wheel" "video" ];
     packages = with pkgs; [
-      # Desktop Environment Stuff
-      waybar 
-      dunst #notifications
-      libnotify #notifications
-      rofi-wayland #launcher
-      bibata-cursors
-      hyprcursor
-      brightnessctl
-      playerctl
-      hyprpaper
-      hyprlock
-      wlsunset
-      pavucontrol
-      trashy
-      powertop
-
-      # Apps
       kitty
       brave
       discord
@@ -48,35 +35,14 @@
       signal-desktop
       obsidian
       lunar-client
-      # Fun Little Terminal GUI
-      fastfetch
-      cbonsai
-      #For Ingrid Testing
-      # xdotool
-      # xorg.libX11
-      # xorg.libXrandr
-      # xorg.libXext
-      # xorg.libxcb1
-      # glibc
-      # vulkan-loader
-      # vulkan-tools
-      # mesa
-      # nss
-      #steam-run
+
       (vscode-with-extensions.override {
           vscode = vscodium;
           vscodeExtensions = with vscode-extensions; [
               bbenoist.nix
               ms-python.python
               ms-azuretools.vscode-docker
-              #ms-vscode-remot079369e.remote-ssh
           ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-              {
-                name = "remote-ssh-edit";
-                publisher = "ms-vscode-remote";
-                version = "0.47.2";
-                sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
-              }
               {
                 name = "gruvbox";
                 publisher = "jdinhlife";
