@@ -1,0 +1,102 @@
+// -*- mode: json -*-
+
+{
+	"layer": "top",
+	"position": "top",
+	"modules-left": [
+		"custom/powerbutton",
+		"hyprland/workspaces"
+	],
+	"modules-center": [
+		"clock#2",
+		"clock#1",
+		"clock#3"
+	],
+	"modules-right": [
+		"network",
+		"bluetooth",
+		"pulseaudio",
+		"memory",
+		"cpu",
+		"battery"
+	],
+	"custom/powerbutton": {
+    		"format": "",
+		"tooltip-format": "Click to shutdown. Right-click to restart.",
+		"on-click": "systemctl poweroff",
+		"on-click-right": "reboot"
+	},
+
+	"hyprland/workspaces": {
+		"disable-scroll": true,
+		"format": "{name}"
+	},
+
+	"clock#1": {
+		"format": "{:%a}",
+		"tooltip": false
+	},
+	"clock#2": {
+		"format": "{:%r}",
+		"tooltip": false,
+		"interval": 1
+	},
+	"clock#3": {
+		"format": "{:%m/%d}",
+		"tooltip": false
+	},
+
+	"network": {
+        	// "interface": "wlp2s0", // (Optional) To force the use of this interface
+        	"format-wifi": " {signalStrength}%",
+        	//"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        	"format-disconnected": "⚠",
+		"on-click-right": "kitty nmtui"
+    	},
+
+	"bluetooth": {
+		"format": " {status}",
+		"format-connected": " {device_alias}",
+		"format-connected-battery": " {device_alias} {device_battery_percentage}%",
+		"on-click-right": "blueman-manager"
+	},
+	"pulseaudio": {
+        //"scroll-step": 1,
+        	"format": "{icon} {volume}%",
+        	"format-muted": "",
+        	"format-icons": {
+            		"headphones": "",
+            		"handsfree": "",
+            		"headset": "",
+            		"phone": "",
+            		"portable": "",
+            		"car": "",
+            		"default": ["", ""]
+        	},
+        	"on-click": "pavucontrol"
+    	},
+
+	"memory": {
+		"interval": 5,
+		"format": "Mem {}%"
+	},
+	"cpu": {
+		"interval": 5,
+		"format": "CPU{usage:2}%"
+	},
+	"battery": {
+		"states": {
+			"good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{icon} {capacity}%",
+		"format-icons": [
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	}
+}
