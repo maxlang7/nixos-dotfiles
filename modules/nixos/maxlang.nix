@@ -47,7 +47,8 @@
       moneydance
       signal-desktop
       obsidian
-
+      lunar-client
+      minecraft
       # Fun Little Terminal GUI
       fastfetch
       cbonsai
@@ -69,7 +70,7 @@
               bbenoist.nix
               ms-python.python
               ms-azuretools.vscode-docker
-              ms-vscode-remot079369e.remote-ssh
+              #ms-vscode-remot079369e.remote-ssh
           ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
               {
                 name = "remote-ssh-edit";

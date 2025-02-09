@@ -10,6 +10,7 @@
     htop
     nh
     nix-output-monitor
+    poppler_utils
     ];
 
   environment.shellAliases = {
