@@ -40,7 +40,7 @@
 
         modules = [
           ./hosts/Aragorn/configuration.nix
-
+          ./hosts/Gandalf/configuration.nix
           # Omit other configurations...
         ];
       };
