@@ -3,6 +3,7 @@
   imports =
     [
       ./desktop_environment_apps.nix
+      ./website.nix
     ];
   users.users.maxlang = {
     isNormalUser = true;
@@ -19,6 +20,7 @@
       inkscape
       gimp
       xfce.thunar
+      nemo-with-extensions
       activitywatch
       aw-watcher-window-wayland
       awatcher
@@ -35,7 +37,8 @@
       signal-desktop
       obsidian
       lunar-client
-
+      #mathematica
+      fastfetch
       (vscode-with-extensions.override {
           vscode = vscodium;
           vscodeExtensions = with vscode-extensions; [
