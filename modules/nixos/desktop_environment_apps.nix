@@ -21,6 +21,7 @@
       trashy
       powertop
       batsignal
+      grimblast
     ];
   };
 }

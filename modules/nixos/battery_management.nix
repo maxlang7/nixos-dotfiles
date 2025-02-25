@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hibernate.nix
+    ];
+    
   powerManagement = {
     enable = true;
     powertop.enable = true;
