@@ -7,8 +7,11 @@
     package = pkgs-unstable.kdePackages.sddm;
     settings = {
       Autologin = {
-        Session = "Hyprland";
+        Session = "hyprland.desktop";
         User = "maxlang";
+      };
+      General = {
+        DefaultSession="hyprland.desktop";
       };
     };
     extraPackages = [ 
@@ -20,10 +23,10 @@
           themeConfig.General = {
             background = toString ../../images/abbey_broad.jpeg;
 	          backgroundMode = "aspect";
-            passwordCursorColor = "#00FF41";
-            passwordTextColor = "#00FF41";
+            passwordCursorColor = "#98971a";
+            passwordTextColor = "#98971a";
             passwordAllowEmpty = true; 
-            basicTextColor = "#00FF41";
+            basicTextColor = "#98971a";
           };
     })
   ];

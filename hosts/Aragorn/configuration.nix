@@ -1,3 +1,4 @@
+
 # Edit this configuration file to define what should be installed o
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -19,8 +20,7 @@ Math Thingy Setup
       ../../modules/nixos/maxlang.nix
       ../../modules/nixos/sddm.nix
       ../../modules/nixos/firefox.nix
-      ../../modules/nixos/virtualization.nix
-
+      ../../modules/nixos/timezones.nix
       #inputs.home-manager.nixosModules.default
     ];
   nix = {
@@ -28,7 +28,7 @@ Math Thingy Setup
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 15d";
+      options = "--delete-older-than 3d";
     };
   };
 
@@ -44,6 +44,10 @@ Math Thingy Setup
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  environment.sessionVariables = {
+    TERMINAL = "ghostty"; # Replace with your terminal
+  };
+  
   # Framework firmware
   services.fwupd.enable = true;
 
@@ -75,9 +79,6 @@ Math Thingy Setup
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-
-
   # Enable Hyprland
   programs.hyprland = {
     enable = true;
@@ -106,6 +107,12 @@ Math Thingy Setup
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
