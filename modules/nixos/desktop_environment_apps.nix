@@ -16,12 +16,13 @@
       playerctl
       hyprpaper
       hyprlock
+      hypridle
       wlsunset
       pavucontrol
       trashy
       powertop
       batsignal
-      grimblast
+      grimblast #Screenshot
     ];
   };
 }

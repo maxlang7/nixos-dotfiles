@@ -8,15 +8,11 @@
     curl
     unzip
     htop
-    nh
-    nix-output-monitor
-    poppler_utils
     ];
 
   environment.shellAliases = {
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos#Aragorn";
     td = "todoist-electron --enable-features=UseOzonePlatform --ozone-platform=wayland";
-    tree = ''"cbonsai -l -m '"I am at home among the trees" - J.R.R Tolkien'"'';
+    tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
   };
-
 }

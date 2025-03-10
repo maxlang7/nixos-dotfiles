@@ -1,11 +1,10 @@
 { config, pkgs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hibernate.nix
+      #./hibernate.nix
     ];
-    
+
   powerManagement = {
     enable = true;
     powertop.enable = true;
@@ -42,7 +41,5 @@
 
   # Enable thermald (thermal management daemon)
   services.thermald.enable = true;
-
-  # Swap file configuration (for hibernation
 }
 

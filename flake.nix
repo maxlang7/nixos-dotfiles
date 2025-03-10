@@ -11,12 +11,17 @@
 
     # You can also use a specific git commit hash to lock the version
     # nixpkgs-fd40cef8d.url = "github:nixos/nixpkgs/fd40cef8d797670e203a27a91e4b8e6decf0b90c";
+
+    # Home Manager
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{
     self,
     nixpkgs,
     nixpkgs-unstable,
+    home-manager,
     #nixpkgs-fd40cef8d,
     ...
   }:
@@ -31,6 +36,10 @@
             pkgs-unstable = import nixpkgs-unstable {
               inherit system;
               config.allowUnfree = true;
+            };
+            home-manager = home-manager.lib.homeManagerConfiguration {
+              pkgs = nixpkgs.legacyPackages.${system};
+              modules = [ ./home.nix ]; # Your Home Manager modules
             };
           };
           modules = modules;
