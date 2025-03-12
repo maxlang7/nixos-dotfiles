@@ -3,7 +3,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-unstable, inputs, ... }:
+{config, pkgs, pkgs-unstable, inputs, ... }:
 
 /*
 TODO
@@ -20,7 +20,7 @@ Math Thingy Setup
       ../../modules/nixos/maxlang.nix
       ../../modules/nixos/sddm.nix
       ../../modules/nixos/firefox.nix
-      ../../modules/nixos/timezones.nix
+      #../../modules/nixos/timezones.nix
       #inputs.home-manager.nixosModules.default
     ];
   nix = {
@@ -61,8 +61,8 @@ Math Thingy Setup
   # Bluetooth GUI
   services.blueman.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "America/New_York";
+  # Set your time zone manually (already have auto-timezone see timezones.nix)
+  time.timeZone = "America/Denver";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
