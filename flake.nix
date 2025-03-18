@@ -29,7 +29,7 @@
       system = "x86_64-linux";
 
       # Function to create a NixOS system configuration
-      mkNixosSystem = { hostName, modules }:
+      mkNixosSystem = { hostName, modules, homeModules }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -39,7 +39,7 @@
             };
             home-manager = home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${system};
-              modules = [ ./home.nix ]; # Your Home Manager modules
+              modules = homeModules; # Your Home Manager modules
             };
           };
           modules = modules;
@@ -50,10 +50,12 @@
         Aragorn = mkNixosSystem {
           hostName = "Aragorn";
           modules = [ ./hosts/Aragorn/configuration.nix ];
+          homeModules = [ ./hosts/Aragorn/home.nix ];
         };
         Gandalf = mkNixosSystem {
           hostName = "Gandalf";
           modules = [ ./hosts/Gandalf/configuration.nix ];
+          homeModules = [ ./hosts/Gandalf/home.nix ];
         };
       };
     };
