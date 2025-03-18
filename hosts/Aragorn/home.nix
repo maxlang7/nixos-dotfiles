@@ -4,6 +4,7 @@
     [
       ../../modules/home_manager/yazi.nix
       ../../modules/home_manager/zsh.nix
+      ../../modules/home_manager/hyprland.nix
     ];
   home.stateVersion = "24.11"; 
   

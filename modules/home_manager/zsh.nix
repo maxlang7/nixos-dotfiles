@@ -1,11 +1,11 @@
-{...}: 
+{pkgs, ...}: 
 {
-    environment.pathsToLink = [ "/share/zsh" ];
-
+  #environment.pathsToLink = [ "/share/zsh" ];
+  
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    autosuggestions.enable = true;
+    autosuggestion.enable = true;
     history = {
       append = true;
       extended = true;
