@@ -1,9 +1,5 @@
 {config, pkgs, home, ... }:
 {
-  imports =
-    [
-      ../../modules/home-manager/yazi.nix
-    ];
   home.stateVersion = "24.11"; 
   
   home.packages = with pkgs; [

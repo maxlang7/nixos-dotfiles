@@ -1,15 +1,4 @@
-
-# Edit this configuration file to define what should be installed o
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{config, pkgs, pkgs-unstable, inputs, ... }:
-
-/*
-TODO
-Math Thingy Setup
-*/
-
+{config, pkgs, pkgs-unstable, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -21,7 +10,6 @@ Math Thingy Setup
       ../../modules/nixos/sddm.nix
       ../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
-      #inputs.home-manager.nixosModules.default
     ];
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
