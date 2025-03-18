@@ -5,7 +5,7 @@
       ./desktop_environment_apps.nix
       #./website.nix
       ./hibernate.nix
-      ./yazi.nix
+      #./yazi.nix
       #../home_manager/text.nix
     ];
   # Things I want to configure more
