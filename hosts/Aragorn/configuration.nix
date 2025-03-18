@@ -62,7 +62,7 @@ Math Thingy Setup
   services.blueman.enable = true;
 
   # Set your time zone manually (already have auto-timezone see timezones.nix)
-  time.timeZone = "America/Denver";
+  time.timeZone = "America/New_York";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
