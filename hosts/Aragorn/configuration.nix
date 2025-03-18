@@ -59,15 +59,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable Hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    package = pkgs.hyprland;
-  };
-
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
