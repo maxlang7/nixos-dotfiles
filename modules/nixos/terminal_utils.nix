@@ -8,6 +8,10 @@
     curl
     unzip
     htop
+    fzf
+    zoxide
+    fd
+    ripgrep
     ];
 
   environment.shellAliases = {
