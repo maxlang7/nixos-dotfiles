@@ -10,6 +10,7 @@
       ../../modules/nixos/sddm.nix
       ../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
+      ../../modules/nixos/hyprland.nix
     ];
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
@@ -19,6 +20,8 @@
       options = "--delete-older-than 3d";
     };
   };
+
+  home-manager.users.maxlang = import ./home.nix;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
