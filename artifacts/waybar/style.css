@@ -4,10 +4,11 @@
 }
 
 window#waybar {
-	background: #000000;
-	color: #000000;
+	background: #282828;
+	color: #282828;
 }
 #custom-powerbutton,
+#custom-resolution,
 #workspaces,
 #clock.1,
 #clock.2,
@@ -21,60 +22,52 @@ window#waybar {
 #disk,
 
 #custom-powerbutton button {
-	padding: 2px;
-	color: #FFFFFF;
+	padding: 0 4px;
+	color: #fbf1c7;
 }
 
 #workspaces button {
-	padding: 0 2px;
-	color: #fdf6e3;
+	padding: 0 0px;
+	color: #fbf1c7;
 }
-#workspaces button.focused {
-	color: #268bd2;
-}
-#workspaces button:hover {
-	box-shadow: inherit;
-	text-shadow: inherit;
-}
-#workspaces button:hover {
-	background: #1a1a1a;
-	border: #1a1a1a;
-	padding: 0 3px;
+#custom-resolution {
+    color: #fbf1c7;
+    padding: 0px 4px;
 }
 #clock.1 {
 	padding: 0 5px;
-	color: #FFFFFF;
+	color: #fbf1c7;
 }
 
 #clock.2 {
 	padding: 0 5px;
-	color: #FFFFFF;
+	color: #fbf1c7;
 }
 
 #clock.3 {
 	padding: 0 5px;
-	color: #FFFFFF;
+	color: #fbf1c7;
 }
 #network {
 	padding: 0 8px;
-	color: #870000;
+	color: #cc241d;
 }
 #bluetooth{
 	padding: 0 8px;
-	color: #af3a03;
+	color: #d65d0e;
 }
 #pulseaudio {
 	padding: 0 8px;
-	color: #b57614;
+	color: #d79921;
 }
 #memory {
-	color: #79740e;
+	color: #98971a;
 }
 #cpu {
-	color: #005f87;
+	color: #458588;
 }
 #battery {
-	color: #8f3f71;
+	color: #b16286;
 }
 #powerbutton
 #workspaces,

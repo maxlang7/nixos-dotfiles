@@ -7,16 +7,16 @@
       ./hibernate.nix
     ];
   # Things I want to configure more
-  # Minecraft
+  # Minecraft DONE
   # Minecraft server
   # Broswer
   # Terminal
   # Zed
-  # File Manager (nnn)
+  # File Manager (yazi)
   # activitywatch
   # obsidian
-  # waybar
-  # hyprland
+  # waybar DONE
+  # hyprland DONE
   # grimblast
   # theming (cursors, gruvbox)
   # rofi

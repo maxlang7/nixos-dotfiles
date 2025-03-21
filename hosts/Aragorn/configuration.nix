@@ -20,7 +20,8 @@
       options = "--delete-older-than 3d";
     };
   };
-
+  programs.zsh.enable = true;
+  
   home-manager.users.maxlang = import ./home.nix;
 
   # Bootloader.
