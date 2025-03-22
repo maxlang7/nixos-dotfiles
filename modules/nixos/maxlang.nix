@@ -6,25 +6,6 @@
       #./website.nix
       ./hibernate.nix
     ];
-  # Things I want to configure more
-  # Minecraft DONE
-  # Minecraft server
-  # Broswer
-  # Terminal
-  # Zed
-  # File Manager (yazi)
-  # activitywatch
-  # obsidian
-  # waybar DONE
-  # hyprland DONE
-  # grimblast
-  # theming (cursors, gruvbox)
-  # rofi
-  # wallpapers
-  # hyprlock
-  # sddm (done)
-  # backups
-  # networks
   users.users.maxlang = {
     isNormalUser = true;
     description = "Max Langhorst";
@@ -64,6 +45,7 @@
         evtest
         thefuck
         (lib.hiPrio pkgs.uutils-coreutils-noprefix)
+        python314
     ])
 
     ++
