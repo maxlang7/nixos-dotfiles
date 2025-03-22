@@ -23,9 +23,7 @@
 	],
 	"custom/powerbutton": {
     "format": "",
-		"tooltip-format": "Click to shutdown. Right-click to restart.",
 		"on-click": "systemctl poweroff",
-		"on-click-right": "reboot"
 	},
 	"hyprland/workspaces": {
 		"disable-scroll": true,
