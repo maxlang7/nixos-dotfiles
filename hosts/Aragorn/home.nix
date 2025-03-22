@@ -6,8 +6,27 @@
       ../../modules/home_manager/zsh.nix
       ../../modules/home_manager/hyprland.nix
       ../../modules/home_manager/minecraft.nix
-      ./../modules/home_manager/waybar.nix
+      ../../modules/home_manager/waybar.nix
+      ../../modules/home_manager/rofi.nix
     ];
+    # Things I want to configure more
+    # Minecraft server
+    # Broswer
+    # Terminal
+    # Zed
+    # File Manager (yazi) DONE
+    # activitywatch
+    # obsidian
+    # waybar DONE
+    # hyprland DONE
+    # grimblast
+    # theming (cursors, gruvbox)
+    # rofi
+    # wallpapers
+    # hyprlock
+    # sddm (done)
+    # backups
+    # networks
   home.stateVersion = "24.11"; 
   home.packages = with pkgs; [
       hello
