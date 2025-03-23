@@ -46,6 +46,7 @@
         thefuck
         (lib.hiPrio pkgs.uutils-coreutils-noprefix)
         python314
+        strawberry
     ])
 
     ++

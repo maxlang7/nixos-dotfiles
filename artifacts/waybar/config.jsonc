@@ -23,7 +23,7 @@
 	],
 	"custom/powerbutton": {
     "format": "",
-		"on-click": "systemctl poweroff",
+		"on-click": "rofi -show power-menu -modi power-menu:rofi-power-menu"
 	},
 	"hyprland/workspaces": {
 		"disable-scroll": true,
@@ -60,7 +60,7 @@
 		"format": " {status}",
 		"format-connected": " {device_alias}",
 		"format-connected-battery": " {device_alias} {device_battery_percentage}%",
-		"on-click-right": "blueman-manager"
+		"on-click": "rofi-bluetooth"
 	},
 	"pulseaudio": {
         //"scroll-step": 1,

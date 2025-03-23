@@ -71,7 +71,7 @@
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
-    #nerdfonts
+    nerdfonts
     font-awesome
     fira-code
     fira-code-symbols

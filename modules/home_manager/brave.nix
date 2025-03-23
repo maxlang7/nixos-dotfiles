@@ -1,0 +1,15 @@
+{config, pkgs, ...}: 
+{
+  programs.chromium = {
+      enable = true;
+      package = pkgs.brave;
+      extensions = [
+        { id = "nffaoalbilbmmfgbnbgppjihopabppdk"; } # speed
+        { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # sponsorblock 
+        { id = "cjobgkekcenldbaenikebmbhffhhffef"; } # tetrys
+      ];
+      commandLineArgs = [
+        "--disable-features=AutofillSavePaymentMethods"
+      ];
+    };
+}

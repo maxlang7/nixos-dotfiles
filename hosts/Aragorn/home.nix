@@ -8,10 +8,11 @@
       ../../modules/home_manager/minecraft.nix
       ../../modules/home_manager/waybar.nix
       ../../modules/home_manager/rofi.nix
+      ../../modules/home_manager/brave.nix
     ];
     # Things I want to configure more
     # Minecraft server
-    # Broswer
+    # Browser
     # Terminal
     # Zed
     # File Manager (yazi) DONE
