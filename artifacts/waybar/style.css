@@ -22,23 +22,21 @@ window#waybar {
 #disk,
 
 #custom-powerbutton button {
-	padding: 0 4px;
-	color: #fbf1c7;
-}
-
-#workspaces button {
-	padding: 0 0px;
+	padding: 4px 4px;
 	color: #fbf1c7;
 }
 #custom-resolution {
     color: #fbf1c7;
-    padding: 0px 4px;
+    padding: 4px 8px;
+}
+#workspaces button {
+	padding: 0 0px;
+	color: #fbf1c7;
 }
 #clock.1 {
 	padding: 0 5px;
 	color: #fbf1c7;
 }
-
 #clock.2 {
 	padding: 0 5px;
 	color: #fbf1c7;
