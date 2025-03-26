@@ -12,7 +12,6 @@
     extraGroups = [ "networkmanager" "wheel" "video" ];
     packages =
       (with pkgs; [
-        brave
         kitty
         discord
         mpv
@@ -24,7 +23,6 @@
         activitywatch
         aw-watcher-window-wayland
         awatcher
-        supersonic-wayland
         yt-dlp
         pdfarranger
         wine
@@ -56,6 +54,8 @@
       ghostty
       sourcegit
       zed-editor
+      supersonic-wayland
+      hollywood
     ]);
 };
 }
