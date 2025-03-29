@@ -14,6 +14,7 @@
       (with pkgs; [
         kitty
         discord
+        audacity
         mpv
         todoist-electron
         remnote
