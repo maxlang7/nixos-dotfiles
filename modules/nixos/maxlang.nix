@@ -46,6 +46,8 @@
         (lib.hiPrio pkgs.uutils-coreutils-noprefix)
         python314
         strawberry
+        et
+        sway-sway-audio-idle-inhibit
     ])
 
     ++
