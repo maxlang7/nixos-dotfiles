@@ -9,6 +9,7 @@
       ../../modules/home_manager/waybar.nix
       ../../modules/home_manager/rofi.nix
       ../../modules/home_manager/brave.nix
+      ../../modules/home_manager/hyprlock.nix
     ];
     # Things I want to configure more
     # Minecraft server
@@ -22,8 +23,8 @@
     # hyprland DONE
     # grimblast
     # theming (cursors, gruvbox)
-    # rofi
-    # wallpapers
+    # rofi DONE
+    # wallpapers DONE
     # hyprlock
     # sddm (done)
     # backups
