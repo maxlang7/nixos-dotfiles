@@ -11,6 +11,7 @@
       ../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
+      ../../modules/nixos/minecraft_server.nix
     ];
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
