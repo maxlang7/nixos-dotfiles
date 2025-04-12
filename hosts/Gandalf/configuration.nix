@@ -1,54 +1,41 @@
-# Edit this configuration file to define what should be installed o
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, pkgs-unstable, inputs, ... }:
-
-/*
-TODO
-Math Thingy Setup
-*/
-
+{config, pkgs, pkgs-unstable, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
-      #./hardware-configuration.nix
+      ./hardware-configuration.nix
       #../../modules/nixos/battery_management.nix
       ../../modules/nixos/terminal_utils.nix
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
-      ../../modules/nixos/sddm.nix
+      ../../modules/nixos/sddm.nixk
       #../../modules/nixos/firefox.nix
-      #../../modules/nixos/virtualization.nix
-
-      #inputs.home-manager.nixosModules.default
+      #../../modules/nixos/timezones.nix
+      ../../modules/nixos/hyprland.nix
+      ../../modules/nixos/minecraft_server.nix
     ];
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 15d";
+      options = "--delete-older-than 3d";
     };
   };
-
-  # Home Manager Setup
-  /*home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "maxlang" = import ./home.nix;  
-    };
-  };*/
+  programs.zsh.enable = true;
+  
+  home-manager.users.maxlang = import ./home.nix;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Framework firmware
-  services.fwupd.enable = true;
+  environment.sessionVariables = {
+    TERMINAL = "ghostty"; # Replace with your terminal
+  };
+
 
   # Host Name
-  networking.hostName = "Aragorn"; # Define your hostname.
+  networking.hostName = "Gandalf"; # Define your hostname.
 
   networking.networkmanager.enable = true;
 
@@ -57,7 +44,7 @@ Math Thingy Setup
   # Bluetooth GUI
   services.blueman.enable = true;
 
-  # Set your time zone.
+  # Set your time zone manually (already have auto-timezone see timezones.nix)
   time.timeZone = "America/New_York";
 
   # Select internationalisation properties.
@@ -75,18 +62,6 @@ Math Thingy Setup
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-
-
-  # Enable Hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    package = pkgs.hyprland;
-  };
-
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -95,7 +70,7 @@ Math Thingy Setup
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
-    #nerdfonts
+    nerdfonts
     font-awesome
     fira-code
     fira-code-symbols
@@ -105,7 +80,7 @@ Math Thingy Setup
   
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
+  
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -119,15 +94,6 @@ Math Thingy Setup
     jack.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput = {
-    enable = true;
-    touchpad.naturalScrolling = true;
-  };
-  
-  # Fingerprint Sensor
-  services.fprintd.enable = true;
-  
   # Setup portals (for interapplication workflows)
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
