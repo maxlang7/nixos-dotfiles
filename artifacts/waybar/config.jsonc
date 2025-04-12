@@ -47,7 +47,7 @@
 		"format": "{:%m/%d}",
 		"tooltip": false
 	},
-
+	
 	"network": {
         	// "interface": "wlp2s0", // (Optional) To force the use of this interface
         	"format-wifi": " {signalStrength}%",
@@ -59,7 +59,7 @@
 	"bluetooth": {
 		"format": " {status}",
 		"format-connected": " {device_alias}",
-		"format-connected-battery": " {device_alias} {device_battery_percentage}%",
+		"format-connected-battery": " {device_battery_percentage}%",
 		"on-click": "rofi-bluetooth"
 	},
 	"pulseaudio": {
@@ -77,7 +77,6 @@
         	},
         	"on-click": "pavucontrol"
     	},
-
 	"memory": {
 		"interval": 5,
 		"format": "Mem {}%"
