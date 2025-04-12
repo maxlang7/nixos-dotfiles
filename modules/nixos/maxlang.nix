@@ -6,6 +6,11 @@
       #./website.nix
       ./hibernate.nix
     ];
+  users.users.maxlang.shell = pkgs.zsh;
+  programs.evolution = {
+    enable = true;
+    plugins = [ pkgs.evolution-ews ];
+  };
   users.users.maxlang = {
     isNormalUser = true;
     description = "Max Langhorst";
@@ -29,6 +34,8 @@
         wine
         winetricks
         evince #pdf
+        evolution
+        evolution-ews
         gnome-calendar
         signal-desktop
         obsidian
@@ -47,7 +54,8 @@
         python314
         strawberry
         et
-        sway-sway-audio-idle-inhibit
+        sway-audio-idle-inhibit
+        libreoffice
     ])
 
     ++
