@@ -7,7 +7,7 @@
       ../../modules/nixos/terminal_utils.nix
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
-      ../../modules/nixos/sddm.nixk
+      ../../modules/nixos/sddm.nix
       #../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix

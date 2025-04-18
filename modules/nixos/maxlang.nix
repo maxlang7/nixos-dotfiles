@@ -6,11 +6,6 @@
       #./website.nix
       ./hibernate.nix
     ];
-  users.users.maxlang.shell = pkgs.zsh;
-  programs.evolution = {
-    enable = true;
-    plugins = [ pkgs.evolution-ews ];
-  };
   users.users.maxlang = {
     isNormalUser = true;
     description = "Max Langhorst";
