@@ -12,7 +12,6 @@
     fzf
     fd
     ripgrep
-    fish
     ];
   environment.pathsToLink = [ "/share/zsh" ];
   environment.shellAliases = {
@@ -21,5 +20,6 @@
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
   };
-  users.users.maxlang.shell = pkgs.fish;
+  #programs.fish.enable = true;
+  users.users.maxlang.shell = pkgs.zsh;
 }

@@ -4,10 +4,10 @@
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
-    # oh-my-zsh = {
-    #   enable = true;
-    #   theme = 
-    # };
+    oh-my-zsh = {
+      enable = true;
+      theme = "";
+    };
     history = {
       append = true;
       extended = true;
