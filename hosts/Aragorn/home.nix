@@ -3,8 +3,8 @@
   imports =
     [
       ../../modules/home_manager/yazi.nix
-      #../../modules/home_manager/zsh.nix
-      ../../modules/home_manager/fish.nix
+      ../../modules/home_manager/zsh.nix
+      #../../modules/home_manager/fish.nix
       ../../modules/home_manager/hyprland.nix
       ../../modules/home_manager/minecraft.nix
       ../../modules/home_manager/waybar.nix
@@ -34,5 +34,6 @@
   home.packages = with pkgs; [
       hello
   ];
+  xdg.configFile."bat/bat.conf".source = ../../artifacts/bat.conf;
 }
 
