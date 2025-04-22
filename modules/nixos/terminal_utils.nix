@@ -20,6 +20,6 @@
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
   };
-  #programs.fish.enable = true;
+  programs.zsh.enable = true;
   users.users.maxlang.shell = pkgs.zsh;
 }
