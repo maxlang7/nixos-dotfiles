@@ -34,6 +34,6 @@
   home.packages = with pkgs; [
       hello
   ];
-  xdg.configFile."bat/bat.conf".source = ../../artifacts/bat.conf;
+  xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
 }
 

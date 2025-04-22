@@ -53,7 +53,8 @@
         	"format-wifi": " {signalStrength}%",
         	//"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         	"format-disconnected": "⚠",
-		"on-click-right": "kitty nmtui"
+          "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
+          "on-click-right": "kitty nmtui"
     	},
 
 	"bluetooth": {
@@ -79,11 +80,13 @@
     	},
 	"memory": {
 		"interval": 5,
-		"format": "Mem {}%"
+		"format": "Mem {}%",
+ 	  "on-click": "hyprctl dispatch togglespecialworkspace top"
 	},
 	"cpu": {
 		"interval": 5,
-		"format": "CPU{usage:2}%"
+		"format": "CPU{usage:2}%",
+    "on-click": "hyprctl dispatch togglespecialworkspace top"
 	},
 	"battery": {
 		"states": {

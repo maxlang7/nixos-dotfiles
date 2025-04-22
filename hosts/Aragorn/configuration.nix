@@ -11,17 +11,16 @@
       ../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
-      ../../modules/nixos/minecraft_server.nix
+      #../../modules/nixos/minecraft_server.nix
     ];
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 3d";
+      options = "--delete-older-than 7d";
     };
   };
-  programs.zsh.enable = true;
   
   home-manager.users.maxlang = import ./home.nix;
 
