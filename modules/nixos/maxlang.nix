@@ -51,6 +51,7 @@
         et
         sway-audio-idle-inhibit
         libreoffice
+        ffmpeg
     ])
 
     ++
