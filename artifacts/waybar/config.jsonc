@@ -5,6 +5,8 @@
 	"position": "top",
 	"modules-left": [
 		"custom/powerbutton",
+		"custom/nixos",
+		// "custom/tree",
 		"custom/resolution",
 		"hyprland/workspaces"
 	],
@@ -22,9 +24,17 @@
 		"battery"
 	],
 	"custom/powerbutton": {
-    "format": "",
+    "format": "󰐥",
 		"on-click": "rofi -show power-menu -modi power-menu:rofi-power-menu"
 	},
+	"custom/nixos": {
+    "format": "󱄅",
+		"on-click": "ghostty -e sudo nixos-rebuild switch --flake /etc/nixos#Aragorn"
+	},
+	// "custom/tree": {
+ //    "format": "󰐅",
+	// 	"on-click": "ghostty -e cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'"
+	// },
 	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"
@@ -32,7 +42,8 @@
 	"custom/resolution": {
 	  "format": "{}",
 	  "exec": "/usr/bin/env bash /home/maxlang/.config/waybar/get_monitor_resolution_icon.sh",
-    "interval": 1
+		"on-click": "bash /etc/nixos/artifacts/scripts/rofi-resolution-switcher.sh",	
+    "interval": 30
 	},
 	"clock#1": {
 		"format": "{:%a}",
