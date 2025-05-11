@@ -5,9 +5,10 @@
 	"position": "top",
 	"modules-left": [
 		"custom/powerbutton",
-		"custom/nixos",
 		// "custom/tree",
+		// "custom/timer",
 		"custom/resolution",
+		"custom/nixos",
 		"hyprland/workspaces"
 	],
 	"modules-center": [
@@ -35,6 +36,12 @@
  //    "format": "󰐅",
 	// 	"on-click": "ghostty -e cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'"
 	// },
+	// "custom/timer": {
+ //      "exec": "/etc/nixos/artifacts/scripts/rofi-timer.sh",
+ //      "interval": 1,
+ //      "on-click": "exec /etc/nixos/artifacts/scripts/rofi-timer.sh",
+ //      "tooltip": false
+ //  },
 	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"
@@ -57,8 +64,7 @@
 	"clock#3": {
 		"format": "{:%m/%d}",
 		"tooltip": false
-	},
-	
+	},	
 	"network": {
         	// "interface": "wlp2s0", // (Optional) To force the use of this interface
         	"format-wifi": " {signalStrength}%",
@@ -66,7 +72,7 @@
         	"format-disconnected": "⚠",
           "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
           "on-click-right": "kitty nmtui"
-    	},
+    },
 
 	"bluetooth": {
 		"format": " {status}",

@@ -11,6 +11,7 @@ window#waybar {
 #custom-resolution,
 #custom-nixos,
 #custom-tree,
+/* #custom-timer, */
 #workspaces,
 #clock.1,
 #clock.2,
@@ -24,23 +25,27 @@ window#waybar {
 #disk,
 
 #custom-powerbutton button {
-	padding: 0 8px;
+	padding: 4 4px;
 	color: #fbf1c7;
 }
 #custom-resolution button {
     color: #fbf1c7;
-    padding: 0 8px;
+    padding: 4 4px;
 }
 #custom-nixos button {
     color: #fbf1c7;
-    padding: 0 8px;
+    padding: 4 4px;
 }
 /* #custom-tree button {
     color: #98971a;
     padding: 0 8px;
 } */
+/* #custom-timer button {
+    color: #fbf1c7;
+    padding: 4 4px;
+} */
 #workspaces button {
-	padding: 0 0px;
+	padding: 4 0px;
 	color: #fbf1c7;
 }
 #clock.1 {
