@@ -52,6 +52,7 @@
         sway-audio-idle-inhibit
         libreoffice
         ffmpeg
+        uair
     ])
 
     ++

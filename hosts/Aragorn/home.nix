@@ -35,5 +35,6 @@
       hello
   ];
   xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
+  xdg.configFile."uair/uair.toml".source = ../../artifacts/uair.toml;
 }
 
