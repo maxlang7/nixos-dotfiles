@@ -40,10 +40,10 @@ window#waybar {
     color: #98971a;
     padding: 0 8px;
 } */
-/* #custom-timer button {
+#custom-timer button {
     color: #fbf1c7;
     padding: 4 4px;
-} */
+}
 #workspaces button {
 	padding: 4 0px;
 	color: #fbf1c7;

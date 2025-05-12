@@ -8,7 +8,8 @@
 		// "custom/tree",
 		// "custom/timer",
 		"custom/resolution",
-		"custom/nixos",
+		"custom/timer",
+		// "custom/nixos",
 		"hyprland/workspaces"
 	],
 	"modules-center": [
@@ -28,20 +29,37 @@
     "format": "󰐥",
 		"on-click": "rofi -show power-menu -modi power-menu:rofi-power-menu"
 	},
-	"custom/nixos": {
-    "format": "󱄅",
-		"on-click": "ghostty -e sudo nixos-rebuild switch --flake /etc/nixos#Aragorn"
-	},
+	// "custom/nixos": {
+ //    "format": "󱄅",
+	// 	"on-click": "ghostty -e sudo nixos-rebuild switch --flake /etc/nixos#Aragorn"
+	// },
 	// "custom/tree": {
  //    "format": "󰐅",
 	// 	"on-click": "ghostty -e cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'"
 	// },
-	// "custom/timer": {
- //      "exec": "/etc/nixos/artifacts/scripts/rofi-timer.sh",
- //      "interval": 1,
- //      "on-click": "exec /etc/nixos/artifacts/scripts/rofi-timer.sh",
- //      "tooltip": false
- //  },
+	"custom/timer": {
+    "format": "{icon} {}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "tooltip": false,
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "uairctl toggle",
+    "on-click-middle": "uairctl prev",
+    "on-click-right": "uairctl next",
+    "exec-if": "which uairctl",
+    "exec": "uairctl fetch '{\"text\":\"{name} {time} {percent}%\",\"class\":\"{state}\",\"percentage\":{percent}}'"
+	},
 	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"
