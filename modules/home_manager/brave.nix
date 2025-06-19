@@ -1,8 +1,8 @@
-{config, pkgs, ...}: 
+{config, pkgs, pkgs-unstable, ...}: 
 {
   programs.chromium = {
       enable = true;
-      package = pkgs.brave;
+      package = pkgs-unstable.brave;
       extensions = [
         { id = "nffaoalbilbmmfgbnbgppjihopabppdk"; } # speed
         { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # sponsorblock 

@@ -1,4 +1,4 @@
-{config, pkgs, home, ... }:
+{config, pkgs, pkgs-unstable, home, ... }:
 {
   imports =
     [
@@ -30,11 +30,24 @@
     # sddm (done)
     # backups
     # networks
-  home.stateVersion = "24.11"; 
+  home.stateVersion = "25.05"; 
   home.packages = with pkgs; [
       hello
   ];
   xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
   xdg.configFile."uair/uair.toml".source = ../../artifacts/uair.toml;
+  
+  # For USB Drive autodetection
+  services.udiskie = {
+      enable = true;
+      settings = {
+          # workaround for
+          # https://github.com/nix-community/home-manager/issues/632
+          program_options = {
+              # replace with your favorite file manager
+              file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
+          };
+      };
+  };
 }
 
