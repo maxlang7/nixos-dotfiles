@@ -67,14 +67,15 @@
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
-    nerdfonts
     font-awesome
     fira-code
     fira-code-symbols
     liberation_ttf
     proggyfonts
-  ];
-  
+  ]
+  ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+    
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -84,8 +85,9 @@
     openFirewall = true;
   };
   
-  # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  # Enable sound with pulseaudio.
+  services.pulseaudio.enable = false;
+  
   security.rtkit.enable = true;
   services.pipewire = {
     wireplumber.enable = true;
@@ -125,6 +127,9 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
+
+  # Enable auto-detecting of usb drives
+  services.udisks2.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

@@ -1,4 +1,4 @@
-{config, pkgs, pkgs-unstable, ...}:
+{pkgs, pkgs-unstable, ...}:
 {
   imports =
     [
@@ -29,8 +29,6 @@
         wine
         winetricks
         evince #pdf
-        evolution
-        evolution-ews
         gnome-calendar
         signal-desktop
         obsidian
@@ -41,18 +39,24 @@
         nil
         dconf-editor # For Gnome Theming
         gruvbox-dark-gtk
-        moneydance
+        #moneydance
         jq # Json parser
         evtest
         thefuck
         (lib.hiPrio pkgs.uutils-coreutils-noprefix)
-        python314
+        python313
         strawberry
         et
         sway-audio-idle-inhibit
         libreoffice
         ffmpeg
         uair
+        font-manager  
+        upower
+        easyeffects
+        bitwarden
+        nicotine-plus
+        picard
     ])
 
     ++
@@ -64,6 +68,9 @@
       zed-editor
       supersonic-wayland
       hollywood
+      #brave
+      moneydance
+      yubikey-manager
     ]);
 };
 }
