@@ -8,9 +8,9 @@
 		// "custom/tree",
 		// "custom/timer",
 		"custom/resolution",
-		"custom/timer",
 		// "custom/nixos",
-		"hyprland/workspaces"
+		"hyprland/workspaces",
+		"custom/timer"
 	],
 	"modules-center": [
 		"clock#2",
@@ -38,28 +38,16 @@
 	// 	"on-click": "ghostty -e cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'"
 	// },
 	"custom/timer": {
-    "format": "{icon} {}",
-    "format-icons": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
+    "format": "{}",
     "tooltip": false,
     "return-type": "json",
-    "interval": 5,
+    "interval": 1,
     "on-click": "uairctl toggle",
     "on-click-middle": "uairctl prev",
     "on-click-right": "uairctl next",
     "exec-if": "which uairctl",
-    "exec": "uairctl fetch '{\"text\":\"{name} {time} {percent}%\",\"class\":\"{state}\",\"percentage\":{percent}}'"
-	},
+    "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'"
+  },
 	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"
