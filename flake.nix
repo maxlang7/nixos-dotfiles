@@ -20,7 +20,7 @@
   }: let
     system = "x86_64-linux";
 
-    mkNixosSystem = { modules, homeModules }: let
+    mkNixosSystem = { hostName, modules, homeModules }: let
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;

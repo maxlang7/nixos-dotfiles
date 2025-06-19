@@ -1,4 +1,4 @@
-{config, pkgs, ...}: 
+{...}: 
 {
   home.file.".minecraft/resourcepacks".source = ../../artifacts/minecraft/resourcepacks;
   home.file.".minecraft/options.txt".source = ../../artifacts/minecraft/options.txt;

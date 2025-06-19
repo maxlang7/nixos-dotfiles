@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{pkgs, ...}:
 {
   users.users.maxlang = {
     isNormalUser = true;
