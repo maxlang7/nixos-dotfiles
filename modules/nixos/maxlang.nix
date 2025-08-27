@@ -5,6 +5,7 @@
       ./desktop_environment_apps.nix
       #./website.nix
       ./hibernate.nix
+      ./sops.nix
     ];
   programs.steam.enable = true;
   
@@ -60,6 +61,7 @@
         picard
         vesktop
         shtris
+        sops
         whatsie
     ])
 
