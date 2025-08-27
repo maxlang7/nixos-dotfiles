@@ -4,21 +4,21 @@
     enable = true;
     wayland.enable = true;
     theme = "where_is_my_sddm_theme";
-    package = pkgs-unstable.kdePackages.sddm;
+    package = pkgs.kdePackages.sddm;
     settings = {
-      Autologin = {
-        Session = "hyprland.desktop";
-        User = "maxlang";
-      };
+      # Autologin = {
+      #   Session = "hyprland.desktop";
+      #   User = "maxlang";
+      # };
       General = {
         DefaultSession="hyprland.desktop";
       };
     };
     extraPackages = [ 
-      pkgs-unstable.kdePackages.qt5compat
+      pkgs.kdePackages.qt5compat
     ];
   };
-  environment.systemPackages = with pkgs-unstable; [
+  environment.systemPackages = with pkgs; [
     (where-is-my-sddm-theme.override {
           themeConfig.General = {
             background = toString ../../images/abbey_broad.jpeg;
