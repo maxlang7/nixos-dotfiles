@@ -11,6 +11,8 @@
       ../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
+      ../../modules/nixos/networking.nix
+      ../../modules/nixos/bluetooth.nix
       #../../modules/nixos/minecraft_server.nix
     ];
   nix = {
@@ -35,15 +37,8 @@
   # Framework firmware
   services.fwupd.enable = true;
 
-  # Host Name
-  networking.hostName = "Aragorn"; # Define your hostname.
 
-  networking.networkmanager.enable = true;
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  # Bluetooth GUI
-  services.blueman.enable = true;
 
   # Set your time zone manually (already have auto-timezone see timezones.nix)
   time.timeZone = "America/New_York";
