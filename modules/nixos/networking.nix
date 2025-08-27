@@ -1,11 +1,11 @@
-{pkgs, ... }:
+{ pkgs, ... }:
 {
   networking.hostName = "Aragorn";
   networking.networkmanager.enable = true;
 
   # This is the correct way to use `let ... in` within a NixOS module
   # or any attribute set.
-  networking.networkmanager.systemConnections = let
+  networking.wireless.networks = let
     collegeCaCert = pkgs.writeTextFile {
       name = "cmu.crt";
       text = builtins.readFile ../../artifacts/cmu.crt;

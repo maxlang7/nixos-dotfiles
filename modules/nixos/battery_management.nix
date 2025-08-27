@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{...}:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -42,4 +42,3 @@
   # Enable thermald (thermal management daemon)
   services.thermald.enable = true;
 }
-

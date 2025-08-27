@@ -5,6 +5,9 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     
@@ -15,11 +18,11 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    sops-nix,
     home-manager,
     ...
   }: let
     system = "x86_64-linux";
-
     mkNixosSystem = { hostName, modules, homeModules }: let
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
@@ -33,6 +36,7 @@
         };
         modules = modules ++ [
           home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
           {
             home-manager = {
               useGlobalPkgs = true;
