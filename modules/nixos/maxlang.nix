@@ -6,6 +6,8 @@
       #./website.nix
       ./hibernate.nix
     ];
+  programs.steam.enable = true;
+  
   users.users.maxlang = {
     isNormalUser = true;
     description = "Max Langhorst";
@@ -13,7 +15,6 @@
     packages =
       (with pkgs; [
         kitty
-        discord
         audacity
         mpv
         todoist-electron
@@ -57,6 +58,9 @@
         bitwarden
         nicotine-plus
         picard
+        vesktop
+        shtris
+        whatsie
     ])
 
     ++
@@ -68,7 +72,6 @@
       zed-editor
       supersonic-wayland
       hollywood
-      #brave
       moneydance
       yubikey-manager
     ]);
