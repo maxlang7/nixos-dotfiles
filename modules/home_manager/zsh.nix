@@ -6,7 +6,7 @@
     autosuggestion.enable = true;
     oh-my-zsh = {
       enable = true; # Disable oh-my-zsh to avoid conflicts
-      theme = "gruvbox"; # Commented out as oh-my-zsh is disabled
+      #theme = "gruvbox"; # Commented out as oh-my-zsh is disabled
     };
     history = {
       append = true;

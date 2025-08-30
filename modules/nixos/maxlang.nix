@@ -5,10 +5,11 @@
       ./desktop_environment_apps.nix
       #./website.nix
       ./hibernate.nix
-      ./sops.nix
+      #./sops.nix
     ];
+  boot.loader.timeout = 0;
+
   programs.steam.enable = true;
-  
   users.users.maxlang = {
     isNormalUser = true;
     description = "Max Langhorst";
