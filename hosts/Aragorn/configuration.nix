@@ -37,9 +37,6 @@
   # Framework firmware
   services.fwupd.enable = true;
 
-
-
-
   # Set your time zone manually (already have auto-timezone see timezones.nix)
   time.timeZone = "America/New_York";
 

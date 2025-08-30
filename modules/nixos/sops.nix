@@ -8,7 +8,7 @@
       inputs.sops-nix.nixosModules.sops
     ];
 
-  sops.defaultSopsFile = ../../artifacts/sops/secrets.yaml;
+  sops.defaultSopsFile = ../../artifacts/sops/secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   
   sops.age.keyFile = "../../artifacts/sops/age/keys.txt";
