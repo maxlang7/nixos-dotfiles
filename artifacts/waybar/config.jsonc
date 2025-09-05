@@ -77,7 +77,8 @@
         	//"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         	"format-disconnected": "⚠",
           "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
-          "on-click-right": "kitty nmtui"
+          "on-click-right": "kitty nmtui",
+          "on-click-middle": "bash /etc/nixos/artifacts/scripts/switch-connections.sh"
     },
 
 	"bluetooth": {
