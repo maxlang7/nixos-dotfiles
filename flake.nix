@@ -12,6 +12,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
   outputs = inputs @ {
@@ -20,6 +21,7 @@
     nixpkgs-unstable,
     sops-nix,
     home-manager,
+    spicetify-nix,
     ...
   }: let
     system = "x86_64-linux";
@@ -37,6 +39,7 @@
         modules = modules ++ [
           home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
+          #spicetify-nix.nixosModules
           {
             home-manager = {
               useGlobalPkgs = true;

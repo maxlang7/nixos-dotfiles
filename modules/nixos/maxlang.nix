@@ -5,6 +5,7 @@
       ./desktop_environment_apps.nix
       #./website.nix
       ./hibernate.nix
+      ./spicetify.nix
       #./sops.nix
     ];
   boot.loader.timeout = 0;
@@ -64,6 +65,7 @@
         shtris
         sops
         whatsie
+        imagemagick
     ])
 
     ++
