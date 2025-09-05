@@ -10,8 +10,8 @@
 		"custom/resolution",
 		// "custom/nixos",
 		"hyprland/workspaces",
-		"custom/timer",
-		"custom/hypridle"
+		"custom/timer"
+		// "custom/hypridle"
 	],
 	"modules-center": [
 		"clock#2",
@@ -49,14 +49,14 @@
     "exec-if": "which uairctl",
     "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'"
   },
-  "custom/hypridle": {
-      "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
-      "on-click": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh toggle",
-      "interval": 2,
-      "format": "{}",
-      "return-type": "json",
-      "tooltip": true
-  },
+  // "custom/hypridle": {
+  //     "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
+  //     "on-click": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
+  //     "interval": 2,
+  //     "format": "{}",
+  //     "return-type": "json",
+  //     "tooltip": true
+  // },
 	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"

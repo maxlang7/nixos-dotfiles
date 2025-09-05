@@ -12,7 +12,7 @@ window#waybar {
 #custom-nixos,
 #custom-tree,
 #custom-timer,
-#custom-hypridle
+/*#custom-hypridle*/
 #workspaces,
 #clock.1,
 #clock.2,
@@ -45,15 +45,15 @@ window#waybar {
     color: #fbf1c7;
     padding: 4px 4px;
 }
-#custom-hypridle {
+/*#custom-hypridle {
     padding: 4px 4px;
 }
 #custom-hypridle.enabled {
-    color: #4CAF50; /* Green for "ON" */
+    color: #4CAF50;
 }
 #custom-hypridle.disabled {
-    color: #f44336; /* Red for "OFF" */
-}
+    color: #f44336;
+}*/
 #workspaces button {
 	padding: 4px 0px;
 	color: #fbf1c7;
