@@ -15,9 +15,11 @@ if (( CURRENT_TIMESTAMP < TARGET_TIMESTAMP )); then
     
     # Set the system date and time
     # This command requires superuser privileges
-    sudo date -s "$TARGET_DATE"
+    date -s "$TARGET_DATE"
     
     echo "Date and time have been set to 08/01/2025 09:00:00."
+    echo "Restaring network manager"
+    systemctl restart NetworkManager
 else
     echo "Current date is already on or after August 1, 2025. No changes made."
 fi
