@@ -10,7 +10,8 @@
 		"custom/resolution",
 		// "custom/nixos",
 		"hyprland/workspaces",
-		"custom/timer"
+		"custom/timer",
+		"custom/hypridle"
 	],
 	"modules-center": [
 		"clock#2",
@@ -48,6 +49,14 @@
     "exec-if": "which uairctl",
     "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'"
   },
+  "custom/hypridle": {
+      "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
+      "on-click": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh toggle",
+      "interval": 2,
+      "format": "{}",
+      "return-type": "json",
+      "tooltip": true
+  },
 	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"
@@ -73,9 +82,9 @@
 	},	
 	"network": {
         	// "interface": "wlp2s0", // (Optional) To force the use of this interface
-        	"format-wifi": " {signalStrength}%",
+        	"format-wifi": " {essid} ({signalStrength}%)",
         	//"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        	"format-disconnected": "⚠",
+        	"format-disconnected": "󰖪",
           "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
           "on-click-right": "kitty nmtui",
           "on-click-middle": "bash /etc/nixos/artifacts/scripts/switch-connections.sh"
@@ -118,7 +127,7 @@
 			"warning": 30,
 			"critical": 15
 		},
-		"format": "{icon} {capacity}%",
+		"format": "{icon} {capacity}% ({power:2.0f}W)",
 		"format-icons": [
 			"",
 			"",

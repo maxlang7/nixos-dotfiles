@@ -12,6 +12,7 @@ window#waybar {
 #custom-nixos,
 #custom-tree,
 #custom-timer,
+#custom-hypridle
 #workspaces,
 #clock.1,
 #clock.2,
@@ -25,16 +26,16 @@ window#waybar {
 #disk,
 
 #custom-powerbutton button {
-	padding: 4 4px;
+	padding: 4px 4px;
 	color: #fbf1c7;
 }
 #custom-resolution button {
     color: #fbf1c7;
-    padding: 4 4px;
+    padding: 4px 4px;
 }
 #custom-nixos button {
     color: #fbf1c7;
-    padding: 4 4px;
+    padding: 4px 4px;
 }
 /* #custom-tree button {
     color: #98971a;
@@ -42,10 +43,19 @@ window#waybar {
 } */
 #custom-timer button {
     color: #fbf1c7;
-    padding: 4 4px;
+    padding: 4px 4px;
+}
+#custom-hypridle {
+    padding: 4px 4px;
+}
+#custom-hypridle.enabled {
+    color: #4CAF50; /* Green for "ON" */
+}
+#custom-hypridle.disabled {
+    color: #f44336; /* Red for "OFF" */
 }
 #workspaces button {
-	padding: 4 0px;
+	padding: 4px 0px;
 	color: #fbf1c7;
 }
 #clock.1 {
@@ -83,6 +93,7 @@ window#waybar {
 }
 #powerbutton
 #workspaces,
+#idle_inhibitor
 #clock,
 #pulseaudio,
 #memory,
