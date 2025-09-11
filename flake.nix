@@ -21,7 +21,6 @@
     nixpkgs-unstable,
     sops-nix,
     home-manager,
-    spicetify-nix,
     ...
   }: let
     system = "x86_64-linux";
