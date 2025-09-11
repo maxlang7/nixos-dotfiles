@@ -66,19 +66,25 @@
         sops
         whatsie
         imagemagick
+        yubikey-manager
+        lunar-client
+        ghostty
+        sourcegit
+        supersonic-wayland
+        hollywood
+        moneydance
+        spicetify-cli
+        #spotify
+        spotdl
+        nix-prefetch-github
+        slack
     ])
 
     ++
 
     (with pkgs-unstable; [
-      lunar-client
-      ghostty
-      sourcegit
+      hello
       zed-editor
-      supersonic-wayland
-      hollywood
-      moneydance
-      yubikey-manager
     ]);
 };
 }
