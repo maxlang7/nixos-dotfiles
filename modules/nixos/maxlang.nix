@@ -5,7 +5,8 @@
       ./desktop_environment_apps.nix
       #./website.nix
       ./hibernate.nix
-      ./spicetify.nix
+      #./spicetify.nix
+      ./navidrome.nix
       #./sops.nix
     ];
   boot.loader.timeout = 0;
@@ -60,7 +61,6 @@
         easyeffects
         bitwarden
         nicotine-plus
-        picard
         vesktop
         shtris
         sops
@@ -71,11 +71,9 @@
         ghostty
         sourcegit
         supersonic-wayland
-        hollywood
         moneydance
-        spicetify-cli
-        #spotify
-        spotdl
+        #spicetify-cli
+        spotify
         nix-prefetch-github
         slack
     ])
@@ -83,8 +81,8 @@
     ++
 
     (with pkgs-unstable; [
-      hello
       zed-editor
+      spotdl
     ]);
-};
+  };
 }
