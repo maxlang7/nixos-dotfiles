@@ -76,13 +76,18 @@
         spotify
         nix-prefetch-github
         slack
+        zenity
     ])
 
     ++
 
     (with pkgs-unstable; [
       zed-editor
+      feishin
+      yazi
       spotdl
+      xdg-desktop-portal-termfilechooser
+      picard
     ]);
   };
 }
