@@ -2,7 +2,6 @@
 format = "{time}\n"
 paused_state_text = "paused"
 resumed_state_text = "resumed"
-
 [[sessions]]
 id = "5"
 name = "5"
@@ -72,7 +71,8 @@ command = "notify-send 'Done!'"
 [[sessions]]
 id = "60"
 name = "60"
-duration = "30m"
+duration = "60m"
 time_format = "%M:%S"
 command = "notify-send 'Done!'"
+
 

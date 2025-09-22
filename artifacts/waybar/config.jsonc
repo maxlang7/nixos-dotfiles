@@ -10,7 +10,8 @@
 		"custom/resolution",
 		// "custom/nixos",
 		"hyprland/workspaces",
-		"custom/timer"
+		"custom/timer",
+		"mpris"
 		// "custom/hypridle"
 	],
 	"modules-center": [
@@ -44,6 +45,7 @@
     "return-type": "json",
     "interval": 1,
     "on-click": "uairctl toggle",
+    "on-triple-click": "uair -c ",
     "on-click-middle": "uairctl prev",
     "on-click-right": "uairctl next",
     "exec-if": "which uairctl",
@@ -66,6 +68,17 @@
 	  "exec": "/usr/bin/env bash /home/maxlang/.config/waybar/get_monitor_resolution_icon.sh",
 		"on-click": "bash /etc/nixos/artifacts/scripts/rofi-resolution-switcher.sh",	
     "interval": 30
+	},
+	"mpris": {
+		"format": "{player_icon} <i>{title}</i>",
+		"format-paused": "{status_icon} <i>{title}</i>",
+		"player-icons": {
+			"default": "▶",
+			"mpv": "🎵"
+		},
+		"status-icons": {
+			"paused": "⏸"
+		},
 	},
 	"clock#1": {
 		"format": "{:%a}",
@@ -127,7 +140,7 @@
 			"warning": 30,
 			"critical": 15
 		},
-		"format": "{icon} {capacity}% ({power:2.0f}W)",
+		"format": "{icon} {capacity}%",
 		"format-icons": [
 			"",
 			"",
