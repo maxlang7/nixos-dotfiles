@@ -3,6 +3,18 @@ format = "{time}\n"
 paused_state_text = "paused"
 resumed_state_text = "resumed"
 [[sessions]]
+id = "dry"
+name = "dry"
+duration = "54m"
+time_format = "%M:%S"
+command = "notify-send 'Drying Done!'"
+[[sessions]]
+id = "wash"
+name = "wash"
+duration = "36m"
+time_format = "%M:%S"
+command = "notify-send 'Wash Done!'"
+[[sessions]]
 id = "5"
 name = "5"
 duration = "5m"
