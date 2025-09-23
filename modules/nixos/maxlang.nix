@@ -34,7 +34,6 @@
         wine
         winetricks
         evince #pdf
-        gnome-calendar
         signal-desktop
         obsidian
         #mathematica
@@ -44,19 +43,12 @@
         nil
         dconf-editor # For Gnome Theming
         gruvbox-dark-gtk
-        #moneydance
-        jq # Json parser
-        evtest
-        thefuck
         (lib.hiPrio pkgs.uutils-coreutils-noprefix)
         python313
-        strawberry
-        et
         sway-audio-idle-inhibit
         libreoffice
         ffmpeg
-        uair
-        font-manager  
+        uair # timer utility
         upower
         easyeffects
         bitwarden
@@ -69,11 +61,7 @@
         yubikey-manager
         lunar-client
         ghostty
-        sourcegit
-        supersonic-wayland
         moneydance
-        #spicetify-cli
-        spotify
         nix-prefetch-github
         slack
         zenity
@@ -88,9 +76,6 @@
       spotdl
       xdg-desktop-portal-termfilechooser
       picard
-      #merkaartor
-      routino
-      josm
     ]);
     
   };
