@@ -88,6 +88,10 @@
       spotdl
       xdg-desktop-portal-termfilechooser
       picard
+      #merkaartor
+      routino
+      josm
     ]);
+    
   };
 }
