@@ -4,10 +4,10 @@
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
-    oh-my-zsh = {
-      enable = true; # Disable oh-my-zsh to avoid conflicts
-      #theme = "gruvbox"; # Commented out as oh-my-zsh is disabled
-    };
+    # oh-my-zsh = {
+    #   enable = true; # Disable oh-my-zsh to avoid conflicts
+    #   #theme = "gruvbox"; # Commented out as oh-my-zsh is disabled
+    # };
     history = {
       append = true;
       extended = true;

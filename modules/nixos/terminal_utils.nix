@@ -12,6 +12,7 @@
     fzf
     fd
     ripgrep
+    jq
   ];
   
   environment.shellAliases = {
