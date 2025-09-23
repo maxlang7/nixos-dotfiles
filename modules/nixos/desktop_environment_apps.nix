@@ -11,7 +11,6 @@
       libnotify #notifications
       rofi-wayland #launcher
       rofimoji
-      rofi-calc
       rofi-power-menu
       rofi-bluetooth
       bibata-cursors
