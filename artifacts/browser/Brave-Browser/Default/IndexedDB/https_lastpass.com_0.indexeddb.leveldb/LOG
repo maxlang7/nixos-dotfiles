@@ -1,6 +1,0 @@
-2025/01/21-18:21:58.399 720 Creating DB /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_lastpass.com_0.indexeddb.leveldb since it was missing.
-2025/01/21-18:21:58.407 720 Reusing MANIFEST /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_lastpass.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/01/21-18:22:00.982 722 Level-0 table #5: started
-2025/01/21-18:22:00.983 722 Level-0 table #5: 395 bytes OK
-2025/01/21-18:22:00.984 722 Delete type=0 #3
-2025/01/21-18:22:00.984 722 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

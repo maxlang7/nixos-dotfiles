@@ -1,6 +1,0 @@
-2025/01/22-22:28:25.667 3f6c Creating DB /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_x.com_0.indexeddb.leveldb since it was missing.
-2025/01/22-22:28:25.669 3f6c Reusing MANIFEST /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_x.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/01/22-22:29:10.739 3f6d Level-0 table #5: started
-2025/01/22-22:29:10.741 3f6d Level-0 table #5: 855 bytes OK
-2025/01/22-22:29:10.742 3f6d Delete type=0 #3
-2025/01/22-22:29:10.742 3f6d Manual compaction at level-0 from (begin) .. (end); will stop at (end)

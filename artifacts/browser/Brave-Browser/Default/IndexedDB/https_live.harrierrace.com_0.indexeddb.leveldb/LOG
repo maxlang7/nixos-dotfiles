@@ -1,6 +1,0 @@
-2025/01/18-15:15:57.977 6c8 Creating DB /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_live.harrierrace.com_0.indexeddb.leveldb since it was missing.
-2025/01/18-15:15:57.979 6c8 Reusing MANIFEST /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_live.harrierrace.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/01/18-15:17:38.722 6c8 Level-0 table #5: started
-2025/01/18-15:17:38.723 6c8 Level-0 table #5: 1121 bytes OK
-2025/01/18-15:17:38.724 6c8 Delete type=0 #3
-2025/01/18-15:17:38.724 6c8 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

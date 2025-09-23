@@ -1,6 +1,0 @@
-2025/01/24-14:45:53.319 6d8 Creating DB /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_www.overleaf.com_0.indexeddb.leveldb since it was missing.
-2025/01/24-14:45:53.321 6d8 Reusing MANIFEST /home/maxlang/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_www.overleaf.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/01/24-21:35:52.662 6d8 Level-0 table #5: started
-2025/01/24-21:35:52.664 6d8 Level-0 table #5: 36159 bytes OK
-2025/01/24-21:35:52.665 6d8 Delete type=0 #3
-2025/01/24-21:35:52.665 6d8 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
