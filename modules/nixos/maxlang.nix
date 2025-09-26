@@ -26,9 +26,9 @@
         inkscape
         gimp
         nemo-with-extensions
-        activitywatch
-        aw-watcher-window-wayland
-        awatcher
+        #activitywatch
+        #aw-watcher-window-wayland
+        #awatcher
         yt-dlp
         pdfarranger
         wine
@@ -44,7 +44,6 @@
         dconf-editor # For Gnome Theming
         gruvbox-dark-gtk
         (lib.hiPrio pkgs.uutils-coreutils-noprefix)
-        python313
         sway-audio-idle-inhibit
         libreoffice
         ffmpeg
@@ -77,6 +76,5 @@
       xdg-desktop-portal-termfilechooser
       picard
     ]);
-    
   };
 }

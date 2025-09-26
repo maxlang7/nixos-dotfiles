@@ -10,7 +10,7 @@
       ../../modules/home_manager/waybar.nix
       ../../modules/home_manager/rofi.nix
       ../../modules/home_manager/brave.nix
-      ../../modules/home_manager/hyprlock.nix
+      ../../modules/home_manager/hypridle.nix
     ];
     # Things I want to configure more
     # Minecraft server

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Define the target date and time
-TARGET_DATE="2025-08-01 09:00:00"
+TARGET_DATE="2025-09-23 09:00:00"
 
 # Convert the target date to a Unix timestamp
 TARGET_TIMESTAMP=$(date -d "$TARGET_DATE" +%s)
