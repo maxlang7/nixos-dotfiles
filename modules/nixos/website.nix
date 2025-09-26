@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{pkgs, ...}:
 {
   # Very very in progress
   services.nginx = {
