@@ -48,5 +48,8 @@
           };
       };
   };
+  home.shellAliases = {
+      ff = "clear & fastfetch";
+  };
 }
 
