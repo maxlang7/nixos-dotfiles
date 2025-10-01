@@ -29,7 +29,6 @@
         #activitywatch
         #aw-watcher-window-wayland
         #awatcher
-        yt-dlp
         pdfarranger
         wine
         winetricks
@@ -64,6 +63,9 @@
         nix-prefetch-github
         slack
         zenity
+        qdirstat
+        opustags
+        discord
     ])
 
     ++
@@ -75,6 +77,8 @@
       spotdl
       xdg-desktop-portal-termfilechooser
       picard
+      yt-dlp
+      atomicparsley
     ]);
   };
 }
