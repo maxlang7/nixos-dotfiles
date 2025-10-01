@@ -20,7 +20,7 @@
     td = "todoist-electron --enable-features=UseOzonePlatform --ozone-platform=wayland";
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
-    ff = "clear & fastfetch";
+    ff = "clear && fastfetch";
   };
   
   programs.zsh.enable = true;
