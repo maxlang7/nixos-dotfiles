@@ -8,15 +8,17 @@
     device = "/var/lib/swapfile";
     size = 32*1024;
   }];
-  boot.resumeDevice = "/var/lib/swapfile";
+  boot.kernelParams = [
+    "resume_offset=67440640"
+    "mem_sleep_default=deep"
+  ];
+  boot.resumeDevice = "/dev/disk/by-uuid/2870-2353";
   services.logind.lidSwitch = "suspend-then-hibernate";
+  services.logind.lidSwitchExternalPower = "lock";
   # Hibernate on power button pressed
   services.logind.powerKey = "hibernate";
   services.logind.powerKeyLongPress = "poweroff";
-  
-  # Suspend first
-  #boot.kernelParams = ["mem_sleep_default=deep"];
-  
+    
   # Define time delay for hibernation
   systemd.sleep.extraConfig = ''
     HibernateDelaySec=10m
