@@ -29,7 +29,6 @@
         #activitywatch
         #aw-watcher-window-wayland
         #awatcher
-        pdfarranger
         wine
         winetricks
         evince #pdf
@@ -60,12 +59,11 @@
         lunar-client
         ghostty
         moneydance
-        nix-prefetch-github
         slack
         zenity
         qdirstat
         opustags
-        discord
+        obs-studio
     ])
 
     ++
@@ -75,10 +73,12 @@
       feishin
       yazi
       spotdl
-      xdg-desktop-portal-termfilechooser
+      #xdg-desktop-portal-termfilechooser
       picard
       yt-dlp
       atomicparsley
+      netlogo
+      spotify
     ]);
   };
 }
