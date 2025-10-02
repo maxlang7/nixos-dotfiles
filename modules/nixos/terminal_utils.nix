@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{pkgs, ...}:
 {
   environment.systemPackages = with pkgs; [
   	neovim
@@ -21,6 +21,7 @@
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
     ff = "clear && fastfetch";
+    nrsu = "sudo nixos-rebuild switch --flake /etc/nixos#Aragorn && sudo nix flake update --flake /etc/nixos";
   };
   
   programs.zsh.enable = true;
