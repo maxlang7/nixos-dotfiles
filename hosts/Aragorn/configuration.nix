@@ -8,7 +8,7 @@
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
       ../../modules/nixos/sddm.nix
-      ../../modules/nixos/firefox.nix
+      #../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/networking.nix
