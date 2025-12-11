@@ -38,7 +38,7 @@
           }
           {
             timeout = 500;                                
-            on-timeout = "systemctl hibernate";              
+            on-timeout = "systemctl suspend";              
           }
         ];
       };
