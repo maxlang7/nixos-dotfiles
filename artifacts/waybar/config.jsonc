@@ -12,12 +12,14 @@
 		"hyprland/workspaces",
 		"custom/timer",
 		"mpris"
+		
 		// "custom/hypridle"
 	],
 	"modules-center": [
 		"clock#2",
 		"clock#1",
 		"clock#3"
+		// "custom/run-streak"
 	],
 	"modules-right": [
 		"network",
@@ -94,6 +96,13 @@
 		"format": "{:%m/%d}",
 		"tooltip": false
 	},	
+	// "custom/run-streak": {
+ //        "format": "🔥 {}",
+ //        "exec": "echo $(( ( $(date +%s) - $(date -d 'Aug 3, 2025 00:00:00' +%s) ) / 86400 ))",
+ //        "interval": 1,
+ //        "tooltip": true,
+ //        "tooltip-format": "Run streak length (Started Aug 3, 2025)"
+ //  },
 	"network": {
         	// "interface": "wlp2s0", // (Optional) To force the use of this interface
         	"format-wifi": " {essid} ({signalStrength}%)",
