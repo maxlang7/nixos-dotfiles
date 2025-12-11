@@ -4,7 +4,7 @@
     [
       ./desktop_environment_apps.nix
       #./website.nix
-      ./hibernate.nix
+      #./hibernate.nix
       #./spicetify.nix
       ./navidrome.nix
       #./sops.nix
@@ -29,7 +29,7 @@
         #activitywatch
         #aw-watcher-window-wayland
         #awatcher
-        wine
+        wineWowPackages.waylandFull
         winetricks
         evince #pdf
         signal-desktop
@@ -59,11 +59,11 @@
         lunar-client
         ghostty
         moneydance
-        slack
         zenity
         qdirstat
         opustags
         obs-studio
+        bluebubbles
     ])
 
     ++
@@ -78,7 +78,7 @@
       yt-dlp
       atomicparsley
       netlogo
-      spotify
+      slack
     ]);
   };
 }
