@@ -17,11 +17,10 @@
   
   environment.shellAliases = {
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos#Aragorn";
-    td = "todoist-electron --enable-features=UseOzonePlatform --ozone-platform=wayland";
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
     ff = "clear && fastfetch";
-    nrsu = "sudo nixos-rebuild switch --flake /etc/nixos#Aragorn && sudo nix flake update --flake /etc/nixos";
+    nrsu = "sudo nix flake update --flake /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#Aragorn";
   };
   
   programs.zsh.enable = true;
