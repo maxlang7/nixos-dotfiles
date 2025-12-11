@@ -16,7 +16,7 @@ notification(){
 menu(){
 	printf "1. Lofi Girl\n"
 	printf "2. RP Main Mix\n"
-	printf "3. Box Lofi\n"
+	printf "3. WRCT \n"
 	printf "4. The Bootleg Boy\n"
 	printf "5. Radio Spinner\n"
 	printf "6. SmoothChill"
@@ -37,8 +37,8 @@ main() {
 			break
 			;;
 		3)
-			notification "Box Lofi ☕️🎶";
-            URL="http://stream.zeno.fm/f3wvbbqmdg8uv"
+			notification "WRCT 🎶";
+            URL="https://streamalt.wrct.org/wrct-hi.mp3.m3u"
 			break
 			;;
 		4)
