@@ -13,11 +13,13 @@ window#waybar {
 #custom-tree,
 #custom-timer,
 #mpris,
+#run_streak
 /*#custom-hypridle*/
 #workspaces,
 #clock.1,
 #clock.2,
 #clock.3,
+/*#run-streak,*/
 #network
 #bluetooth
 #pulseaudio,
@@ -74,6 +76,10 @@ window#waybar {
     padding: 0 5px;
     color: #fbf1c7;
 }
+/*#run-streak {
+    padding: 0 5px;
+    color: #fbf1c7;
+}*/
 #network {
     padding: 0 8px;
     color: #cc241d;
