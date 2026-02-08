@@ -33,7 +33,7 @@
             owner = "grademach";
             repo = "spotify-downloader";
             rev = "main"; # You can use a specific commit hash for stability
-            hash = "sha256-PEJgTmADx1kfT3FqguAMlwOIcEgzeovPhz/GtfKnXLk=";
+            hash = "sha256-hlQPA1QTISHcAC8V60ocRuEiR4v/DOwt6MlSy8wgvUM=";
           };
           # The actual file name of the customApp usually ends with .js
           name = "song-downloader.js";
