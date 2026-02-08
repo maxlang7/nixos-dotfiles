@@ -68,7 +68,6 @@
         molsketch
         pymol
         python314Full
-        bk
       ])
 
     ++
