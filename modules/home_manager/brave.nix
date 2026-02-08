@@ -1,15 +1,15 @@
-{pkgs, ...}: 
+{pkgs-unstable, ...}: 
 {
   programs.chromium = {
       enable = true;
-      package = pkgs.brave;
+      package = pkgs-unstable.brave;
       extensions = [
         { id = "nffaoalbilbmmfgbnbgppjihopabppdk"; } # speed
         { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # sponsorblock 
         { id = "cjobgkekcenldbaenikebmbhffhhffef"; } # tetrys
         { id = "bnomihfieiccainjcjblhegjgglakjdd"; } # improvedtube
         { id = "dbcfpoaehlbfdeeaonihhkoocmjgalco"; } # better player
-        { id = "cndibmoanboadcifjkjbdpjgfedanolh"; } # better canvsa
+        { id = "cndibmoanboadcifjkjbdpjgfedanolh"; } # better canvas
         { id = "ghbmnnjooekpmoecnnnilnnbdlolhkhi"; } # google docs offline
       ];
       commandLineArgs = [

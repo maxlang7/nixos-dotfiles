@@ -5,7 +5,7 @@
       ./desktop_environment_apps.nix
       #./website.nix
       #./hibernate.nix
-      #./spicetify.nix
+      ./spicetify.nix
       ./navidrome.nix
       #./sops.nix
     ];
@@ -64,7 +64,12 @@
         opustags
         obs-studio
         bluebubbles
-    ])
+        #kdePackages.okular
+        molsketch
+        pymol
+        python314Full
+        bk
+      ])
 
     ++
 
