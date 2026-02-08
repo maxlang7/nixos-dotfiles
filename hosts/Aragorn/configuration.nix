@@ -1,4 +1,4 @@
-{pkgs, ... }:
+{pkgs, lib, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -39,8 +39,8 @@
   services.fwupd.enable = true;
 
   # Set your time zone manually (already have auto-timezone see timezones.nix)
-  time.timeZone = "America/New_York";
-
+  time.timeZone = lib.mkForce null; # allow TZ to be set by desktop user        
+  services.automatic-timezoned.enable = true;
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
