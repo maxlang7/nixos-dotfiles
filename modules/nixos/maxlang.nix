@@ -34,7 +34,6 @@
         evince #pdf
         signal-desktop
         obsidian
-        #mathematica
         fastfetch
         cbonsai
         nixd
@@ -68,7 +67,9 @@
         molsketch
         pymol
         python314Full
+        foliate
       ])
+      
 
     ++
 
