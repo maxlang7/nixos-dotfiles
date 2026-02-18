@@ -35,7 +35,8 @@
       hello
   ];
   xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
-  
+  xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
+
   xdg.desktopEntries = {
       international-relations = {
         name = "International Relations";
