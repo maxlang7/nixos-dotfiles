@@ -2,40 +2,46 @@
 show_hidden = false
 ratio = [1,2,2]
 sort_by = "mtime"
+
 [opener]
   zed = [
-    { run = 'zeditor -n --wait "$@"', block = true, for = "unix" },
-    # { run = '"C:\Program Files\Zed\zed.exe" %*', block = true, for = "windows" }, #Example windows
+    { run = 'zeditor -n --wait %s', orphan = true, for = "unix" },
   ]
   gimp = [
-    { run = 'gimp "$@"', orphan = true, for = "unix" },
-    # { run = '"C:\Program Files\GIMP 2\bin\gimp-2.10.exe" %*', orphan = true, for = "windows" }, #Example windows
+    { run = 'gimp %s', orphan = true, for = "unix" },
   ]
   obsidian = [
-    { run = 'obsidian "$@"', orphan = true, for = "unix" },
-    # { run = '"C:\Program Files\GIMP 2\bin\gimp-2.10.exe" %*', orphan = true, for = "windows" }, #Example windows
+    { run = 'obsidian %s', orphan = true, for = "unix" },
+  ]
+  pymol = [
+    { run = 'pymol %s', orphan = true, for = "unix" },
+  ]
+  okular = [
+    { run = 'okular %s', orphan = true, for = "unix" },
   ]
   open = [
-    { run = 'xdg-open "$@"', desc = "Open", for = "unix" }
+    { run = 'xdg-open %s', desc = "Open", for = "unix" }
   ]
 
 [open]
 prepend_rules = [
-  { name = "*.txt", use = "zed" },
-  { name = "*.json", use = "zed" },
-  { name = "*.lock", use = "zed" },
-  { name = "*.jsonc", use = "zed" },
-  { name = "*.toml", use = "zed" },
-  { name = "*.py", use = "zed" },
-  { name = "*.html", use = "zed" },
-  { name = "*.nix", use = "zed" },
-  { name = "*.conf", use = "zed" },
-  { name = "*.txt", use = "zed" },
-  { name = "*.md", use = "obsidian" },
-  { name = "*.png", use = "gimp" },
-  { name = "*.jpg", use = "gimp" },
-  { name = "*.jpeg", use = "gimp" },
-  { name = "*.gif", use = "gimp" },
-  { name = "*.svg", use = "gimp" },
-  { name = "*", use = "open" } # Fallback to xdg-open for everything else
+  { url = "*.txt", use = "zed" },
+  { url = "*.json", use = "zed" },
+  { url = "*.lock", use = "zed" },
+  { url = "*.jsonc", use = "zed" },
+  { url = "*.toml", use = "zed" },
+  { url = "*.py", use = "zed" },
+  { url = "*.html", use = "zed" },
+  { url = "*.nix", use = "zed" },
+  { url = "*.conf", use = "zed" },
+  { url = "*.txt", use = "zed" },
+  { url = "*.md", use = "obsidian" },
+  { url = "*.png", use = "gimp" },
+  { url = "*.jpg", use = "gimp" },
+  { url = "*.jpeg", use = "gimp" },
+  { url = "*.gif", use = "gimp" },
+  { url = "*.svg", use = "gimp" },
+  { url = "*.pse", use = "pymol" },
+  { url = "*.pdf", use = "okular" },
+  { url = "*", use = "open" } # Fallback to xdg-open for everything else
 ]
