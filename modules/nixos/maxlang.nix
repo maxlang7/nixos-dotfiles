@@ -11,6 +11,10 @@
     ];
   boot.loader.timeout = 0;
 
+  programs.dconf.profiles.user.databases = [{
+     settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+   }];
+  
   programs.steam.enable = true;
   users.users.maxlang = {
     isNormalUser = true;
@@ -63,11 +67,12 @@
         opustags
         obs-studio
         bluebubbles
-        #kdePackages.okular
-        molsketch
+        kdePackages.okular
+        # molsketch
         pymol
         python314Full
         foliate
+        openshot-qt
       ])
       
 
@@ -81,9 +86,9 @@
       #xdg-desktop-portal-termfilechooser
       picard
       yt-dlp
-      atomicparsley
-      netlogo
+      # atomicparsley
       slack
+      cura-appimage
     ]);
   };
 }
