@@ -125,8 +125,13 @@ keymap = [
 
 	# Goto
 	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go home" },
-	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Goto ~/.config" },
-	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Goto ~/Downloads" },
+	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go to ~/.config" },
+	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go to ~/Downloads" },
+	{ on = [ "g", "C" ],       run = "cd /home/maxlang/26_Freshman_Spring/09348 (Inorganic Chemistry)",   desc = "Go to 09348" },
+	{ on = [ "g", "B" ],       run = "cd /home/maxlang/26_Freshman_Spring/03232 (Biochemistry)",   desc = "Go to 03232" },
+	{ on = [ "g", "I" ],       run = "cd /home/maxlang/26_Freshman_Spring/84226 (International Relations)",   desc = "Go to 84226" },
+	{ on = [ "g", "W" ],       run = "cd /home/maxlang/26_Freshman_Spring/09348 (Inorganic Chemistry)",   desc = "Go to 76101" },
+
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
 
 	# Tabs
