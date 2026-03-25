@@ -5,7 +5,7 @@
       ./desktop_environment_apps.nix
       #./website.nix
       #./hibernate.nix
-      ./spicetify.nix
+      # ./spicetify.nix
       ./navidrome.nix
       #./sops.nix
     ];
@@ -59,7 +59,6 @@
         whatsie
         imagemagick
         yubikey-manager
-        lunar-client
         ghostty
         moneydance
         zenity
@@ -89,6 +88,7 @@
       # atomicparsley
       slack
       cura-appimage
+      lunar-client
     ]);
   };
 }
