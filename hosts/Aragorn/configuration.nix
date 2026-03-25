@@ -13,7 +13,7 @@
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/networking.nix
       ../../modules/nixos/bluetooth.nix
-      #../../modules/nixos/minecraft_server.nix
+      # ../../modules/nixos/minecraft_server.nix
     ];
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
