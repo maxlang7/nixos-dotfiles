@@ -1,4 +1,4 @@
-{pkgs, lib, ... }:
+{pkgs, lib, user, hostName, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -15,6 +15,9 @@
       ../../modules/nixos/bluetooth.nix
       # ../../modules/nixos/minecraft_server.nix
     ];
+
+  networking.hostName = hostName;
+
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
     gc = {
@@ -22,24 +25,21 @@
       dates = "weekly";
       options = "--delete-older-than 3d";
     };
-  };
-  
-  home-manager.users.maxlang = import ./home.nix;
+    };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;  
+    # Bootloader.
+    boot.loader.systemd-boot.enable = true;  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  
+
   environment.sessionVariables = {
     TERMINAL = "ghostty"; # Replace with your terminal
   };
-  
+
   # Framework firmware
   services.fwupd.enable = true;
 
   # Set your time zone manually (already have auto-timezone see timezones.nix)
-  time.timeZone = lib.mkForce null; # allow TZ to be set by desktop user        
+  time.timeZone = lib.mkForce null; # allow TZ to be set by desktop user
   services.automatic-timezoned.enable = true;
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -56,7 +56,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  
+
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
@@ -67,7 +67,7 @@
     proggyfonts
   ]
   ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
-    
+
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -77,10 +77,10 @@
     nssmdns4 = true;
     openFirewall = true;
   };
-  
+
   # Enable sound with pulseaudio.
   services.pulseaudio.enable = false;
-  
+
   security.rtkit.enable = true;
   services.pipewire = {
     wireplumber.enable = true;
@@ -97,10 +97,10 @@
     enable = true;
     touchpad.naturalScrolling = true;
   };
-  
+
   # Fingerprint Sensor
   services.fprintd.enable = true;
-  
+
   # Setup portals (for interapplication workflows)
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

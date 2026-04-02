@@ -1,18 +1,18 @@
-{pkgs, ...}:
+{pkgs, user, ...}:
 {
   # Very very in progress
   services.nginx = {
     enable = true;
     virtualHosts."localhost" = {
-      root = "/home/maxlang/fish";
-      locations."~ \\.php$".extraConfig = '' 
+      root = "/home/${user}/fish";
+      locations."~ \\.php$".extraConfig = ''
         fastcgi_pass 127.0.0.1:9000
         fastfgi_index index.php;
         include ${pkgs.nginx}/conf/fastcgi_params;
       '';
     };
   };
-  
+
   virtualisation = {
     podman = {
       enable = true;
@@ -24,7 +24,7 @@
         image = "php:8.2-fpm";
         autoStart = true;
         ports = [ "127.0.0.1:9000:9000" ];
-        volumes = [ "/home/maxlang/fish:/var/www/html" ];
+        volumes = [ "/home/${user}/fish:/var/www/html" ];
         extraOptions = [
           "--network=host"
         ];

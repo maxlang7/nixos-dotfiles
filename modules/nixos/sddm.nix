@@ -1,4 +1,4 @@
-{config, pkgs, pkgs-unstable, ...}:
+{config, pkgs, user, ...}:
 {
   services.displayManager.sddm = {
     enable = true;
@@ -8,13 +8,13 @@
     settings = {
       # Autologin = {
       #   Session = "hyprland.desktop";
-      #   User = "maxlang";
+      #   User = "${user}";
       # };
       General = {
         DefaultSession="hyprland.desktop";
       };
     };
-    extraPackages = [ 
+    extraPackages = [
       pkgs.kdePackages.qt5compat
     ];
   };
@@ -25,7 +25,7 @@
 	          backgroundMode = "aspect";
             passwordCursorColor = "#98971a";
             passwordTextColor = "#98971a";
-            passwordAllowEmpty = true; 
+            passwordAllowEmpty = true;
             basicTextColor = "#98971a";
           };
     })

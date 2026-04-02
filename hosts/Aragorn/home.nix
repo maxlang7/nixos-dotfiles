@@ -1,4 +1,4 @@
-{pkgs, ... }:
+{pkgs, user, ... }:
 {
   imports =
     [
@@ -30,7 +30,7 @@
     # sddm (done)
     # backups
     # networks
-  home.stateVersion = "25.05"; 
+  home.stateVersion = "25.05";
   home.packages = with pkgs; [
       hello
   ];
@@ -41,7 +41,7 @@
       international-relations = {
         name = "International Relations";
         genericName = "Textbook";
-        exec = ''${pkgs.kdePackages.okular}/bin/okular "/home/maxlang/Documents/School/CMU/26_Freshman_Spring/84226 (International Relations)/Essentials of International Relations (Ninth Edition) (Karen A. Mingst Heather Elko McKibben) (Z-Library).pdf"'';
+        exec = ''${pkgs.kdePackages.okular}/bin/okular "/home/${user}/Documents/School/CMU/26_Freshman_Spring/84226 (International Relations)/Essentials of International Relations (Ninth Edition) (Karen A. Mingst Heather Elko McKibben) (Z-Library).pdf"'';
         icon = "okular";
         categories = [ "Education" ];
         settings = {
@@ -54,7 +54,7 @@
       Enabled=false
       First Use=false
   '';
-  
+
   # For USB Drive autodetection
   services.udiskie = {
       enable = true;
@@ -68,4 +68,3 @@
       };
   };
 }
-
