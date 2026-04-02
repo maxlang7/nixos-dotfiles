@@ -6,7 +6,8 @@
       #./website.nix
       #./hibernate.nix
       # ./spicetify.nix
-      ./navidrome.nix
+      # ./navidrome.nix
+      ./ampache.nix
       #./sops.nix
     ];
   boot.loader.timeout = 0;
