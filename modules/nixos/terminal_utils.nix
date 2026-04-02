@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, user, hostName, ...}:
 {
   environment.systemPackages = with pkgs; [
   	neovim
@@ -14,16 +14,16 @@
     ripgrep
     jq
   ];
-  
+
   environment.shellAliases = {
-    nrs = "sudo nixos-rebuild switch --flake /etc/nixos#Aragorn";
+    nrs = "sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
     ff = "clear && fastfetch";
-    nrsu = "sudo nix flake update --flake /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#Aragorn";
+    nrsu = "sudo nix flake update --flake /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
   };
-  
+
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
-  users.users.maxlang.shell = pkgs.zsh;
+  users.users.${user}.shell = pkgs.zsh;
 }

@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, user, ... }:
 
 let
-  ampacheRoot = "/var/www/ampache";
+  ampacheRoot = "/srv/ampache";
   ampacheUser = "ampache";
   ampacheVersion = "7.8.0";
   phpPackage = pkgs.php84.withExtensions ({ enabled, all }: enabled ++ [
@@ -20,7 +20,7 @@ let
   # Fetch the pre-bundled release zip declaratively
   ampacheSrc = pkgs.fetchzip {
     url = "https://github.com/ampache/ampache/releases/download/${ampacheVersion}/ampache-${ampacheVersion}_all_php8.4_squashed.zip";
-    sha256 = lib.fakeSha256; # Run once, replace with actual hash from error output
+    sha256 = "sha256-EG8dWlT71IdgVjHFwgnJe3/5cYphDuPDaVGMUg5/qQ4="; # Run once, replace with actual hash from error output
     stripRoot = false;
   };
 in
@@ -29,6 +29,7 @@ in
   # Ampache lives in the nix store; symlink into web root
   systemd.tmpfiles.rules = [
     "d ${ampacheRoot} 0750 ${ampacheUser} nginx -"
+    "d /srv/music 0750 ampache nginx -"
     "L+ ${ampacheRoot}/public - - - - ${ampacheSrc}/public"
   ];
 
@@ -95,8 +96,9 @@ in
   # ── Nginx ─────────────────────────────────────────────────────
   services.nginx = {
     enable = true;
-    virtualHosts."ampache.yourdomain.com" = {
-      root = "${ampacheRoot}/public";
+    virtualHosts."localhost" = {
+      listen = [{ addr = "0.0.0.0"; port = 5042; }];
+      root = "${ampacheRoot}";
       # enableACME = true;
       # forceSSL = true;
 
@@ -123,7 +125,7 @@ in
   };
 
   # ── Firewall ──────────────────────────────────────────────────
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 5042 ];
 
   # ── Optional transcoding ──────────────────────────────────────
   environment.systemPackages = with pkgs; [ ffmpeg lame flac vorbis-tools ];

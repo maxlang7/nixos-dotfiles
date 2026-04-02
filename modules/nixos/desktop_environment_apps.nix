@@ -1,12 +1,8 @@
-{pkgs, ...}:
+{pkgs, user, ...}:
 {
-  users.users.maxlang = {
-    isNormalUser = true;
-    description = "Max Langhorst";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
-    packages = with pkgs; [
+  users.users.${user}.packages = with pkgs; [
       # Desktop Environment Stuff
-      waybar 
+      waybar
       dunst #notifications
       libnotify #notifications
       rofi-wayland #launcher
@@ -27,5 +23,4 @@
       batsignal
       grimblast #Screenshot
     ];
-  };
 }

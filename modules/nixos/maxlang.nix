@@ -1,7 +1,8 @@
-{pkgs, pkgs-unstable, ...}:
+{pkgs, pkgs-unstable, user, ...}:
 {
   imports =
     [
+      ./user.nix
       ./desktop_environment_apps.nix
       #./website.nix
       #./hibernate.nix
@@ -15,13 +16,9 @@
   programs.dconf.profiles.user.databases = [{
      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
    }];
-  
+
   programs.steam.enable = true;
-  users.users.maxlang = {
-    isNormalUser = true;
-    description = "Max Langhorst";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
-    packages =
+  users.users.${user}.packages =
       (with pkgs; [
         kitty
         audacity
@@ -74,7 +71,7 @@
         foliate
         openshot-qt
       ])
-      
+
 
     ++
 
@@ -91,5 +88,4 @@
       cura-appimage
       lunar-client
     ]);
-  };
 }
