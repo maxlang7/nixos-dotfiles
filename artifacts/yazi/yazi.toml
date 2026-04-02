@@ -43,5 +43,6 @@ prepend_rules = [
   { url = "*.svg", use = "gimp" },
   { url = "*.pse", use = "pymol" },
   { url = "*.pdf", use = "okular" },
+  { url = "*.pub", use = "zed" },
   { url = "*", use = "open" } # Fallback to xdg-open for everything else
 ]
