@@ -4,6 +4,10 @@ let
   ampacheRoot = "/srv/ampache";
   ampacheUser = "ampache";
   ampacheVersion = "7.8.0";
+  # We use /srv/music as the canonical path for Ampache
+  musicSource = "/home/${user}/Music/ampache";
+  musicDest = "/srv/music";
+
   phpPackage = pkgs.php84.withExtensions ({ enabled, all }: enabled ++ [
     all.curl
     all.gd
@@ -17,23 +21,28 @@ let
     all.exif
   ]);
 
-  # Fetch the pre-bundled release zip declaratively
   ampacheSrc = pkgs.fetchzip {
     url = "https://github.com/ampache/ampache/releases/download/${ampacheVersion}/ampache-${ampacheVersion}_all_php8.4_squashed.zip";
-    sha256 = "sha256-EG8dWlT71IdgVjHFwgnJe3/5cYphDuPDaVGMUg5/qQ4="; # Run once, replace with actual hash from error output
+    sha256 = "sha256-EG8dWlT71IdgVjHFwgnJe3/5cYphDuPDaVGMUg5/qQ4=";
     stripRoot = false;
   };
 in
 {
+  # ── Bind Mount ────────────────────────────────────────────────
+  # This makes your home music folder appear at /srv/music
+  fileSystems."${musicDest}" = {
+    device = "${musicSource}";
+    options = [ "bind" "nofail" ];
+  };
+
   # ── Declarative file deployment ───────────────────────────────
-  # Ampache lives in the nix store; symlink into web root
   systemd.tmpfiles.rules = [
     "d ${ampacheRoot} 0750 ${ampacheUser} nginx -"
-    "d /srv/music 0750 ampache nginx -"
-    "L+ ${ampacheRoot}/public - - - - ${ampacheSrc}/public"
+    "d ${musicDest} 0755 ${ampacheUser} nginx -"
+    # Granting traverse permissions to the home subdir specifically
+    "a+ ${musicSource} - - - - u:${ampacheUser}:rX"
   ];
 
-  # Use a systemd oneshot to copy (not symlink) so Ampache can write config
   systemd.services.ampache-setup = {
     description = "Deploy Ampache web app";
     wantedBy = [ "multi-user.target" ];
@@ -50,7 +59,31 @@ in
         chmod -R 750 ${ampacheRoot}
         chmod -R 770 ${ampacheRoot}/config
       fi
+
+      # Pre-seed catalog using the /srv/music path
+      ${pkgs.mariadb}/bin/mysql ampache -e "
+        INSERT IGNORE INTO catalog (name, path, catalog_type, last_update, enabled)
+        VALUES ('Music', '${musicDest}', 'local', UNIX_TIMESTAMP(), 1);
+      " 2>/dev/null || true
     '';
+  };
+
+  # ── Watch ~/Music/ampache and trigger rescan on changes ───────
+  systemd.paths.ampache-music-watch = {
+    wantedBy = [ "multi-user.target" ];
+    pathConfig = {
+      PathChanged = musicSource;
+      Unit = "ampache-rescan.service";
+    };
+  };
+
+  systemd.services.ampache-rescan = {
+    description = "Trigger Ampache catalog rescan";
+    serviceConfig = {
+      Type = "oneshot";
+      User = ampacheUser;
+      ExecStart = "${phpPackage}/bin/php ${ampacheRoot}/bin/cli run:updateCatalog";
+    };
   };
 
   # ── User & group ──────────────────────────────────────────────
@@ -59,6 +92,9 @@ in
     group = "nginx";
     home = ampacheRoot;
   };
+
+  # Ensure the user's home directory is traversable by the webserver/ampache user
+  users.users.${user}.homeMode = "711";
 
   # ── MariaDB ───────────────────────────────────────────────────
   services.mysql = {
@@ -99,8 +135,6 @@ in
     virtualHosts."localhost" = {
       listen = [{ addr = "0.0.0.0"; port = 5042; }];
       root = "${ampacheRoot}";
-      # enableACME = true;
-      # forceSSL = true;
 
       locations."/" = {
         index = "index.php";
