@@ -1,47 +1,47 @@
 // -*- mode: json -*-
 
 {
-	"layer": "top",
-	"position": "top",
-	"modules-left": [
-		"custom/powerbutton",
-		// "custom/tree",
-		// "custom/timer",
-		"custom/resolution",
-		// "custom/nixos",
-		"hyprland/workspaces",
-		"custom/timer",
-		"mpris"
-		
-		// "custom/hypridle"
-	],
-	"modules-center": [
-		"clock#2",
-		"clock#1",
-		"clock#3"
-		// "custom/run-streak"
-	],
-	"modules-right": [
-		"network",
-		"bluetooth",
-		"pulseaudio",
-		"memory",
-		"cpu",
-		"battery"
-	],
-	"custom/powerbutton": {
+  "layer": "top",
+  "position": "top",
+  "modules-left": [
+    "custom/powerbutton",
+    // "custom/tree",
+    // "custom/timer",
+    "custom/resolution",
+    // "custom/nixos",
+    "hyprland/workspaces",
+    "custom/timer",
+    "mpris",
+
+    // "custom/hypridle"
+  ],
+  "modules-center": [
+    "clock#2",
+    "clock#1",
+    "clock#3",
+    // "custom/run-streak"
+  ],
+  "modules-right": [
+    "network",
+    "bluetooth",
+    "pulseaudio",
+    "memory",
+    "cpu",
+    "battery",
+  ],
+  "custom/powerbutton": {
     "format": "󰐥",
-		"on-click": "rofi -show power-menu -modi power-menu:rofi-power-menu"
-	},
-	// "custom/nixos": {
- //    "format": "󱄅",
-	// 	"on-click": "ghostty -e sudo nixos-rebuild switch --flake /etc/nixos#Aragorn"
-	// },
-	// "custom/tree": {
- //    "format": "󰐅",
-	// 	"on-click": "ghostty -e cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'"
-	// },
-	"custom/timer": {
+    "on-click": "rofi -show power-menu -modi power-menu:rofi-power-menu",
+  },
+  // "custom/nixos": {
+  //    "format": "󱄅",
+  // 	"on-click": "ghostty -e sudo nixos-rebuild switch --flake /etc/nixos#Aragorn"
+  // },
+  // "custom/tree": {
+  //    "format": "󰐅",
+  // 	"on-click": "ghostty -e cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'"
+  // },
+  "custom/timer": {
     "format": "{}",
     "tooltip": false,
     "return-type": "json",
@@ -50,7 +50,7 @@
     "on-click-middle": "uairctl prev",
     "on-click-right": "uairctl next",
     "exec-if": "which uairctl",
-    "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'"
+    "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'",
   },
   // "custom/hypridle": {
   //     "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
@@ -60,103 +60,97 @@
   //     "return-type": "json",
   //     "tooltip": true
   // },
-	"hyprland/workspaces": {
-		"disable-scroll": true,
-		"format": "{name}"
-	},
-	"custom/resolution": {
-	  "format": "{}",
-	  "exec": "/usr/bin/env bash /home/maxlang/.config/waybar/get_monitor_resolution_icon.sh",
-		"on-click": "bash /etc/nixos/artifacts/scripts/rofi-resolution-switcher.sh",	
-    "interval": 30
-	},
-	"mpris": {
-		"format": "{player_icon} <i>{title}</i>",
-		"format-paused": "{status_icon} <i>{title}</i>",
-		"max-length": 50,
-		"ignored-players": ["brave"],
-		"player-icons": {
-			"default": "▶",
-			"mpv": "🎵"
-		},
-		"status-icons": {
-			"paused": "⏸"
-		},
-	},
-	"clock#1": {
-		"format": "{:%a}",
-		"tooltip": false
-	},
-	"clock#2": {
-		"format": "{:%r}",
-		"tooltip": false,
-		"interval": 1
-	},
-	"clock#3": {
-		"format": "{:%m/%d}",
-		"tooltip": false
-	},	
-	// "custom/run-streak": {
- //        "format": "🔥 {}",
- //        "exec": "echo $(( ( $(date +%s) - $(date -d 'Aug 3, 2025 00:00:00' +%s) ) / 86400 ))",
- //        "interval": 1,
- //        "tooltip": true,
- //        "tooltip-format": "Run streak length (Started Aug 3, 2025)"
- //  },
-	"network": {
-        	// "interface": "wlp2s0", // (Optional) To force the use of this interface
-        	"format-wifi": " {essid} ({signalStrength}%)",
-        	//"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        	"format-disconnected": "󰖪",
-          "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
-          "on-click-right": "kitty nmtui",
-          "on-click-middle": "bash /etc/nixos/artifacts/scripts/switch-connections.sh"
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "format": "{name}",
+  },
+  "custom/resolution": {
+    "format": "{}",
+    "exec": "/usr/bin/env bash ~/.config/waybar/get_monitor_resolution_icon.sh",
+    "on-click": "bash /etc/nixos/artifacts/scripts/rofi-resolution-switcher.sh",
+    "interval": 30,
+  },
+  "mpris": {
+    "format": "{player_icon} <i>{title}</i>",
+    "format-paused": "{status_icon} <i>{title}</i>",
+    "max-length": 50,
+    "ignored-players": ["brave"],
+    "player-icons": {
+      "default": "▶",
+      "mpv": "🎵",
     },
+    "status-icons": {
+      "paused": "⏸",
+    },
+  },
+  "clock#1": {
+    "format": "{:%a}",
+    "tooltip": false,
+  },
+  "clock#2": {
+    "format": "{:%r}",
+    "tooltip": false,
+    "interval": 1,
+  },
+  "clock#3": {
+    "format": "{:%m/%d}",
+    "tooltip": false,
+  },
+  // "custom/run-streak": {
+  //        "format": "🔥 {}",
+  //        "exec": "echo $(( ( $(date +%s) - $(date -d 'Aug 3, 2025 00:00:00' +%s) ) / 86400 ))",
+  //        "interval": 1,
+  //        "tooltip": true,
+  //        "tooltip-format": "Run streak length (Started Aug 3, 2025)"
+  //  },
+  "network": {
+    // "interface": "wlp2s0", // (Optional) To force the use of this interface
+    "format-wifi": " {essid} ({signalStrength}%)",
+    //"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+    "format-disconnected": "󰖪",
+    "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
+    "on-click-right": "kitty nmtui",
+    "on-click-middle": "bash /etc/nixos/artifacts/scripts/switch-connections.sh",
+  },
 
-	"bluetooth": {
-		"format": " {status}",
-		"format-connected": " {device_alias}",
-		"format-connected-battery": " {device_battery_percentage}%",
-		"on-click": "rofi-bluetooth"
-	},
-	"pulseaudio": {
-        //"scroll-step": 1,
-        	"format": "{icon} {volume}%",
-        	"format-muted": "",
-        	"format-icons": {
-            		"headphones": "",
-            		"handsfree": "",
-            		"headset": "",
-            		"phone": "",
-            		"portable": "",
-            		"car": "",
-            		"default": ["", ""]
-        	},
-        	"on-click": "pavucontrol"
-    	},
-	"memory": {
-		"interval": 5,
-		"format": "Mem {}%",
- 	  "on-click": "hyprctl dispatch togglespecialworkspace top"
-	},
-	"cpu": {
-		"interval": 5,
-		"format": "CPU{usage:2}%",
-    "on-click": "hyprctl dispatch togglespecialworkspace top"
-	},
-	"battery": {
-		"states": {
-			"good": 95,
-			"warning": 30,
-			"critical": 15
-		},
-		"format": "{icon} {capacity}%",
-		"format-icons": [
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	}
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_battery_percentage}%",
+    "on-click": "rofi-bluetooth",
+  },
+  "pulseaudio": {
+    //"scroll-step": 1,
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "headphones": "",
+      "handsfree": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", ""],
+    },
+    "on-click": "pavucontrol",
+  },
+  "memory": {
+    "interval": 5,
+    "format": "Mem {}%",
+    "on-click": "hyprctl dispatch togglespecialworkspace top",
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "CPU{usage:2}%",
+    "on-click": "hyprctl dispatch togglespecialworkspace top",
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{icon} {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+  },
 }

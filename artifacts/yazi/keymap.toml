@@ -1,4 +1,4 @@
 [mgr]
 prepend_keymap = [
-    { on = [ "g", "S" ],       run = "cd /home/maxlang/26_Freshman_Spring",   desc = "Go to current Semester" },
+    { on = [ "g", "S" ],       run = "cd ~/26_Freshman_Spring",   desc = "Go to current Semester" },
 ]
