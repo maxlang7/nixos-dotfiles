@@ -42,7 +42,7 @@
         nil
         dconf-editor # For Gnome Theming
         gruvbox-dark-gtk
-        (lib.hiPrio pkgs.uutils-coreutils-noprefix)
+        # (lib.hiPrio pkgs.uutils-coreutils-noprefix)
         sway-audio-idle-inhibit
         libreoffice
         ffmpeg
@@ -54,38 +54,37 @@
         vesktop
         shtris
         sops
-        whatsie
+        # whatsie
         imagemagick
         yubikey-manager
         ghostty
         moneydance
-        zenity
+        # zenity
         qdirstat
         opustags
         obs-studio
         bluebubbles
         kdePackages.okular
-        # molsketch
         pymol
         python314Full
         foliate
-        openshot-qt
+        wl-clipboard
+        video-trimmer
+        yt-dlp-light
+        claude-code
+        # lidarr
       ])
 
 
     ++
 
     (with pkgs-unstable; [
-      zed-editor
+      # zed-editor
+      claude-agent-acp
       feishin
       yazi
-      spotdl
-      #xdg-desktop-portal-termfilechooser
       picard
-      yt-dlp
-      # atomicparsley
       slack
-      cura-appimage
       lunar-client
     ]);
 }
