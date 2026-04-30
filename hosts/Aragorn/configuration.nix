@@ -7,7 +7,7 @@
       ../../modules/nixos/terminal_utils.nix
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
-      ../../modules/nixos/sddm.nix
+      # ../../modules/nixos/sddm.nix
       #../../modules/nixos/firefox.nix
       #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
@@ -28,7 +28,7 @@
     };
 
     # Bootloader.
-    boot.loader.systemd-boot.enable = true;  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   environment.sessionVariables = {
