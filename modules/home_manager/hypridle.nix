@@ -3,9 +3,9 @@
   services.hypridle = {
       enable = true;
       settings = {
-        general = [ 
+        general = [
           {
-            mouse_move_enables_dpms = true;                # enables mouse movement treated as activity.       
+            mouse_move_enables_dpms = true;                # enables mouse movement treated as activity.
             key_press_enables_dpms = true;                 # enables key press treated as activity.
             lock_cmd = "pgrep hyprlock || hyprlock";       # avoids starting multiple hyprlock instances.
             before_sleep_cmd = "loginctl lock-session";    # lock before suspend.
@@ -13,32 +13,32 @@
           }
         ];
           # set monitor backlight to minimum when timeout has passed, restore monitor backlight when activity detected.
-        listener = [ 
+        listener = [
           {
-            timeout = 150;                                
-            on-timeout = "brightnessctl -s set 50%-";       
-            on-resume = "brightnessctl -r";               
+            timeout = 150;
+            on-timeout = "brightnessctl -s set 50%-";
+            on-resume = "brightnessctl -r";
           }
           # keyboard backlight when timout has passed, screen on when activity detected.
-          { 
-            timeout = 150;                               
+          {
+            timeout = 150;
             on-timeout = "brightnessctl -sd rgb:kbd_backlight set 0";
-            on-resume = "brightnessctl -rd rgb:kbd_backlight";        
+            on-resume = "brightnessctl -rd rgb:kbd_backlight";
           }
           # lock screen when timeout thas passed.
           {
-            timeout = 180; 
+            timeout = 180;
             on-timeout = "loginctl lock-session";
           }
           # screen off when timeout has passed, screen on when activity detected.
           {
-            timeout = 330;                                
-            on-timeout = "hyprctl dispatch dpms off";     
-            on-resume = "hyprctl dispatch dpms on";       
+            timeout = 330;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
           }
           {
-            timeout = 500;                                
-            on-timeout = "systemctl suspend";              
+            timeout = 500;
+            on-timeout = "systemctl suspend";
           }
         ];
       };
