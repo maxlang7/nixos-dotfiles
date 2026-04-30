@@ -11,6 +11,7 @@
       ../../modules/home_manager/rofi.nix
       ../../modules/home_manager/brave.nix
       ../../modules/home_manager/hypridle.nix
+      ../../modules/home_manager/zed.nix
     ];
     # Things I want to configure more
     # Minecraft server
