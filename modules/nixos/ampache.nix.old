@@ -41,8 +41,7 @@ in
     "a+ ${musicSource} - - - - u:${ampacheUser}:rX"
   ];
 
-  # Deploy Ampache files on first boot
-  systemd.services.ampache-deploy = {
+  systemd.services.ampache-setup = {
     description = "Deploy Ampache web app";
     wantedBy = [ "multi-user.target" ];
     before = [ "phpfpm-ampache.service" "nginx.service" ];
@@ -58,6 +57,13 @@ in
         chmod -R 750 ${ampacheRoot}
         chmod -R 770 ${ampacheRoot}/config
       fi
+
+      # CLEANUP: Remove old catalogs pointing to /home/ and enforce /srv/music
+      ${pkgs.mariadb}/bin/mysql ampache -e "
+        DELETE FROM catalog WHERE path != '${musicDest}';
+        INSERT IGNORE INTO catalog (name, path, catalog_type, last_update, enabled)
+        VALUES ('Music', '${musicDest}', 'local', UNIX_TIMESTAMP(), 1);
+      " 2>/dev/null || true
     '';
   };
 
@@ -119,6 +125,25 @@ in
       "php_admin_value[post_max_size]" = "100M";
       "php_admin_value[memory_limit]" = "256M";
     };
+  };
+
+  systemd.services.ampache-bindmount = {
+    description = "Ensure Ampache music bind mount";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "ampache-deploy.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      User = "root";
+    };
+    script = ''
+      # Unmount if already mounted to refresh it
+      ${pkgs.util-linux}/bin/umount -l /srv/music 2>/dev/null || true
+      # Wait a moment
+      ${pkgs.coreutils}/bin/sleep 1
+      # Remount
+      ${pkgs.util-linux}/bin/mount /srv/music
+    '';
   };
 
   # ── Nginx with Subsonic Support ───────────────────────────────
