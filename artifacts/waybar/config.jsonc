@@ -10,8 +10,8 @@
     "custom/resolution",
     // "custom/nixos",
     "hyprland/workspaces",
-    "custom/timer",
-    "mpris"
+    "custom/timer"
+    // "mpris"
 
     // "custom/hypridle"
   ],
@@ -70,19 +70,19 @@
     "on-click": "bash /etc/nixos/artifacts/scripts/rofi-resolution-switcher.sh",
     "interval": 30
   },
-  "mpris": {
-    "format": "{player_icon} <i>{title}</i>",
-    "format-paused": "{status_icon} <i>{title}</i>",
-    "max-length": 50,
-    "ignored-players": ["brave"],
-    "player-icons": {
-      "default": "▶",
-      "mpv": "🎵"
-    },
-    "status-icons": {
-      "paused": "⏸"
-    }
-  },
+  // "mpris": {
+  //   "format": "{player_icon} <i>{title}</i>",
+  //   "format-paused": "{status_icon} <i>{title}</i>",
+  //   "max-length": 50,
+  //   "ignored-players": ["brave"],
+  //   "player-icons": {
+  //     "default": "▶",
+  //     "mpv": "🎵"
+  //   },
+  //   "status-icons": {
+  //     "paused": "⏸"
+  //   }
+  // },
   "clock#1": {
     "format": "{:%a}",
     "tooltip": false
