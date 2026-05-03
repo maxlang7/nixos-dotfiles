@@ -2,10 +2,9 @@
 show_hidden = false
 ratio = [1,2,2]
 sort_by = "mtime"
-
 [opener]
   zed = [
-    { run = 'zeditor -n --wait %s', orphan = true, for = "unix" },
+    { run = 'zeditor -n --wait %s', block=true, url="bulk-rename.txt", mime="text/plain", orphan = true, for = "unix" },
   ]
   gimp = [
     { run = 'gimp %s', orphan = true, for = "unix" },
@@ -30,6 +29,7 @@ prepend_rules = [
   { url = "*.lock", use = "zed" },
   { url = "*.jsonc", use = "zed" },
   { url = "*.toml", use = "zed" },
+  { url = "*.m3u", use = "zed" },
   { url = "*.py", use = "zed" },
   { url = "*.html", use = "zed" },
   { url = "*.nix", use = "zed" },

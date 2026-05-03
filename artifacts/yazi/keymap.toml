@@ -1,5 +1,6 @@
 [mgr]
 prepend_keymap = [
     { on = [ "g", "S" ],       run = "cd ~/26_Freshman_Spring",   desc = "Go to current Semester" },
-    { on = [ "g", "M" ],       run = "cd ~/Music/ampache",   desc = "Go to Ampache Music Folder" },
+    { on = [ "g", "m" ],       run = "cd ~/Music/navidrome",   desc = "Go to Navidrome Music Folder" },
+    { on = [ "g", "p" ],       run = "cd ~/Music/navidrome/playlists",   desc = "Go to Navidrome Playlists Folder" },
 ]
