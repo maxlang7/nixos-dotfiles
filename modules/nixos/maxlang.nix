@@ -7,8 +7,8 @@
       #./website.nix
       #./hibernate.nix
       # ./spicetify.nix
-      # ./navidrome.nix
-      ./ampache.nix
+      ./navidrome.nix
+      # ./ampache.nix
       #./sops.nix
     ];
   boot.loader.timeout = 0;
@@ -17,13 +17,14 @@
      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
    }];
 
+  environment.variables.EDITOR = "zeditor";
+
   programs.steam.enable = true;
   users.users.${user}.packages =
       (with pkgs; [
         kitty
         audacity
         mpv
-        todoist-electron
         remnote
         inkscape
         gimp
@@ -70,9 +71,7 @@
         foliate
         wl-clipboard
         video-trimmer
-        yt-dlp-light
         claude-code
-        # lidarr
       ])
 
 
@@ -80,7 +79,8 @@
 
     (with pkgs-unstable; [
       # zed-editor
-      claude-agent-acp
+      yt-dlp-light
+      # claude-agent-acp
       feishin
       yazi
       picard
