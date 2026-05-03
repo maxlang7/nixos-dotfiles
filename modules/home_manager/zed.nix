@@ -14,6 +14,9 @@
         claude-acp = {
           type = "registry";
         };
+        gemini = {
+          type = "registry";
+        };
       };
 
       icon_theme = {
