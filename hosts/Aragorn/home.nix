@@ -12,7 +12,9 @@
       ../../modules/home_manager/brave.nix
       ../../modules/home_manager/hypridle.nix
       ../../modules/home_manager/zed.nix
+      ../../modules/home_manager/filepicker.nix
     ];
+    
     # Things I want to configure more
     # Minecraft server
     # Browser
