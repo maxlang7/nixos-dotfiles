@@ -104,8 +104,8 @@
   services.fprintd.enable = true;
 
   # Setup portals (for interapplication workflows)
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  # xdg.portal.enable = true;
+  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
