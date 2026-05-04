@@ -17,6 +17,8 @@
      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
    }];
 
+  nix.settings.download-buffer-size = 524288000;
+
   environment.variables.EDITOR = "zeditor";
 
   programs.steam.enable = true;
@@ -71,13 +73,14 @@
         foliate
         wl-clipboard
         video-trimmer
-        claude-code
       ])
 
 
     ++
 
     (with pkgs-unstable; [
+      codex
+      claude-code
       # zed-editor
       yt-dlp-light
       # claude-agent-acp
