@@ -73,6 +73,7 @@
         foliate
         wl-clipboard
         video-trimmer
+        nodejs-slim_latest
       ])
 
 
