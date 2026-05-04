@@ -1,26 +1,31 @@
 { pkgs, config, ... }:
 
 let
-  # A small wrapper script to bridge the portal and yazi
-  yazi-picker = pkgs.writeShellScriptBin "yazi-picker" ''
-    # The portal passes the output path as the first argument
-    out=$1
-    shift
-    # Run yazi. When a file is selected, it writes the path to $out
-    ${pkgs.yazi}/bin/yazi --chooser-file="$out" "$@"
+  # Script matching the 5-arg signature xdg-desktop-portal-termfilechooser uses:
+  # $1=multiple $2=directory $3=save $4=starting_path $5=output_file
+  yazi-picker-wrapper = pkgs.writeShellScriptBin "yazi-picker-wrapper" ''
+    multiple="$1"
+    directory="$2"
+    save="$3"
+    path="$4"
+    out="$5"
+    export YAZI_CONFIG_HOME="$HOME/.config/yazi"
+    if [ "$directory" = "1" ]; then
+      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser -e ${pkgs.yazi}/bin/yazi --chooser-file="$out" --cwd-file="$out" "$path"
+    else
+      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser -e ${pkgs.yazi}/bin/yazi --chooser-file="$out" "$path"
+    fi
   '';
 in
 {
   home.packages = [
     pkgs.xdg-desktop-portal-termfilechooser
-    yazi-picker
+    yazi-picker-wrapper
   ];
 
-  # Configure the portal backend
   xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''
-    [chooser]
-    # We launch the terminal with a specific class "yazi-picker" for Hyprland targeting
-    cmd=${pkgs.ghostty}/bin/foot --class "yazi-picker" -e ${yazi-picker}/bin/yazi-picker
+    [filechooser]
+    cmd=${yazi-picker-wrapper}/bin/yazi-picker-wrapper
   '';
 
   # Ensure the portal knows to use termfilechooser

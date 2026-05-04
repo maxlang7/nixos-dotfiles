@@ -35,7 +35,7 @@ prepend_rules = [
   { url = "*.nix", use = "zed" },
   { url = "*.conf", use = "zed" },
   { url = "*.txt", use = "zed" },
-  { url = "*.md", use = "obsidian" },
+  { url = "*.md", use = "zed" },
   { url = "*.png", use = "gimp" },
   { url = "*.jpg", use = "gimp" },
   { url = "*.jpeg", use = "gimp" },
