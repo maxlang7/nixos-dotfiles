@@ -81,9 +81,7 @@
     (with pkgs-unstable; [
       codex
       claude-code
-      # zed-editor
       yt-dlp-light
-      # claude-agent-acp
       feishin
       yazi
       picard
