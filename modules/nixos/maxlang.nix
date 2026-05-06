@@ -65,7 +65,7 @@
         # zenity
         qdirstat
         opustags
-        obs-studio
+        # obs-studio
         bluebubbles
         kdePackages.okular
         pymol
@@ -74,6 +74,8 @@
         wl-clipboard
         video-trimmer
         nodejs-slim_latest
+        btop
+        clipse
       ])
 
 
@@ -88,5 +90,6 @@
       picard
       slack
       lunar-client
+      obs-studio
     ]);
 }
