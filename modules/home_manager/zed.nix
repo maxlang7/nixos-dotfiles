@@ -9,15 +9,15 @@
           milliseconds = 1000;
         };
       };
-
-      agent_servers = {
-        claude-acp = {
-          type = "registry";
-        };
-        gemini = {
-          type = "registry";
-        };
-      };
+      disable_ai = true;
+      # agent_servers = {
+      #   claude-acp = {
+      #     type = "registry";
+      #   };
+      #   gemini = {
+      #     type = "registry";
+      #   };
+      # };
 
       icon_theme = {
         mode = "dark";
