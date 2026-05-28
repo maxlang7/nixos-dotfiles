@@ -15,12 +15,7 @@
 
     // "custom/hypridle"
   ],
-  "modules-center": [
-    "clock#2",
-    "clock#1",
-    "clock#3"
-    // "custom/run-streak"
-  ],
+  "modules-center": ["clock#2", "clock#1", "clock#3", "custom/run-streak"],
   "modules-right": [
     "network",
     "bluetooth",
@@ -96,19 +91,17 @@
     "format": "{:%m/%d}",
     "tooltip": false
   },
-  // "custom/run-streak": {
-  //        "format": "🔥 {}",
-  //        "exec": "echo $(( ( $(date +%s) - $(date -d 'Aug 3, 2025 00:00:00' +%s) ) / 86400 ))",
-  //        "interval": 1,
-  //        "tooltip": true,
-  //        "tooltip-format": "Run streak length (Started Aug 3, 2025)"
-  //  },
+  "custom/run-streak": {
+    "format": "🔥{}",
+    "exec": "echo $(( ( $(date +%s) - $(date -d 'Aug 3, 2025 00:00:00' +%s) ) / 86400 ))",
+    "interval": 1,
+    "tooltip": true,
+    "tooltip-format": "Run streak length (Started Aug 3, 2025)"
+  },
   "network": {
-    // "interface": "wlp2s0", // (Optional) To force the use of this interface
     "format-wifi": " {essid} ({signalStrength}%)",
-    //"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
     "format-disconnected": "󰖪",
-    "on-click": "bash /etc/nixos/artifacts/rofi/ -manager.sh",
+    "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
     "on-click-right": "kitty nmtui",
     "on-click-middle": "bash /etc/nixos/artifacts/scripts/switch-connections.sh"
   },
@@ -117,7 +110,7 @@
     "format": " {status}",
     "format-connected": " {device_alias}",
     "format-connected-battery": " {device_battery_percentage}%",
-    "on-click": "rofi-bluetooth"
+    "on-click": "bash /etc/nixos/artifacts/scripts/rofi-bluetooth.sh"
   },
   "pulseaudio": {
     //"scroll-step": 1,
@@ -132,7 +125,8 @@
       "car": "",
       "default": ["", ""]
     },
-    "on-click": "pavucontrol"
+    // "on-click": "bash /etc/nixos/artifacts/scripts/rofi-mixer.sh",
+    "on-click-right": "pavucontrol"
   },
   "memory": {
     "interval": 5,
