@@ -14,7 +14,7 @@
       ../../modules/home_manager/zed.nix
       ../../modules/home_manager/filepicker.nix
     ];
-    
+
     # Things I want to configure more
     # Minecraft server
     # Browser
@@ -41,14 +41,14 @@
   xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
 
   xdg.desktopEntries = {
-      international-relations = {
-        name = "International Relations";
-        genericName = "Textbook";
-        exec = ''${pkgs.kdePackages.okular}/bin/okular "/home/${user}/Documents/School/CMU/26_Freshman_Spring/84226 (International Relations)/Essentials of International Relations (Ninth Edition) (Karen A. Mingst Heather Elko McKibben) (Z-Library).pdf"'';
+      reading = {
+        name = "Reading";
+        genericName = "Reading";
+        exec = ''${pkgs.kdePackages.okular}/bin/okular "/home/${user}/Documents/books/The_Greatest_Story_Ever_Told-Bear_Grylls.pdf"'';
         icon = "okular";
-        categories = [ "Education" ];
+        categories = [];
         settings = {
-          Keywords = "Politics;Study;IR";
+          Keywords = "Reading";
         };
       };
     };
