@@ -4,7 +4,7 @@
 # It checks the current connection and switches to the other one.
 
 # Define the names of your two networks here.
-NETWORK1="CMellon"
+NETWORK1="sascha"
 NETWORK2="Max’s iPhone"
 
 # Check if nmcli is installed
