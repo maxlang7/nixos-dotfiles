@@ -16,6 +16,8 @@
       ScanSchedule = "@every 24h";
       EnableSharing = true;
       UIWelcomeMessage = "Musik";
+      LastFM.ApiKey = "***REMOVED***";
+      LastFM.Secret = "***REMOVED***";
     };
   };
 }
