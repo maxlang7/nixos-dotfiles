@@ -1,48 +1,79 @@
-[mgr]
+[manager]
 show_hidden = false
-ratio = [1,2,2]
+ratio = [1, 2, 2]
 sort_by = "mtime"
+
 [opener]
-  zed = [
-    { run = 'zeditor -n --wait %s', block=true, url="bulk-rename.txt", mime="text/plain", orphan = true, for = "unix" },
-  ]
-  gimp = [
-    { run = 'gimp %s', orphan = true, for = "unix" },
-  ]
-  obsidian = [
-    { run = 'obsidian %s', orphan = true, for = "unix" },
-  ]
-  pymol = [
-    { run = 'pymol %s', orphan = true, for = "unix" },
-  ]
-  okular = [
-    { run = 'okular %s', orphan = true, for = "unix" },
-  ]
-  open = [
-    { run = 'xdg-open %s', desc = "Open", for = "unix" }
-  ]
+text = [
+  { run = 'zeditor -n "$@"', orphan = true, for = "unix" },
+]
+bulk-rename = [
+  { run = 'zeditor -n --wait "$@"', block = true, for = "unix" },
+]
+gimp = [
+  { run = 'gimp "$@"', orphan = true, for = "unix" },
+]
+image-viewer = [
+  { run = 'imv "$@"', orphan = true, for = "unix" },
+]
+obsidian = [
+  { run = 'obsidian "$@"', orphan = true, for = "unix" },
+]
+pymol = [
+  { run = 'pymol "$@"', orphan = true, for = "unix" },
+]
+okular = [
+  { run = 'okular "$@"', orphan = true, for = "unix" },
+]
+browser = [
+  { run = 'brave --new-window "$@"', orphan = true, for = "unix" },
+]
+inkscape = [
+  { run = 'inkscape "$@"', orphan = true, for = "unix" },
+]
+libreoffice = [
+  { run = 'libreoffice "$@"', orphan = true, for = "unix" },
+]
+unzip = [
+  { run = 'unzip "$@"', for = "unix" },
+]
+media-player = [
+  { run = 'mpv "$@"', orphan = true, for = "unix" },
+]
+open = [
+  { run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "unix" }
+]
 
 [open]
 prepend_rules = [
-  { url = "*.txt", use = "zed" },
-  { url = "*.json", use = "zed" },
-  { url = "*.lock", use = "zed" },
-  { url = "*.jsonc", use = "zed" },
-  { url = "*.toml", use = "zed" },
-  { url = "*.m3u", use = "zed" },
-  { url = "*.py", use = "zed" },
-  { url = "*.html", use = "zed" },
-  { url = "*.nix", use = "zed" },
-  { url = "*.conf", use = "zed" },
-  { url = "*.txt", use = "zed" },
-  { url = "*.md", use = "zed" },
-  { url = "*.png", use = "gimp" },
-  { url = "*.jpg", use = "gimp" },
-  { url = "*.jpeg", use = "gimp" },
-  { url = "*.gif", use = "gimp" },
-  { url = "*.svg", use = "gimp" },
+  # 1. High-priority intercepts
+  { url = "*.md", use = ["text", "obsidian"] },
+
+  # 2. Grouped Images (Kept individual rules to preserve custom choices)
+  { url = "*.png", use = ["image-viewer", "gimp", "inkscape"] },
+  { url = "*.svg", use = ["image-viewer", "gimp", "inkscape"] },
+  { url = "*.jpg", use = ["image-viewer", "gimp"] },
+  { url = "*.jpeg", use = ["image-viewer", "gimp"] },
+  { url = "*.gif", use = ["image-viewer", "gimp"] },
+
+  # 3. Media Catch-Alls (Replaces 14 individual extension lines)
+  { mime = "video/*", use = "media-player" },
+  { mime = "audio/*", use = "media-player" },
+
+  # 4. Text Catch-All (Catches JSON, TOML, Nix, Py, Conf, Txt, etc.)
+  { mime = "text/*", use = "text" },
+  { url = "*.json", use = "text" }, # Extra fallback for environments where JSON lacks MIME headers
+  { url = "*.jsonc", use = "text" },
+
+  # 5. Specialized Formats
   { url = "*.pse", use = "pymol" },
   { url = "*.pdf", use = "okular" },
-  { url = "*.pub", use = "zed" },
-  { url = "*", use = "open" } # Fallback to xdg-open for everything else
+  { url = "*.pub", use = "text" },
+  { url = "*.docx", use = "libreoffice" },
+  { url = "*.xlsx", use = "libreoffice" },
+  { url = "*.csv", use = ["text", "libreoffice"] },
+  { url = "*.zip", use = "unzip" },
+
+  # 6. Global Catch-All Fallback
+  { name = "*", use = ["open", "browser"] }
 ]

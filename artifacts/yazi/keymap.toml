@@ -1,6 +1,10 @@
 [mgr]
 prepend_keymap = [
-    { on = [ "g", "S" ],       run = "cd ~/26_Freshman_Spring",   desc = "Go to current Semester" },
+    { on = [ "g", "D" ],       run = "cd ~/Documents",   desc = "Go to ~/Documents" },
+    { on = [ "g", "S" ],       run = "cd ~/Documents/School/CMU/26_Summer",   desc = "Go to current Semester" },
     { on = [ "g", "m" ],       run = "cd ~/Music/navidrome",   desc = "Go to Navidrome Music Folder" },
     { on = [ "g", "p" ],       run = "cd ~/Music/navidrome/playlists",   desc = "Go to Navidrome Playlists Folder" },
+    { on = [ "g", "b" ],       run = "cd ~/Documents/books",   desc = "Go to books folder" },
+    { on = [ "<Enter>" ], run = [ "open", "quit" ], desc = "Open and exit" },
+    { on = [ "R" ], run = 'shell --block "ya emit rename; zeditor -n --wait bulk-rename.txt"', desc = "Bulk rename with Zed" }
 ]

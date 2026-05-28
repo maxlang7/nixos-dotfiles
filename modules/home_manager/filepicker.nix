@@ -10,10 +10,14 @@ let
     path="$4"
     out="$5"
     export YAZI_CONFIG_HOME="$HOME/.config/yazi"
+    out_q=$(printf '%q' "$out")
+    path_q=$(printf '%q' "$path")
     if [ "$directory" = "1" ]; then
-      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser -e ${pkgs.yazi}/bin/yazi --chooser-file="$out" --cwd-file="$out" "$path"
+      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser \
+        -e "${pkgs.yazi}/bin/yazi --chooser-file=$out_q --cwd-file=$out_q $path_q"
     else
-      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser -e ${pkgs.yazi}/bin/yazi --chooser-file="$out" "$path"
+      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser \
+        -e "${pkgs.yazi}/bin/yazi --chooser-file=$out_q $path_q"
     fi
   '';
 in
