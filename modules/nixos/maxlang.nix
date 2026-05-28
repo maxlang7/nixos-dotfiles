@@ -37,7 +37,6 @@
         wineWowPackages.waylandFull
         winetricks
         evince #pdf
-        signal-desktop
         obsidian
         fastfetch
         cbonsai
@@ -76,6 +75,8 @@
         nodejs-slim_latest
         btop
         clipse
+        imv
+        zip
       ])
 
 
@@ -91,5 +92,6 @@
       slack
       lunar-client
       obs-studio
+      signal-desktop
     ]);
 }
