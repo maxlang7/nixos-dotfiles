@@ -75,5 +75,5 @@ prepend_rules = [
   { url = "*.zip", use = "unzip" },
 
   # 6. Global Catch-All Fallback
-  { name = "*", use = ["open", "browser"] }
+  { url = "*", use = ["open", "browser"] }
 ]

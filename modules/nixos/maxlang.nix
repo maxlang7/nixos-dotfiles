@@ -8,6 +8,7 @@
       #./hibernate.nix
       # ./spicetify.nix
       ./navidrome.nix
+      ./syncthing.nix
       # ./ampache.nix
       #./sops.nix
     ];
