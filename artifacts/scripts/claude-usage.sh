@@ -40,12 +40,12 @@ if [ -n "$five_resets_at" ] && [ "$five_resets_at" != "null" ]; then
 else
   tooltip_line1="5hr: ${five_str}"
 fi
-tooltip="${tooltip_line1}\n7d: ${week_str}\nLast updated: ${age_str}"
+tooltip="${tooltip_line1}"$'\n'"7d: ${week_str}"$'\n'"Last updated: ${age_str}"
 
 # Add stale warning if cache is older than 30 minutes
 if [ "$age" -gt 1800 ]; then
   text="${text} ?"
-  tooltip="⚠ Stale data\n${tooltip}"
+  tooltip="⚠ Stale data"$'\n'"${tooltip}"
 fi
 
-printf '{"text":"%s","tooltip":"%s"}\n' "$text" "$tooltip"
+jq -n --arg text "$text" --arg tooltip "$tooltip" '{"text":$text,"tooltip":$tooltip}'
