@@ -12,6 +12,7 @@ window#waybar {
 #custom-nixos,
 #custom-tree,
 #custom-timer,
+#custom-claude-usage,
 #mpris,
 /*#custom-hypridle*/
 #workspaces,
@@ -45,6 +46,10 @@ window#waybar {
 #custom-timer button {
     color: #fbf1c7;
     padding: 4px 4px;
+}
+#custom-claude-usage {
+    padding: 4px 4px;
+    color: #fbf1c7;
 }
 #mpris button {
     color: #fbf1c7;
