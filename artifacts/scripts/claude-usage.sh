@@ -33,11 +33,14 @@ five_str="${five_pct:+$(printf '%.0f' "$five_pct")%}"
 five_str="${five_str:---%}"
 week_str="${week_pct:+$(printf '%.0f' "$week_pct")%}"
 week_str="${week_str:---%}"
+five_resets_at_str="${five_resets_at_str:+$(printf '%.0f' "$week_pct")%}"
+five_resets_at_str="${five_resets_at_str:---%}"
 
-text="󱙺 ${five_str} 7d:${week_str}"
+text="󱙺 ${five_str}"
 
 if [ -n "$five_resets_at" ]; then
-  reset_time=$(date -d "$five_resets_at" +%H:%M 2>/dev/null)
+  reset_time=$(date -d "$five_resets_at" +"%I:%M %p" 2>/dev/null)  \
+  text="󱙺 ${five_str}"
   tooltip_line1="5hr: ${five_str} | Resets at ${reset_time:-?}"
 else
   tooltip_line1="5hr: ${five_str}"

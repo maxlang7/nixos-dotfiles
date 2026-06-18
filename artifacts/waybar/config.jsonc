@@ -6,8 +6,6 @@
   "modules-left": [
     "custom/powerbutton",
     // "custom/tree",
-    // "custom/timer",
-    "custom/resolution",
     // "custom/nixos",
     "hyprland/workspaces",
     "custom/timer",
@@ -51,7 +49,7 @@
   "custom/claude-usage": {
     "exec": "/etc/nixos/artifacts/scripts/claude-usage.sh",
     "return-type": "json",
-    "interval": 30,
+    "interval": 60,
     "signal": 8,
     "tooltip": true,
     "on-click": "pkill -SIGRTMIN+8 waybar",
