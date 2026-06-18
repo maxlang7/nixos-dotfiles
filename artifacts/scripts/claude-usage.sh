@@ -48,4 +48,4 @@ if [ "$age" -gt 1800 ]; then
   tooltip="⚠ Stale data"$'\n'"${tooltip}"
 fi
 
-jq -n --arg text "$text" --arg tooltip "$tooltip" '{"text":$text,"tooltip":$tooltip}'
+jq -cn --arg text "$text" --arg tooltip "$tooltip" '{"text":$text,"tooltip":$tooltip}'
