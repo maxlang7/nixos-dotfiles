@@ -38,7 +38,7 @@ unzip = [
   { run = 'unzip "$@"', for = "unix" },
 ]
 media-player = [
-  { run = 'mpv "$@"', orphan = true, for = "unix" },
+  { run = 'mpv -player-operation-mode=pseudo-gui "$@"', orphan = true, for = "unix" },
 ]
 open = [
   { run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "unix" }
