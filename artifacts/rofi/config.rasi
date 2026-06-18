@@ -10,7 +10,6 @@ configuration {
 }
 
 @import ".config/rofi/gruvbox.rasi"
-@import ".config/rofi/fonts.rasi"
 
 * {
     border-colour:               @aqua;
