@@ -78,6 +78,8 @@
         clipse
         imv
         zip
+        nix-search-tv
+        lunar-client
       ])
 
 
@@ -91,7 +93,7 @@
       yazi
       picard
       slack
-      lunar-client
+      # lunar-client
       obs-studio
       signal-desktop
     ]);
