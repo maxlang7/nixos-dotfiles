@@ -1,4 +1,4 @@
-{pkgs, pkgs-unstable, user, ...}:
+{pkgs, pkgs-unstable, user, inputs, ...}:
 {
   imports =
     [
@@ -10,7 +10,7 @@
       ./navidrome.nix
       ./syncthing.nix
       # ./ampache.nix
-      #./sops.nix
+      ./sops.nix # secrets — comment to disable (see header in sops.nix)
     ];
   boot.loader.timeout = 0;
 
@@ -96,5 +96,12 @@
       # lunar-client
       obs-studio
       signal-desktop
-    ]);
+
+    ])
+
+    ++
+
+    [
+      inputs.claude-cowork-linux.packages.${pkgs.system}.default
+    ];
 }

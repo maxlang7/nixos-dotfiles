@@ -2,4 +2,11 @@
 /artifacts/networks
 nohup.out
 /artifacts/keys
+
+# sops: NEVER commit the age PRIVATE key. Only .sops.yaml (public recipients)
+# and the encrypted secrets.yaml belong in git.
+/artifacts/sops/age/keys.txt
+/artifacts/sops/age/*.bak
+/artifacts/sops/PLAINTEXT-REFERENCE.md
+
 /.Trash-1000

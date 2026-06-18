@@ -1,4 +1,4 @@
-{...}:
+{ config, ... }:
 {
   # Enable WireGuard
   networking.wireguard.interfaces = {
@@ -7,13 +7,17 @@
       ips = [ "192.168.99.8/32" ];
       listenPort = 51820; # to match firewall allowedUDPPorts (without this wg uses random port numbers)
 
-      privateKeyFile = "/etc/nixos/artifacts/keys/wireguard/private_key";
+      # ── sops secret (requires ./sops.nix). Plaintext fallback below. ──
+      privateKeyFile = config.sops.secrets."wireguard-private-key".path;
+      # privateKeyFile = "/etc/nixos/artifacts/keys/wireguard/private_key";
 
       peers = [
         {
           # Public key of the server (not a file path).
           publicKey = "fLSyzuBDLomN37RSqIz1TQNNHLud5HjafYd6xVto8gU=";
-          presharedKeyFile = "/etc/nixos/artifacts/keys/wireguard/preshared_key";
+          # ── sops secret (requires ./sops.nix). Plaintext fallback below. ──
+          presharedKeyFile = config.sops.secrets."wireguard-preshared-key".path;
+          # presharedKeyFile = "/etc/nixos/artifacts/keys/wireguard/preshared_key";
           # Or forward only particular subnets
           allowedIPs = [ "192.168.9.0/24" "192.168.99.0/24" "192.168.1.0/24" ];
 
