@@ -29,16 +29,29 @@
   # decrypted at activation. Comment any line to stop provisioning that secret.
   sops.secrets.cmu-pass.owner = config.users.users.${user}.name;
 
+  # Canvas LMS personal access token (canvas.cmu.edu) — read by the local
+  # canvas tool that runs as ${user}.
+  sops.secrets."canvas-token".owner = config.users.users.${user}.name;
+
   sops.secrets."navidrome-lastfm-apikey" = { };
   sops.secrets."navidrome-lastfm-secret" = { };
 
   sops.secrets."wireguard-private-key" = { };
   sops.secrets."wireguard-preshared-key" = { };
 
+  # BlueBubbles server password — consumed as an EnvironmentFile by
+  # imessage-bridge.nix (BB_PASSWORD).
+  sops.secrets."bluebubbles-password" = { };
+
   # ── rendered env file for navidrome (combines two secrets into one file) ───
   # Used as systemd EnvironmentFile in navidrome.nix.
   sops.templates."navidrome.env".content = ''
     ND_LASTFM_APIKEY=${config.sops.placeholder."navidrome-lastfm-apikey"}
     ND_LASTFM_SECRET=${config.sops.placeholder."navidrome-lastfm-secret"}
+  '';
+
+  # ── rendered env file for the iMessage bridge (imessage-bridge.nix) ────────
+  sops.templates."imessage-bridge.env".content = ''
+    BB_PASSWORD=${config.sops.placeholder."bluebubbles-password"}
   '';
 }
