@@ -9,6 +9,7 @@
       ../../modules/nixos/maxlang.nix
       # ../../modules/nixos/sddm.nix
       #../../modules/nixos/firefox.nix
+      ../../modules/nixos/brave.nix
       #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/networking.nix

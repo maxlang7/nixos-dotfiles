@@ -13,6 +13,7 @@
       ../../modules/home_manager/hypridle.nix
       ../../modules/home_manager/zed.nix
       ../../modules/home_manager/filepicker.nix
+      ../../modules/home_manager/claude.nix
     ];
 
     # Things I want to configure more
