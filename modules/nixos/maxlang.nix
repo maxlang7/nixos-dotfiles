@@ -8,6 +8,7 @@
       #./hibernate.nix
       # ./spicetify.nix
       ./navidrome.nix
+      ./imessage-bridge.nix
       ./syncthing.nix
       # ./ampache.nix
       ./sops.nix # secrets — comment to disable (see header in sops.nix)
@@ -96,7 +97,7 @@
       # lunar-client
       obs-studio
       signal-desktop
-
+      beeper
     ])
 
     ++
