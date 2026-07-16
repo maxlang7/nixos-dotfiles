@@ -25,18 +25,36 @@ let
   # first build: `sudo nixos-rebuild switch` will fail and print the real hash
   # to paste in (standard nix TOFU workflow). If `rev = "v${version}"` 404s,
   # the tag scheme differs — pin a commit hash from the repo instead.
-  gmailMcp = pkgs.buildNpmPackage rec {
+  gmailRawSrc = pkgs.fetchFromGitHub {
+    owner = "GongRzhe";
+    repo = "Gmail-MCP-Server";
+    # repo has no tags; main HEAD is the v1.1.11 commit.
+    rev = "a890d19189bbc1325b8728fab830fc278cfd8804";
+    hash = "sha256-cmnnRwQUOro7idWQySzhUfkKcnnLcpVYsi8JwwHeypg=";
+  };
+
+  # Upstream's package-lock.json ships a broken entry: the top-level
+  # @modelcontextprotocol/sdk@0.4.0 has no `resolved`/`integrity`, so nix can't
+  # prefetch it and `npm ci` tries to hit the network mid-build (ENOTCACHED).
+  # Patch those two fields back in (values from the npm registry) so the build
+  # is fully offline/reproducible.
+  gmailSrc = pkgs.runCommand "gmail-mcp-src-patched" { } ''
+    cp -r ${gmailRawSrc} $out
+    chmod -R u+w $out
+    ${pkgs.jq}/bin/jq '
+      .packages["node_modules/@modelcontextprotocol/sdk"].resolved
+        = "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-0.4.0.tgz"
+      | .packages["node_modules/@modelcontextprotocol/sdk"].integrity
+        = "sha512-79gx8xh4o9YzdbtqMukOe5WKzvEZpvBA1x8PAgJWL7J5k06+vJx8NK2kWzOazPgqnfDego7cNEO8tjai/nOPAA=="
+    ' ${gmailRawSrc}/package-lock.json > $out/package-lock.json
+  '';
+
+  gmailMcp = pkgs.buildNpmPackage {
     pname = "gmail-autoauth-mcp";
     version = "1.1.11";
+    src = gmailSrc;
 
-    src = pkgs.fetchFromGitHub {
-      owner = "GongRzhe";
-      repo = "Gmail-MCP-Server";
-      rev = "v${version}";
-      hash = lib.fakeHash;
-    };
-
-    npmDepsHash = lib.fakeHash;
+    npmDepsHash = "sha256-y4Hrjj9lAlMVJPcezK4SH0oZ8q9qseE9dkiVA1EtIec=";
 
     # repo's package.json builds TS -> dist (npm run build) and exposes
     # bin `gmail-mcp` -> dist/index.js, so $out/bin/gmail-mcp just works.
@@ -86,9 +104,11 @@ in
         && run ${pkgs.coreutils}/bin/mv "$cfg.hm-tmp" "$cfg"
     '';
 
-  # ── One-time, after `nixos-rebuild switch` provisions the OAuth key: ───────
-  #   cd ~/.config/gmail-mcp
-  #   GMAIL_OAUTH_PATH=$PWD/gcp-oauth.keys.json \
-  #   GMAIL_CREDENTIALS_PATH=$PWD/credentials-home.json ${"\${"}gmailMcp}/bin/gmail-mcp auth
-  #   (repeat with credentials-cmu.json, log in as the CMU account)
+  # ── First-time auth only (already done for home + cmu on this machine) ─────
+  #   The gmail-mcp binary reads GMAIL_OAUTH_PATH / GMAIL_CREDENTIALS_PATH.
+  #   To (re)authorize an account, run its server binary with `auth`:
+  #     GMAIL_OAUTH_PATH=~/.config/gmail-mcp/gcp-oauth.keys.json \
+  #     GMAIL_CREDENTIALS_PATH=~/.config/gmail-mcp/credentials-home.json \
+  #       $(nix eval --raw ...gmailMcp)/bin/gmail-mcp auth
+  #   Tokens are runtime state and deliberately not managed by nix.
 }
