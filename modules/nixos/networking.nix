@@ -2,6 +2,8 @@
 {
   networking.hostName = hostName;
   networking.networkmanager.enable = true;
+  networking.networkmanager.dns = "systemd-resolved";
+  services.resolved.enable = true;
   systemd.services.wifi-time-fix = {
     description = "Temporarily sets time to fix Wi-Fi certificate validation";
     wantedBy = [ "multi-user.target" ];
