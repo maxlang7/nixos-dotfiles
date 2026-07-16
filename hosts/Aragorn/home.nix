@@ -40,6 +40,8 @@
   ];
   xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
   xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
+  # Beeper Desktop watches this file and live-injects it as custom CSS.
+  xdg.configFile."BeeperTexts/custom.css".source = ../../artifacts/beeper/gruvbox.css;
 
   xdg.desktopEntries = {
       reading = {

@@ -1,0 +1,253 @@
+/* ════════════════════════════════════════════════════════════════════════
+ *  Gruvbox (dark) theme for Beeper Desktop
+ * ────────────────────────────────────────────────────────────────────────
+ *  Structure follows beeper/themes current-v4 (dracula.css scaffold): a
+ *  self-contained redefinition of Beeper's --color-* design tokens.
+ *
+ *  Dark-only: the whole palette lives in :root so it applies regardless of
+ *  the system light/dark preference — there is no light variant.
+ *
+ *  Managed declaratively — Beeper watches ~/.config/BeeperTexts/custom.css
+ *  and live-injects it. Here that file is a read-only symlink into the nix
+ *  store (see hosts/Aragorn/home.nix), so edit THIS file + rebuild, not the
+ *  in-app CSS editor (which cannot write to the store).
+ *
+ *  Palette: gruvbox dark (medium contrast) — https://github.com/morhetz/gruvbox
+ * ════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    /* Font and Layout Variables (unchanged from Beeper defaults) */
+    --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+
+    --header-height: 48px;
+    --filters-pane-width: 220px;
+    --min-sidebar-width: 280px;
+    --max-sidebar-width: 800px;
+    --threads-list-item-height: 54px;
+
+    --pinned-thread-base-size: 64px;
+    --pinned-thread-group-img-size: calc(var(--pinned-thread-base-size) / 1.5);
+    --pinned-thread-height: calc(var(--pinned-thread-base-size) + (var(--pinned-thread-base-size) / 1.4));
+    --pinned-thread-width: calc(var(--pinned-thread-base-size) + (var(--pinned-thread-base-size) / 2.5));
+
+    /* Base Colors — gruvbox bg0 / fg1 */
+    --color-bg: #282828;                /* bg0  */
+    --color-bg-rgb: 40, 40, 40;
+    --color-fg: #ebdbb2;                /* fg1  */
+    --color-fg-rgb: 235, 219, 178;
+
+    /* Accent/Primary — gruvbox blue */
+    --color-primary: #458588;
+    --color-primary-rgb: 69, 133, 136;
+
+    /* Neutral Gray reference — gruvbox gray */
+    --color-gray-rgb: 146, 131, 116;
+
+    /* Base Color Tokens */
+    --color-base-black: #1d2021;        /* bg0_hard */
+    --color-base-black-rgb: 29, 32, 33;
+    --color-base-white: #fbf1c7;        /* fg0 / light0 */
+    --color-base-white-rgb: 251, 241, 199;
+
+    /* Gray Scale — dark surfaces ascending into light foregrounds */
+    --color-base-gray-10: #1d2021;      /* bg0_hard (darkest) */
+    --color-base-gray-10-rgb: 29, 32, 33;
+    --color-base-gray-20: #282828;      /* bg0  */
+    --color-base-gray-20-rgb: 40, 40, 40;
+    --color-base-gray-30: #3c3836;      /* bg1  */
+    --color-base-gray-30-rgb: 60, 56, 54;
+    --color-base-gray-40: #504945;      /* bg2  */
+    --color-base-gray-40-rgb: 80, 73, 69;
+    --color-base-gray-50: #665c54;      /* bg3 (selection tone) */
+    --color-base-gray-50-rgb: 102, 92, 84;
+    --color-base-gray-60: #7c6f64;      /* bg4  */
+    --color-base-gray-60-rgb: 124, 111, 100;
+    --color-base-gray-70: #928374;      /* gray */
+    --color-base-gray-70-rgb: 146, 131, 116;
+    --color-base-gray-80: #a89984;      /* fg4  */
+    --color-base-gray-80-rgb: 168, 153, 132;
+    --color-base-gray-85: #83a598;      /* bright blue tone */
+    --color-base-gray-85-rgb: 131, 165, 152;
+    --color-base-gray-90: #d5c4a1;      /* fg2  */
+    --color-base-gray-90-rgb: 213, 196, 161;
+    --color-base-gray-100: #ebdbb2;     /* fg1 (foreground) */
+    --color-base-gray-100-rgb: 235, 219, 178;
+    --color-base-gray-110: #bdae93;     /* fg3 (subtle text) */
+    --color-base-gray-110-rgb: 189, 174, 147;
+    --color-base-gray-120: #fbf1c7;     /* fg0 (max contrast) */
+    --color-base-gray-120-rgb: 251, 241, 199;
+
+    /* Syntax Palette — gruvbox bright accents (var names kept from scaffold) */
+    --color-dracula-red: #fb4934;
+    --color-dracula-orange: #fe8019;
+    --color-dracula-yellow: #fabd2f;
+    --color-dracula-green: #b8bb26;
+    --color-dracula-cyan: #8ec07c;      /* bright aqua */
+    --color-dracula-purple: #d3869b;
+    --color-dracula-pink: #d3869b;
+    --color-dracula-comment: #928374;
+
+    /* UI Backgrounds */
+    --color-background-app: var(--color-bg);
+    --color-background-app-weak: var(--color-base-gray-20);
+    --color-background-elevated: var(--color-base-gray-30);
+    --color-background-elevated-hover: var(--color-base-gray-50);
+    --color-background-grouped: var(--color-base-gray-20);
+    --color-background-grouped-weak: var(--color-base-gray-10);
+    --color-background-object: var(--color-base-gray-30);
+
+    /* Buttons */
+    --color-background-button-primary: var(--color-primary);
+    --color-background-button-primary-active: #83a598;  /* bright blue */
+    --color-background-button-primary-disabled: #665c54;
+    --color-background-button-secondary: var(--color-base-gray-40);
+    --color-background-button-secondary-active: var(--color-base-gray-50);
+    --color-background-button-secondary-disabled: var(--color-base-gray-30);
+    --color-background-button-translucent: rgba(var(--color-base-white-rgb), 0.1);
+    --color-background-button-translucent-active: rgba(var(--color-base-white-rgb), 0.15);
+    --color-background-button-translucent-disabled: rgba(var(--color-base-white-rgb), 0.05);
+
+    /* Sidebar */
+    --color-background-sidebar: rgba(var(--color-base-gray-30-rgb), 0.6);
+    --color-background-sidebar-opaque: var(--color-base-gray-30);
+    --color-background-sidebar-thread-focus: rgba(var(--color-base-white-rgb), 0.08);
+    --color-background-sidebar-thread-selected: var(--color-background-selected-primary);
+    --color-background-sidebar-thread-selected-unfocused: rgba(var(--color-base-white-rgb), 0.12);
+
+    /* Messages */
+    --color-background-message-active: var(--color-base-gray-20);
+    --color-background-message-bubble-received: var(--color-base-gray-40);
+    --color-background-message-bubble-sent: var(--color-primary);
+    --color-background-message-bubble-linked: var(--color-base-gray-20);
+
+    /* Selected States */
+    --color-background-selected-primary: var(--color-primary);
+    --color-background-selected-secondary: rgba(var(--color-base-white-rgb), 0.1);
+
+    /* Inputs */
+    --color-background-input: var(--color-base-gray-20);
+    --color-background-kbd: rgba(var(--color-base-white-rgb), 0.12);
+
+    /* Header/Menu */
+    --color-background-header-right: rgba(var(--color-base-gray-30-rgb), 0.9);
+    --color-background-header-right-opaque: var(--color-base-gray-30);
+    --color-background-menu: rgba(var(--color-base-gray-30-rgb), 0.9);
+    --color-background-menu-opaque: var(--color-base-gray-30);
+    --color-background-menu-option-hover: var(--color-primary);
+
+    /* Borders */
+    --color-border-neutrals: var(--color-base-gray-40);
+    --color-border-neutrals-strong: var(--color-base-gray-50);
+    --color-border-neutrals-weak: var(--color-base-gray-20);
+    --color-border-input: var(--color-base-gray-40);
+    --color-border-input-active: var(--color-base-gray-50);
+    --color-border-translucent: rgba(var(--color-base-white-rgb), 0.1);
+    --color-border-translucent-strong: rgba(var(--color-base-white-rgb), 0.15);
+    --color-border-translucent-strongest: rgba(var(--color-base-white-rgb), 0.5);
+    --color-border-translucent-weak: rgba(var(--color-base-white-rgb), 0.05);
+
+    /* Text */
+    --color-text-neutrals: var(--color-fg);
+    --color-text-neutrals-subtle: var(--color-base-gray-110);
+    --color-text-neutrals-weak: var(--color-base-gray-80);
+    --color-text-on-accent: #fbf1c7;
+    --color-text-on-accent-weak: rgba(var(--color-base-white-rgb), 0.8);
+    --color-text-translucent: rgba(var(--color-base-white-rgb), 0.9);
+    --color-text-translucent-subtle: rgba(var(--color-base-white-rgb), 0.6);
+    --color-text-translucent-weak: rgba(var(--color-base-white-rgb), 0.75);
+
+    /* Icons */
+    --color-icon-neutrals: var(--color-base-gray-90);
+    --color-icon-neutrals-strong: var(--color-fg);
+    --color-icon-neutrals-subtle: var(--color-base-gray-110);
+    --color-icon-neutrals-weak: var(--color-base-gray-70);
+    --color-icon-on-accent: rgba(var(--color-base-white-rgb), 0.9);
+    --color-icon-on-accent-strong: rgba(var(--color-base-white-rgb), 0.95);
+    --color-icon-on-accent-weak: rgba(var(--color-base-white-rgb), 0.6);
+    --color-icon-translucent: rgba(var(--color-base-white-rgb), 0.6);
+    --color-icon-translucent-strong: rgba(var(--color-base-white-rgb), 0.9);
+    --color-icon-translucent-subtle: rgba(var(--color-base-white-rgb), 0.3);
+    --color-icon-translucent-weak: rgba(var(--color-base-white-rgb), 0.4);
+
+    /* Scrollbar */
+    --color-background-scrollbar: rgba(var(--color-base-white-rgb), 0.25);
+    --color-background-scrollbar-hover: rgba(var(--color-base-white-rgb), 0.45);
+
+    /* Misc */
+    --color-background-tag: rgba(var(--color-base-white-rgb), 0.1);
+    --color-overlay-modal: rgba(0, 0, 0, 0.4);
+    --color-transparent: rgba(0, 0, 0, 0);
+
+    /* Panes */
+    --left-pane-bg: transparent;
+    --right-pane-bg: rgba(var(--color-bg-rgb), 1);
+
+    /* Legacy/Status — gruvbox neutral (non-bright) functional tones */
+    --mark-bg: #504945;                 /* selection-like */
+    --error-color: #cc241d;             /* red   */
+    --warning-color: #d79921;           /* yellow */
+    --snoozed-indicator-bg: #d79921;
+    --error-indicator-bg: var(--error-color);
+    --message-snoozed-border: #d79921;
+    --message-errored-beacon: var(--error-color);
+    --sms-sent-bg: #98971a;             /* green */
+
+    /* Audio Bar */
+    --compose-message-accent: #d5c4a1;
+    --audio-bar-button: #d5c4a1;
+    --audio-bar-preview-progress: #fbf1c7;
+    --audio-bar-bg: #32302f;            /* bg0_soft */
+    --audio-bar-border: #504945;
+
+    /* Keyboard Keys */
+    --key-border: linear-gradient(to bottom, #504945, #3c3836);
+    --key-bg: linear-gradient(to bottom, #3c3836, #282828);
+    --color-key-bottom-bg: #1d2021;
+
+    /* Preferences */
+    --prefs-well: #1d2021;
+
+    /* Skeleton */
+    --skeleton-bg: url("../../../public/img/skeleton.svg");
+
+    /* ANSI — gruvbox */
+    --ansi-black: #282828;
+    --ansi-red: #cc241d;
+    --ansi-green: #98971a;
+    --ansi-yellow: #d79921;
+    --ansi-blue: #458588;
+    --ansi-magenta: #b16286;
+    --ansi-cyan: #689d6a;
+    --ansi-white: #a89984;
+    --ansi-bright-black: #928374;
+    --ansi-bright-red: #fb4934;
+    --ansi-bright-green: #b8bb26;
+    --ansi-bright-yellow: #fabd2f;
+    --ansi-bright-blue: #83a598;
+    --ansi-bright-magenta: #d3869b;
+    --ansi-bright-cyan: #8ec07c;
+    --ansi-bright-white: #ebdbb2;
+}
+
+/* === FUNCTIONAL COLORS (shared) — gruvbox neutral tones === */
+:root {
+    --functional-red: #cc241d;      /* critical */
+    --functional-orange: #d65d0e;   /* warning  */
+    --functional-green: #98971a;    /* success  */
+    --functional-cyan: #458588;     /* info/links */
+    --functional-purple: #b16286;   /* focus    */
+
+    --focus-ring: var(--functional-purple);
+    --link-color: var(--functional-cyan);
+    --danger-bg: var(--functional-red);
+    --success-bg: var(--functional-green);
+    --warning-bg: var(--functional-orange);
+}
+
+/* === TRANSPARENCY OVERRIDES === */
+.no-transparency,
+.reduce-transparency {
+    --left-pane-bg: var(--color-background-sidebar-opaque);
+    --color-background-header-right: var(--color-background-header-right-opaque);
+    --color-background-menu: var(--color-background-menu-opaque);
+}
