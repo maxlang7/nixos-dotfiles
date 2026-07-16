@@ -50,20 +50,16 @@ window#waybar {
 #custom-claude-usage {
     padding: 4px 4px;
     color: #fbf1c7;
+    margin-top: -2px;
+}
+#custom-run-streak {
+    padding: 4px 4px;
+    color: #fbf1c7;
 }
 #mpris button {
     color: #fbf1c7;
     padding: 4px 4px;
 }
-/*#custom-hypridle {
-    padding: 4px 4px;
-}
-#custom-hypridle.enabled {
-    color: #4CAF50;
-}
-#custom-hypridle.disabled {
-    color: #f44336;
-}*/
 #workspaces button {
     padding: 4px 0px;
     color: #fbf1c7;
