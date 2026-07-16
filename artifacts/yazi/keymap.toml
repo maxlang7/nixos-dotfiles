@@ -4,7 +4,7 @@ prepend_keymap = [
     { on = [ "g", "S" ],       run = "cd ~/Documents/School/CMU/26_Summer",   desc = "Go to current Semester" },
     { on = [ "g", "m" ],       run = "cd ~/Music/navidrome",   desc = "Go to Navidrome Music Folder" },
     { on = [ "g", "b" ],       run = "cd ~/Documents/books",   desc = "Go to books folder" },
-    { on = [ "g", "n" ],       run = "cd '/home/maxlang/Documents/IGB Lab/NMRs/'",   desc = "Go to NMRs folder" },
+    { on = [ "g", "l" ],       run = "cd '/home/maxlang/Documents/IGB Lab/'",   desc = "Go to IGB Lab folder" },
     { on = [ "g", "t" ],       run = "cd '/home/maxlang/.local/share/Trash'",   desc = "Go to Trash" },
 
     { on = [ "<Enter>" ], run = [ "open" ], desc = "Open and exit" },
