@@ -14,6 +14,7 @@
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/networking.nix
       ../../modules/nixos/bluetooth.nix
+      ../../modules/nixos/suspend-debug.nix
       # ../../modules/nixos/minecraft_server.nix
     ];
 
