@@ -83,6 +83,48 @@ sudo nixos-rebuild switch --flake /etc/nixos#Aragorn
 nixos-rebuild dry-build --flake /etc/nixos#Aragorn
 ```
 
+## Conventions & preferences
+
+These aren't enforced by the tooling, but they're the deliberate style this repo is
+written in — follow them when editing, rather than reaching for the more "proper" Nix
+way of doing something.
+
+- **Symlink the config in verbatim; don't reimplement it in Nix.** Every app that has
+  its own native config syntax (hyprland.conf, waybar's config.jsonc/style.css, rofi's
+  .rasi, yazi's .toml, bat, Beeper's custom.css, Claude's CLAUDE.md, minecraft
+  resourcepacks…) lives as a plain file under `artifacts/` and is wired in with a single
+  `xdg.configFile."<path>".source = ../../artifacts/<file>;` (or `home.file.*` for
+  non-`.config` targets). Home-manager symlinks it into place read-only. This is the
+  default move whenever Nix has no good native module/option for a piece of config —
+  don't hand-roll a Nix-generated version of a format Nix wasn't meant to express
+  (no `lib.generators`, no reinventing the format as an attrset) unless there's a real
+  reason to template it (e.g. injecting a secret).
+- **Only template when you need to inject something dynamic.** The one common exception
+  to plain symlinks is secrets: when a config value must come from sops at rebuild/
+  activation time (e.g. navidrome's LastFM keys), use `sops.templates."x".content` to
+  render the file into the store, rather than templating the whole config format in Nix.
+- **For mutable/imperative state Nix can't cleanly own, merge rather than overwrite.**
+  When a target file is runtime state that something else also writes (e.g.
+  `~/.claude.json`'s `mcpServers`, which Claude Code itself rewrites), don't manage it
+  as a plain `home.file` (that would clobber other state on every write). Instead use a
+  `home.activation` script that shells out to `jq` to deep-merge just the keys you own
+  into the existing file, leaving the rest alone. (See the retired Gmail-MCP setup in
+  git history for `modules/home_manager/claude.nix` as the reference pattern — current
+  MCP servers are managed imperatively instead, see `MCP-SETUP.md`.)
+- **Toggle by commenting, not deleting.** Modules and packages you're not currently
+  using but might want back get a `#` in front of their import/package line rather than
+  being removed — see the commented imports in `maxlang.nix` and `Aragorn/configuration.nix`,
+  and `bwlang.nix` (an alternate user profile, fully written, just not imported). This
+  keeps working-but-unused config discoverable instead of lost to git blame.
+- **Pragmatism over reproducibility purity.** Full from-source reproducible builds
+  (`buildNpmPackage`, pinned hashes) are used when they're cheap, but dropped in favor
+  of a simpler imperative setup (a pip venv + shell.nix, or `claude mcp add -s user`)
+  when the fully-declarative path costs more upkeep than it's worth. Prefer boring and
+  low-maintenance over maximally-declarative.
+- **`simple` host is insurance, not a real target.** Keep it buildable as a "does the
+  flake even evaluate" fallback — don't let it bit-rot to the point `dry-build` fails
+  on it.
+
 ## History note (2026-06-18)
 
 The age private key had been committed; history was scrubbed with `git filter-repo`
