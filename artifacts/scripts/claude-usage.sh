@@ -28,23 +28,29 @@ fi
 five_pct=$(echo "$response" | jq -r '.five_hour.utilization // empty')
 five_resets_at=$(echo "$response" | jq -r '.five_hour.resets_at // empty')
 week_pct=$(echo "$response" | jq -r '.seven_day.utilization // empty')
+week_resets_at=$(echo "$response" | jq -r '.seven_day.resets_at // empty')
 
 five_str="${five_pct:+$(printf '%.0f' "$five_pct")%}"
 five_str="${five_str:---%}"
 week_str="${week_pct:+$(printf '%.0f' "$week_pct")%}"
 week_str="${week_str:---%}"
-five_resets_at_str="${five_resets_at_str:+$(printf '%.0f' "$week_pct")%}"
-five_resets_at_str="${five_resets_at_str:---%}"
 
 text="󱙺 ${five_str}"
 
 if [ -n "$five_resets_at" ]; then
-  reset_time=$(date -d "$five_resets_at" +"%I:%M %p" 2>/dev/null)  \
-  text="󱙺 ${five_str}"
+  reset_time=$(date -d "$five_resets_at" +"%I:%M %p" 2>/dev/null)
   tooltip_line1="5hr: ${five_str} | Resets at ${reset_time:-?}"
 else
   tooltip_line1="5hr: ${five_str}"
 fi
-tooltip="${tooltip_line1}"$'\n'"7d: ${week_str}"
+
+if [ -n "$week_resets_at" ]; then
+  week_reset_time=$(date -d "$week_resets_at" +"%a %I:%M %p" 2>/dev/null)
+  tooltip_line2="7d: ${week_str} | Resets ${week_reset_time:-?}"
+else
+  tooltip_line2="7d: ${week_str}"
+fi
+
+tooltip="${tooltip_line1}"$'\n'"${tooltip_line2}"
 
 jq -cn --arg text "$text" --arg tooltip "$tooltip" '{"text":$text,"tooltip":$tooltip}'
