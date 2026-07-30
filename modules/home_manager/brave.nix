@@ -3,18 +3,29 @@ let
   braveDir = "${config.home.homeDirectory}/.config/BraveSoftware/Brave-Browser";
   profile = "${braveDir}/Default";
   bookmarksSnapshot = ../../artifacts/brave/Bookmarks.json;
+
+  # pkgs-unstable.brave no longer exposes `.override`, which
+  # `programs.chromium.commandLineArgs` relies on internally. Bake the
+  # flags into a wrapper ourselves instead of going through that option.
+  braveWrapped = pkgs-unstable.symlinkJoin {
+    name = "brave-wrapped";
+    paths = [ pkgs-unstable.brave ];
+    nativeBuildInputs = [ pkgs-unstable.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/brave \
+        --add-flags "--disable-features=AutofillSavePaymentMethods"
+    '';
+  };
 in
 {
   programs.chromium = {
     enable = true;
-    package = pkgs-unstable.brave;
+    package = braveWrapped;
     # NOTE: extension installs are handled declaratively (force-install) by
     # modules/nixos/brave.nix via the managed-policy file. Do NOT list
     # extensions here too — that would duplicate them as soft "External
     # Extensions" hints. This module only owns the package + launch flags.
-    commandLineArgs = [
-      "--disable-features=AutofillSavePaymentMethods"
-    ];
+    # commandLineArgs is intentionally NOT used here — see braveWrapped above.
   };
 
   # Ladybird — independent from-scratch browser engine, just to try out.

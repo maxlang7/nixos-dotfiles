@@ -37,6 +37,7 @@
   home.stateVersion = "25.05";
   home.packages = with pkgs; [
       hello
+      wtype
   ];
   xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
   xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
