@@ -1,6 +1,13 @@
 { pkgs, config, ... }:
 
 let
+  # Use the SAME yazi the user actually configured (programs.yazi.package, i.e.
+  # pkgs-unstable.yazi) rather than `pkgs.yazi`. Those had drifted two releases
+  # apart — stable 25.5.31 here vs unstable 26.5.6 everywhere else — so the
+  # picker was the only yazi on the system reading ~/.config/yazi with an older
+  # parser. Pinning it to one source of truth keeps that from recurring.
+  yazi = config.programs.yazi.package;
+
   # Script matching the 5-arg signature xdg-desktop-portal-termfilechooser uses:
   # $1=multiple $2=directory $3=save $4=starting_path $5=output_file
   yazi-picker-wrapper = pkgs.writeShellScriptBin "yazi-picker-wrapper" ''
@@ -12,12 +19,18 @@ let
     export YAZI_CONFIG_HOME="$HOME/.config/yazi"
     out_q=$(printf '%q' "$out")
     path_q=$(printf '%q' "$path")
+    # `class` must be a valid GTK application ID (reverse-DNS, at least one
+    # dot). "yazi-picker" is not, so Ghostty logged "invalid 'class' in config,
+    # ignoring" and the window kept the default app-id. Nothing targets the
+    # class today — the Hyprland rules in hyprland.conf all match
+    # `title:termfilechooser` — but a silently-dropped setting is worse than a
+    # correct one.
     if [ "$directory" = "1" ]; then
-      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser \
-        -e "${pkgs.yazi}/bin/yazi --chooser-file=$out_q --cwd-file=$out_q $path_q"
+      ${pkgs.ghostty}/bin/ghostty --class=com.yazi.picker --title=termfilechooser \
+        -e "${yazi}/bin/yazi --chooser-file=$out_q --cwd-file=$out_q $path_q"
     else
-      ${pkgs.ghostty}/bin/ghostty --class=yazi-picker --title=termfilechooser \
-        -e "${pkgs.yazi}/bin/yazi --chooser-file=$out_q $path_q"
+      ${pkgs.ghostty}/bin/ghostty --class=com.yazi.picker --title=termfilechooser \
+        -e "${yazi}/bin/yazi --chooser-file=$out_q $path_q"
     fi
   '';
 in
