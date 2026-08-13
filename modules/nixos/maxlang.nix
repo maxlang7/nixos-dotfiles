@@ -86,6 +86,10 @@
         zip
         nix-search-tv
         lunar-client
+        at
+        parted
+        discord
+        gh
       ])
 
 
@@ -104,10 +108,6 @@
       feishin
       yazi
       picard
-      slack
-      # lunar-client
-      obs-studio
-      signal-desktop
       beeper
       # t3code
     ]);
