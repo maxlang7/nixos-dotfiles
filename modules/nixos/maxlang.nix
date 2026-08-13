@@ -62,7 +62,10 @@
         imagemagick
         yubikey-manager
         ghostty
-        moneydance
+        # moneydance — removed 2026-08-12. It pulls
+        # `openjdk25.override { enableJavaFX = true; }`, a derivation no
+        # binary cache has ever built, so every nixpkgs bump that moves the
+        # JDK forced a full from-source OpenJDK+OpenJFX compile locally.
         # zenity
         qdirstat
         opustags
