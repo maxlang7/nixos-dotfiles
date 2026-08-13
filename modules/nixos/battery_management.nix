@@ -7,7 +7,12 @@
 
   powerManagement = {
     enable = true;
-    powertop.enable = true;
+    # powertop.enable runs `powertop --auto-tune` once at boot, writing the
+    # *same* knobs TLP owns (PCIe ASPM, USB/runtime PM, SATA link power).
+    # Whichever service landed second won, so those tunables ended up in a
+    # nondeterministic state and TLP's AC/battery switching was quietly
+    # fighting a one-shot. TLP below is the single owner now.
+    powertop.enable = false;
   };
 
   # Better scheduling for CPU cycles (System76 scheduler)
