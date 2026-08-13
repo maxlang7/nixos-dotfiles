@@ -9,7 +9,6 @@
       ../../modules/nixos/maxlang.nix
       ../../modules/nixos/sddm.nix
       #../../modules/nixos/firefox.nix
-      #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/networking.nix
       ../../modules/nixos/bluetooth.nix
@@ -39,7 +38,7 @@
   # Framework firmware
   services.fwupd.enable = true;
 
-  # Set your time zone manually (already have auto-timezone see timezones.nix)
+  # Timezone is resolved automatically by services.automatic-timezoned below.
   time.timeZone = lib.mkForce null; # allow TZ to be set by desktop user
   services.automatic-timezoned.enable = true;
   # Select internationalisation properties.

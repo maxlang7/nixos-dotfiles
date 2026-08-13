@@ -10,11 +10,9 @@
       # ../../modules/nixos/sddm.nix
       #../../modules/nixos/firefox.nix
       ../../modules/nixos/brave.nix
-      #../../modules/nixos/timezones.nix
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/networking.nix
       ../../modules/nixos/bluetooth.nix
-      ../../modules/nixos/suspend-debug.nix
       # ../../modules/nixos/minecraft_server.nix
     ];
 
@@ -42,7 +40,9 @@
   # Framework firmware
   services.fwupd.enable = true;
 
-  # Set your time zone manually (already have auto-timezone see timezones.nix)
+  # Timezone is resolved automatically by services.automatic-timezoned below.
+  # (There used to be a timezones.nix module referenced here; it no longer
+  # exists — the geoclue-based service is the whole implementation now.)
   time.timeZone = lib.mkForce null; # allow TZ to be set by desktop user
   services.automatic-timezoned.enable = true;
   # Select internationalisation properties.
