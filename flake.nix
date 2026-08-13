@@ -3,20 +3,17 @@
 
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     # ── secrets (sops-nix) — comment these two lines to fully disable ──
     # (also comment ./sops.nix in modules/nixos/maxlang.nix)
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    # spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-
-    claude-cowork-linux.url = "github:johnzfitch/claude-cowork-linux";
   };
 
   outputs = inputs @ {

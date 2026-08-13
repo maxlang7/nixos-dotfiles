@@ -53,7 +53,7 @@
         uair # timer utility
         upower
         easyeffects
-        bitwarden
+        # bitwarden-desktop moved to the pkgs-unstable list below — see there.
         nicotine-plus
         vesktop
         shtris
@@ -70,7 +70,9 @@
         bluebubbles
         kdePackages.okular
         pymol
-        python314Full
+        # `python314Full` was removed in 25.11 — the "Full" variants existed to
+        # add bluetooth/tkinter, both of which the base package now covers.
+        python314
         foliate
         wl-clipboard
         video-trimmer
@@ -87,7 +89,13 @@
     ++
 
     (with pkgs-unstable; [
-      codex
+      # 25.11 renamed `bitwarden` -> `bitwarden-desktop`, but that build pins
+      # electron-39.8.10, which nixpkgs marks INSECURE. Rather than add it to
+      # permittedInsecurePackages — a knowingly-vulnerable Electron under a
+      # password manager is the worst place to make that trade — take the
+      # unstable build (2026.7.0), which is on a patched Electron.
+      # Move this back to the stable list once 25.11 ships a fixed electron.
+      bitwarden-desktop
       claude-code
       yt-dlp-light
       feishin
@@ -98,11 +106,6 @@
       obs-studio
       signal-desktop
       beeper
-    ])
-
-    ++
-
-    [
-      inputs.claude-cowork-linux.packages.${pkgs.system}.default
-    ];
+      # t3code
+    ]);
 }

@@ -5,7 +5,7 @@
       waybar
       dunst #notifications
       libnotify #notifications
-      rofi-wayland #launcher
+      rofi #launcher — `rofi-wayland` was merged into `rofi` in 25.11
       rofimoji
       rofi-power-menu
       rofi-bluetooth

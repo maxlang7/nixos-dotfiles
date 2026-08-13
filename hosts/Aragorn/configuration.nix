@@ -63,7 +63,7 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji # renamed in 25.11
     font-awesome
     fira-code
     fira-code-symbols
