@@ -1,0 +1,23 @@
+# ════════════════════════════════════════════════════════════════════════════
+#  Ghostty — symlinked to ~/.config/ghostty/config by
+#  modules/home_manager/ghostty.nix
+# ════════════════════════════════════════════════════════════════════════════
+
+# Ghostty theme names are the human-readable ones from `ghostty +list-themes`,
+# spaces included — "GruvboxDarkHard" is not a valid name and silently fell
+# back to the default palette.
+theme = Gruvbox Dark Hard
+
+# ── Keybinds ────────────────────────────────────────────────────────────────
+# On Linux the "command" key is the logo/Windows key, which Ghostty spells
+# `super` (there is no `cmd` on this platform).
+#
+# SUPER+ALT+K was NOT free: hyprland.conf bound it to `hyprctl kill`, and the
+# compositor always wins — a bind Hyprland grabs never reaches the terminal.
+# That bind was also broken (it read `$mainmod`, lowercase m, which Hyprland
+# does not expand, so it had degraded to plain ALT+K). It has been corrected
+# and moved to SUPER+SHIFT+ALT+K, leaving this combo free for Ghostty.
+#
+# Not a Ghostty default either — upstream ships ctrl+shift+t for new_tab,
+# which is left intact below rather than replaced.
+keybind = super+alt+k=new_tab
