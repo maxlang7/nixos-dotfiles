@@ -1,0 +1,55 @@
+Home feature carousel: use box-shadow instead of filter: drop-shadow().
+
+Under GPU rasterization the drop-shadow filter's enlarged raster bounds are
+not reliably invalidated when the carousel swaps pages, leaving torn fragments
+of previously shown album art painted around each cover. box-shadow renders
+identically on this opaque, clipped, rounded container and has no such issue.
+
+Upstream: https://github.com/jeffvli/feishin (branch fix/carousel-drop-shadow-artifacts)
+
+diff --git a/src/renderer/components/feature-carousel/feature-carousel.module.css b/src/renderer/components/feature-carousel/feature-carousel.module.css
+index 21ee9994..52296ef2 100644
+--- a/src/renderer/components/feature-carousel/feature-carousel.module.css
++++ b/src/renderer/components/feature-carousel/feature-carousel.module.css
+@@ -181,8 +181,19 @@
+     max-width: 120px;
+     overflow: hidden;
+     border-radius: var(--theme-radius-md);
+-    filter: drop-shadow(0 6px 20px rgb(0 0 0 / 50%)) drop-shadow(0 2px 8px rgb(0 0 0 / 40%));
+-    transition: filter 0.3s ease;
++
++    /*
++     * Use box-shadow, not filter: drop-shadow(). The container is an opaque,
++     * fully-clipped rounded rectangle, so the two render identically -- but
++     * drop-shadow costs an offscreen filter pass and enlarges the layer's raster
++     * bounds. With GPU rasterization those enlarged bounds are not reliably
++     * invalidated when the carousel swaps pages, leaving torn fragments of the
++     * previous album art painted around each cover.
++     */
++    box-shadow:
++        0 6px 20px rgb(0 0 0 / 50%),
++        0 2px 8px rgb(0 0 0 / 40%);
++    transition: box-shadow 0.3s ease;
+ }
+ 
+ .single-carousel-container .album-image-container {
+@@ -217,13 +228,17 @@
+ 
+ .carousel-item:hover .album-image-container,
+ .carousel-link:hover .album-image-container {
+-    filter: drop-shadow(0 16px 40px rgb(0 0 0 / 60%)) drop-shadow(0 6px 16px rgb(0 0 0 / 50%));
++    box-shadow:
++        0 16px 40px rgb(0 0 0 / 60%),
++        0 6px 16px rgb(0 0 0 / 50%);
+ }
+ 
+ /* Single carousel: remove hover shadow effect */
+ .single-carousel-container .carousel-item:hover .album-image-container,
+ .single-carousel-container .carousel-link:hover .album-image-container {
+-    filter: drop-shadow(0 6px 20px rgb(0 0 0 / 50%)) drop-shadow(0 2px 8px rgb(0 0 0 / 40%));
++    box-shadow:
++        0 6px 20px rgb(0 0 0 / 50%),
++        0 2px 8px rgb(0 0 0 / 40%);
+ }
+ 
+ .artist-link {

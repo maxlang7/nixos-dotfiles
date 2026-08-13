@@ -29,6 +29,20 @@
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
+        # Local patches carried on top of unstable. Each entry is a package we
+        # have an upstream PR open for — delete it once the fix lands and the
+        # nixpkgs bump reaches us. Patch files live in artifacts/patches/.
+        overlays = [
+          (final: prev: {
+            # Home "feature carousel" painted torn fragments of previously shown
+            # album art around each cover (drop-shadow filter + GPU raster).
+            feishin = prev.feishin.overrideAttrs (old: {
+              patches = (old.patches or []) ++ [
+                ./artifacts/patches/feishin-carousel-shadow.patch
+              ];
+            });
+          })
+        ];
       };
     in
       nixpkgs.lib.nixosSystem {
