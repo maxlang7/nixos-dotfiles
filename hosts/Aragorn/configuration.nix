@@ -4,6 +4,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/battery_management.nix
+      ../../modules/nixos/graphics.nix
       ../../modules/nixos/terminal_utils.nix
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
