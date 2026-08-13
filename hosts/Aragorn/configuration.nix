@@ -20,13 +20,31 @@
   networking.hostName = hostName;
 
   nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      # Hardlink identical files in the store. The store had grown to ~132G;
+      # this is the single biggest space win and costs nothing at runtime.
+      auto-optimise-store = true;
+    };
+
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 3d";
+      # WAS `--delete-older-than 3d`, which was actively dangerous: it wiped
+      # every system generation older than three days, so the "boot the
+      # config from last week" rollback that saved us on 2026-08-12 was only
+      # available by luck. 30d keeps a real rollback window; the store is on
+      # a 916G disk that is 45% full, so the space is not worth the risk.
+      options = "--delete-older-than 30d";
     };
-    };
+
+    # `nix.gc` runs nix-collect-garbage as root, which only ever touches root
+    # profiles — it does not know about ~/.local/state/nix/profiles. That is
+    # why 452 home-manager generations dating back to March 2025 had piled up
+    # and were pinning their whole closures against collection. See
+    # modules/home_manager/gc.nix for the matching per-user timer.
+    optimise.automatic = true;
+  };
 
     # Bootloader.
   boot.loader.systemd-boot.enable = true;  boot.loader.efi.canTouchEfiVariables = true;
