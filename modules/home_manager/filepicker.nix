@@ -17,20 +17,25 @@ let
     path="$4"
     out="$5"
     export YAZI_CONFIG_HOME="$HOME/.config/yazi"
-    out_q=$(printf '%q' "$out")
-    path_q=$(printf '%q' "$path")
     # `class` must be a valid GTK application ID (reverse-DNS, at least one
     # dot). "yazi-picker" is not, so Ghostty logged "invalid 'class' in config,
     # ignoring" and the window kept the default app-id. Nothing targets the
     # class today — the Hyprland rules in hyprland.conf all match
     # `title:termfilechooser` — but a silently-dropped setting is worse than a
     # correct one.
+    #
+    # Ghostty's `-e` takes an argv LIST, not a shell string: everything after
+    # it is exec'd directly with no shell. Passing one pre-quoted string made
+    # argv[0] the whole command line, so Ghostty tried to exec a file literally
+    # named "…/yazi --chooser-file=… /path" and died with "executable not
+    # found" before the window ever painted. Hence separate args here, and no
+    # printf %q — there is no shell to un-quote them.
     if [ "$directory" = "1" ]; then
       ${pkgs.ghostty}/bin/ghostty --class=com.yazi.picker --title=termfilechooser \
-        -e "${yazi}/bin/yazi --chooser-file=$out_q --cwd-file=$out_q $path_q"
+        -e ${yazi}/bin/yazi --chooser-file="$out" --cwd-file="$out" "$path"
     else
       ${pkgs.ghostty}/bin/ghostty --class=com.yazi.picker --title=termfilechooser \
-        -e "${yazi}/bin/yazi --chooser-file=$out_q $path_q"
+        -e ${yazi}/bin/yazi --chooser-file="$out" "$path"
     fi
   '';
 in
