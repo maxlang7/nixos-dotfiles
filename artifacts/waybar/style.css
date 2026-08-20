@@ -14,7 +14,7 @@ window#waybar {
 #custom-timer,
 #custom-claude-usage,
 #mpris,
-/*#custom-hypridle*/
+#custom-hypridle,
 #workspaces,
 #clock.1,
 #clock.2,
@@ -53,6 +53,10 @@ window#waybar {
     margin-top: -2px;
 }
 #custom-run-streak {
+    padding: 4px 4px;
+    color: #fbf1c7;
+}
+#custom-hypridle {
     padding: 4px 4px;
     color: #fbf1c7;
 }

@@ -9,10 +9,9 @@
     // "custom/nixos",
     "hyprland/workspaces",
     "custom/timer",
-    "custom/claude-usage"
+    "custom/claude-usage",
+    "custom/hypridle"
     // "mpris"
-
-    // "custom/hypridle"
   ],
   "modules-center": ["clock#2", "clock#1", "clock#3", "custom/run-streak"],
   "modules-right": [
@@ -55,14 +54,15 @@
     "on-click": "pkill -SIGRTMIN+8 waybar",
     "on-click-right": "ghostty -e bash -c 'printf \"/exit\\n\" | timeout 10 claude; pkill -SIGRTMIN+8 waybar 2>/dev/null'"
   },
-  // "custom/hypridle": {
-  //     "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
-  //     "on-click": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
-  //     "interval": 2,
-  //     "format": "{}",
-  //     "return-type": "json",
-  //     "tooltip": true
-  // },
+  "custom/hypridle": {
+    "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
+    "on-click": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh toggle && pkill -SIGRTMIN+9 waybar",
+    "interval": 10,
+    "signal": 9,
+    "format": "{}",
+    "return-type": "json",
+    "tooltip": true
+  },
   "hyprland/workspaces": {
     "disable-scroll": true,
     "format": "{name}"
