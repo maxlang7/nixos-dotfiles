@@ -17,157 +17,123 @@ up together, what Max has to do by hand, and how to use it day to day.
 
 | Integration | Kind | Transport | Config lives in | Auth model | Managed by Nix? |
 |---|---|---|---|---|---|
-| `gmail-home` | Gmail (max@langhorst.com) | stdio (node) | `~/.claude.json` + `~/.config/gmail-mcp/` | Google OAuth (per-account token file) | server **binary** yes; tokens no |
-| `gmail-cmu` | Gmail (mlanghor@andrew.cmu.edu) | stdio (node) | same as above | Google OAuth (test-user on consent screen) | server **binary** yes; tokens no |
-| `google-calendar` | Google Calendar | stdio (node) | `~/.config/google-calendar-mcp/` | Google OAuth | no (imperative) |
-| `google-sheets` | Google Sheets | stdio (python venv) | `~/.config/google-sheets-mcp/` | Google OAuth | no (imperative) |
+| `google-workspace-home` | Gmail + Calendar + Drive + Docs + Sheets + Slides + Forms + Tasks (max@langhorst.com) | stdio (python venv) | `~/.claude.json` + `~/.config/google-workspace-home/` | Google OAuth (per-instance token dir) | no (imperative) |
+| `google-workspace-cmu` | same eight services (mlanghor@andrew.cmu.edu) | stdio (python venv) | `~/.claude.json` + `~/.config/google-workspace-cmu/` | Google OAuth (same client, separate creds dir) | no (imperative) |
 | `beeper` | All messaging (Beeper Desktop) | HTTP (localhost:23373) | `~/.claude.json` only | none — trusts the local desktop app | no |
 | `claude_ai_Google_Drive` | Google Drive | remote connector | claude.ai account (not on disk) | Google OAuth via Anthropic | n/a |
-| Canvas (CMU LMS) | not an MCP — REST API | curl/python ad-hoc | sops secret `canvas-token` | personal access token | secret yes, tool no |
+| `canvas` | Canvas LMS (CMU) | stdio (python venv) | `~/.claude.json` + `~/.config/canvas-mcp/` | personal access token (`.env`, sops fallback) | no (imperative) |
 
 **Two config planes.** Runtime state (OAuth tokens, project history) lives under
 `~/.config/*` and `~/.claude.json` and is deliberately *mutable / not in Nix*.
-The reproducible pieces (the Claude Code package, the Gmail server binary built
-from source, `~/.claude/CLAUDE.md`, and every secret) are declarative in this
-repo. See `modules/home_manager/claude.nix` and `modules/nixos/sops.nix`.
+The reproducible pieces (the Claude Code package, `~/.claude/CLAUDE.md`, and
+every secret) are declarative in this repo. See
+`modules/home_manager/claude.nix` and `modules/nixos/sops.nix`.
+
+> **History.** Until 2026-07-23 the Gmail server was *built from source* by
+> `claude.nix` and its `~/.claude.json` entries were managed declaratively. That
+> is gone — every MCP server is now an imperative `~/.config/` venv, and Nix
+> manages only the Claude Code package, `CLAUDE.md`, and secrets.
 
 **Golden rules that survive any reset:**
 - OAuth **tokens** get rewritten on every refresh — never put them in Nix, never
   commit them. Only OAuth *client secrets* and API tokens go in sops.
-- Each Google MCP was set up in its own `~/.config/<name>-mcp/` dir with a
-  `shell.nix` (nix-shell for node, or a pip `.venv` for python — per Max's global
-  convention in `~/.claude/CLAUDE.md`).
+- Every MCP server lives in its own `~/.config/<name>/` dir with a `shell.nix`
+  owning the interpreter plus a pip `.venv` — per Max's global convention in
+  `~/.claude/CLAUDE.md`. Register with `claude mcp add -s user <name> <run.sh>`;
+  **`-s user` is not optional**, plain `claude mcp add` scopes the entry to the
+  current project dir.
 - **Never auto-send email / share docs.** Draft, show Max, wait for explicit
   "send". This is a standing operating rule.
 
 ---
 
-## 1. Gmail — `gmail-home` and `gmail-cmu`
+## 1. Google Workspace — `google-workspace-home` and `google-workspace-cmu`
 
-**Server:** `@gongrzhe/server-gmail-autoauth-mcp` (a.k.a. GongRzhe/Gmail-MCP-Server),
-Node. One MCP server *per account*; both share one OAuth client and one wrapper.
+**Server:** [workspace-mcp](https://github.com/taylorwilsdon/google_workspace_mcp)
+(PyPI `workspace-mcp`), python, stdio. **One full-service instance per Google
+account**, each covering all eight services: gmail, calendar, drive, docs,
+sheets, slides, forms, tasks.
 
-**Accounts:**
-- `gmail-home` → **max@langhorst.com** (personal: SAT tutoring/StudyCore, family, finances)
-- `gmail-cmu` → **mlanghor@andrew.cmu.edu** (CMU: chem research, housing, health insurance)
+| Instance | Account | Used for |
+|---|---|---|
+| `google-workspace-home` | **max@langhorst.com** | SAT tutoring / StudyCore, family, finances |
+| `google-workspace-cmu` | **mlanghor@andrew.cmu.edu** | courses, research, IGB lab |
 
-### How it's wired
-- **Binary:** built from source, fully offline/reproducible, in
-  `modules/home_manager/claude.nix` via `buildNpmPackage`. It pins commit
-  `a890d19…` (repo has no tags; main HEAD == v1.1.11) and **patches upstream's
-  broken `package-lock.json`** — the top-level `@modelcontextprotocol/sdk@0.4.0`
-  entry is missing `resolved`/`integrity`, which makes `npm ci` hit the network
-  (ENOTCACHED). A `runCommand` + `jq` step injects those two fields before the
-  build. If you ever bump the rev, expect to replace `lib.fakeHash` /
-  `npmDepsHash` via the standard Nix TOFU (build fails, prints real hash, paste
-  it back).
-- **`~/.claude.json` entries:** deep-merged in non-destructively by a
-  `home.activation` jq script in `claude.nix` (`.mcpServers = (old * managed)`),
-  so beeper/calendar/sheets entries are never clobbered.
-- **One wrapper, many accounts:** the server reads `GMAIL_OAUTH_PATH` and
-  `GMAIL_CREDENTIALS_PATH` from env. Each account's `mcpServers` entry points
-  `GMAIL_CREDENTIALS_PATH` at its own token file:
-  - `~/.config/gmail-mcp/credentials-home.json`
-  - `~/.config/gmail-mcp/credentials-cmu.json`
-  - shared client: `~/.config/gmail-mcp/gcp-oauth.keys.json`
-- **OAuth client:** shared "desktop app" client, GCP project `gmail-mcp-502104`
-  (owned by max@langhorst.com). Scopes: `gmail.modify` + `gmail.settings.basic`.
-  The auth listener uses `localhost:3000`.
-
-### What Max had to do by hand (and would redo after a wipe)
-1. Create the GCP project + OAuth desktop client, download `gcp-oauth.keys.json`.
-2. `sudo nixos-rebuild switch` to build the server + register the entries
-   (passwordless sudo is **off** — Max runs switch himself, fingerprint prompt).
-3. **First-time auth per account** (writes the token file):
-   ```
-   GMAIL_OAUTH_PATH=~/.config/gmail-mcp/gcp-oauth.keys.json \
-   GMAIL_CREDENTIALS_PATH=~/.config/gmail-mcp/credentials-home.json \
-     <gmailMcp>/bin/gmail-mcp auth
-   ```
-   Browser opens → log into that account → token written.
-4. **CMU gotcha:** mlanghor@andrew.cmu.edu is a *managed org* account. Auth only
-   succeeded after adding it as a **test user** on the OAuth consent screen
-   (Google Auth Platform → Audience). The project-owner account (home) is exempt,
-   which is why home "just worked". CMU's admin does permit third-party OAuth.
-
-### How to use it
-Tools are `mcp__gmail-home__*` and `mcp__gmail-cmu__*`:
-`search_emails`, `read_email`, `draft_email`, `send_email`, `modify_email`,
-`list_email_labels`, `create_filter`, `batch_modify_emails`, `download_attachment`, …
-- Gmail search syntax works in `search_emails`:
-  `in:inbox category:primary is:unread newer_than:14d`, `from:`, `to:me`, etc.
-- **Triage request** ("what's on my docket") → scan **both** inboxes (Primary +
-  unread), report actionable items + deadlines, separate home vs CMU, flag
-  money/time-sensitive, skip marketing. Convert relative dates to absolute.
-- **Drafting only** unless Max says "send".
-
-Full historical detail is also in auto-memory `reference_gmail_mcp`.
-
----
-
-## 2. Google Calendar — `google-calendar`
-
-**Server:** `@cocal/google-calendar-mcp` (Node), pinned `^2.6.2`.
-Installed imperatively into `~/.config/google-calendar-mcp/` (node_modules there).
+Tool names are namespaced per instance:
+`mcp__google-workspace-home__search_gmail_messages`,
+`mcp__google-workspace-cmu__get_events`, etc. Always pass the matching account
+as `user_google_email` — the servers run `--single-user`, so the wrong address
+just errors.
 
 ### Wiring
-- `~/.claude.json` entry: `type: stdio`, `command: node`, `args:
-  [~/.config/google-calendar-mcp/node_modules/@cocal/google-calendar-mcp/build/index.js]`.
-- Env:
-  - `GOOGLE_OAUTH_CREDENTIALS = ~/.config/google-calendar-mcp/gcp-oauth.keys.json`
-  - `GOOGLE_CALENDAR_MCP_TOKEN_PATH = <token file path>` (runtime token, chmod 600)
-- `shell.nix` in that dir just provides full `nodejs` (system only has
-  `nodejs-slim`, which lacks npm/npx). `tokens.json` = the OAuth token, mutable.
+```
+~/.config/google-workspace-{home,cmu}/
+  shell.nix        # python312 venv
+  .venv/           # bin/workspace-mcp
+  .python-gcroot   # pins the interpreter against store GC
+  run.sh           # sets OAuth env, execs workspace-mcp --single-user --transport stdio
+  credentials/     # this instance's cached OAuth token — mode 700, never in git
+```
+
+- **One shared OAuth client** for both instances (and formerly the retired
+  servers): `~/.config/gmail-mcp/gcp-oauth.keys.json`, a Desktop-app credential
+  in GCP project `gmail-mcp-502104`. All Workspace APIs are enabled on that one
+  project. Each `run.sh` points `GOOGLE_CLIENT_SECRET_PATH` at this same file and
+  gives `GOOGLE_MCP_CREDENTIALS_DIR` its own per-instance dir, so the two
+  accounts never collide.
+- **`--tools gmail calendar drive docs sheets slides forms tasks`** — full
+  read/write. Other CLI knobs if scoping is ever wanted: `--tool-tier`,
+  `--read-only`, `--permissions SERVICE:LEVEL` (gmail levels
+  readonly/organize/drafts/send/full, cumulative).
+- **platformdirs gotcha.** `platformdirs` is a transitive fastmcp dep that
+  workspace-mcp's metadata misses, and `pip install workspace-mcp platformdirs`
+  as ONE command silently skips it — the server then dies at import with
+  `ModuleNotFoundError: platformdirs`. **Install it as a separate pip step.**
+  The cmu `shell.nix` does this correctly; home's still carries the old one-liner
+  (its venv is already correct, so it only bites on a rebuild).
 
 ### Max's manual steps (redo after wipe)
-1. `cd ~/.config/google-calendar-mcp && nix-shell` then `npm install @cocal/google-calendar-mcp`.
-2. Provide `gcp-oauth.keys.json` (can reuse a Google OAuth desktop client with the
-   Calendar scope enabled).
-3. First run triggers the browser OAuth flow → writes `tokens.json`.
+1. Rebuild the venvs: `nix-shell ~/.config/google-workspace-home/shell.nix --run setup`
+   (and the cmu one). Watch for the platformdirs trap above.
+2. Register both, **user scope**:
+   ```
+   claude mcp add -s user google-workspace-home ~/.config/google-workspace-home/run.sh
+   claude mcp add -s user google-workspace-cmu  ~/.config/google-workspace-cmu/run.sh
+   ```
+3. Restart Claude Code, then make one tool call per instance. The first call
+   triggers browser OAuth (`start_google_auth`) → consent **as the matching
+   account** → token caches into that instance's `credentials/`. CMU's Workspace
+   admin does not block this client; consent goes through normally.
 
 ### How to use
-Tools `mcp__google-calendar__*`: `list-events`, `search-events`, `create-event`,
-`create-events` (batch), `update-event`, `delete-event`, `get-freebusy`,
-`list-calendars`, `get-current-time`, `respond-to-event`.
-- Use for putting **deadlines** on the calendar (from email triage / Canvas).
-- `default calendar` hint file exists at `~/.config/defaultcalendarrc`.
-- Timezone care: StudyCore invites go out in EDT even when a student is in
-  another TZ (see memory `reference_studycore_student_timezones`).
+Gmail search takes normal Gmail syntax:
+`in:inbox category:primary is:unread newer_than:14d`, `from:`, `to:me`.
+
+- Triage both inboxes: `search_gmail_messages` on each instance, then
+  `get_gmail_messages_content_batch` for bodies.
+- Calendar: `get_events`, `manage_event` (create/update/delete), `query_freebusy`.
+- Sheets: `read_sheet_values`, `modify_sheet_values` — the lab notebook and the
+  per-student SAT trackers live here.
+- Drive/Docs: `search_drive_files`, `get_drive_file_content`, `get_doc_as_markdown`.
+
+> **Standing rule: never auto-send email or share docs.** Draft it
+> (`draft_gmail_message`), show Max, wait for an explicit "send". `send_gmail_message`
+> and the Drive permission tools are off-limits without that. Also note
+> `draft_gmail_message` **cannot attach local files** — paste content inline.
+
+### Decommissioned 2026-07-23
+Replaced by the above when Max consolidated every Google API onto one GCP
+project: `gmail-home`, `gmail-cmu` (both gongrzhe/Gmail-MCP-Server, node, built
+from source by `claude.nix` — that build and its declarative `~/.claude.json`
+entries are **gone**), `google-calendar` (cocal), `google-sheets`, and a
+forms-scoped workspace-mcp. `gmail-cmu` was already dead (`invalid_grant`) —
+the project consolidation had invalidated its refresh token. The old config dirs
+were archived, not deleted:
+`~/.config/{google-calendar-mcp,google-sheets-mcp,google-forms-mcp}.retired-20260723-014810`.
 
 ---
 
-## 3. Google Sheets — `google-sheets`
-
-**Server:** `mcp-google-sheets` (Python), installed in a **pip venv** per Max's
-convention. Dir: `~/.config/google-sheets-mcp/`.
-
-### Wiring
-- `~/.claude.json` entry: `command: ~/.config/google-sheets-mcp/run.sh` (a wrapper).
-- `run.sh` sets `CREDENTIALS_PATH` + `TOKEN_PATH` and `exec`s
-  `.venv/bin/mcp-google-sheets` (the venv shebang points at nix-store Python 3.12).
-- `shell.nix` pins **python312** (deps don't all support 3.14 yet), creates
-  `.venv`, `pip install mcp-google-sheets`.
-- `credentials.json` = OAuth desktop client (`installed` block); `token.json` =
-  runtime token (chmod 600).
-
-### Max's manual steps (redo after wipe)
-1. `cd ~/.config/google-sheets-mcp && nix-shell` → shellHook builds the `.venv`.
-2. Drop the OAuth `credentials.json` in place (Sheets + Drive scope).
-3. First run → browser OAuth → writes `token.json`.
-
-### How to use
-Tools `mcp__google-sheets__*`: `list_spreadsheets`, `search_spreadsheets`,
-`get_sheet_data`, `get_multiple_sheet_data`, `find_in_spreadsheet`,
-`update_cells`, `batch_update_cells`, `add_rows`, `add_columns`, `create_sheet`,
-`create_spreadsheet`, `share_spreadsheet`, `add_chart`, …
-- Two big uses: **lab notebook** (chem reactions, see `user_role` memory) and
-  **per-student SAT trackers** (`~/Documents/StudyCore Students/`, project
-  `project_sat_tutoring`).
-- `share_spreadsheet` is outward-facing → **draft/confirm with Max first.**
-
----
-
-## 4. Beeper — `beeper` (all messaging)
+## 2. Beeper — `beeper` (all messaging)
 
 **Server:** the **Beeper Desktop** app exposes a local MCP over HTTP. This is not
 a separately-installed server; the desktop app *is* the server.
@@ -188,7 +154,7 @@ Tools `mcp__beeper__*`: `search_messages`, `search_chats`, `list_messages`,
 
 ---
 
-## 5. Google Drive — `claude_ai_Google_Drive` (remote connector)
+## 3. Google Drive — `claude_ai_Google_Drive` (remote connector)
 
 **Not a local MCP.** This is a connector attached through the **claude.ai
 account**, so there's nothing in `~/.claude.json` or `~/.config` for it. Auth is
@@ -205,13 +171,55 @@ Tools `mcp__claude_ai_Google_Drive__*`: `search_files`, `read_file_content`,
 
 ---
 
-## 6. Canvas (CMU LMS) — REST API via token in sops
+## 4. Canvas (CMU LMS) — `canvas` MCP + REST API
 
-**Not an MCP** (yet). CMU Canvas is `https://canvas.cmu.edu`, a standard
-Instructure LMS with a full REST API. We authenticate with a **personal access
-token** stored in sops.
+CMU Canvas is `https://canvas.cmu.edu`, a standard Instructure LMS. Two ways in,
+both using the same **personal access token**: the `canvas` MCP server (added
+2026-08-20) for anything conversational, and raw REST for one-offs the server
+doesn't cover.
 
-### Wiring
+**Server:** [vishalsachdev/canvas-mcp](https://github.com/vishalsachdev/canvas-mcp),
+python, stdio. Read-only in practice for Max's student account: assignments and
+due dates, grades, submission status, peer reviews, syllabus, announcements,
+discussions.
+
+### MCP wiring (`canvas`)
+Same shape as the python Google servers: a `~/.config/<name>-mcp/` dir with a
+`shell.nix` owning the interpreter and a pip `.venv` for the server.
+
+```
+~/.config/canvas-mcp/
+  shell.nix        # python312 + `setup` fn: makes .venv, pip install -e ./src
+  src/             # git clone of vishalsachdev/canvas-mcp (v1.10.0), editable
+  .venv/           # pip env; bin/canvas-mcp-server
+  .python-gcroot   # symlink pinning the interpreter against nix store GC
+  run.sh           # stdio wrapper — the command in ~/.claude.json
+  .env             # CANVAS_API_TOKEN + CANVAS_API_URL, mode 600, NOT in git
+```
+
+- **Python 3.12, not the system 3.14.** Upstream tests to 3.13 and several deps
+  (pydantic-core, cryptography, rpds-py) had no 3.14 wheels at install time.
+- **Registered with:** `claude mcp add canvas -s user -- ~/.config/canvas-mcp/run.sh`
+  → a `stdio` entry in `~/.claude.json`. Claude Code only spawns MCP servers at
+  startup, so **restart the CLI** after adding or changing it.
+- **Token resolution in `run.sh`**, in order: `~/.config/canvas-mcp/.env`, then
+  `/run/secrets/canvas-token`. **`.env` does not currently exist** — sops is the
+  single source of truth, and the `.env` branch is only an escape hatch for
+  testing a new token before committing it. Neither path echoes the value.
+- **Rebuild after `git pull` in `src/`:**
+  `nix-shell ~/.config/canvas-mcp/shell.nix --run setup`
+- **Health check:** `~/.config/canvas-mcp/run.sh --test` →
+  `✓ API connection successful! Authenticated as: Max Langhorst`
+
+> **Token rotated 2026-08-20.** The previous token expired 2026-07-18 (it had
+> been created *with* an expiry — don't do that, see below). The replacement was
+> generated, staged in `.env` from the clipboard via `wl-paste` so it never
+> passed through a chat transcript, verified, then re-encrypted into sops and
+> re-provisioned by a rebuild. `.env` was deleted afterward; sops and
+> `/run/secrets/canvas-token` now hold the live value. **The old token still
+> needs deleting in Canvas → Approved Integrations.**
+
+### Wiring (REST / the secret)
 - Secret: `canvas-token` in `artifacts/sops/secrets/secrets.yaml`, declared in
   `modules/nixos/sops.nix`:
   ```nix
@@ -245,6 +253,18 @@ token** stored in sops.
    nix-shell -p age sops --run 'sops -d secrets/secrets.yaml' 2>/dev/null \
    | grep -oE '^[a-zA-Z_.-]+:'
    ```
+5. Optional staging step: to test a new token *before* re-encrypting it, write
+   it to `.env` from the clipboard so it never enters a transcript, then delete
+   `.env` once sops has it (this is what 2026-08-20's rotation did):
+   ```
+   umask 077; printf 'CANVAS_API_TOKEN=%s\nCANVAS_API_URL=https://canvas.cmu.edu/api/v1\n' \
+     "$(wl-paste)" > ~/.config/canvas-mcp/.env
+   ```
+   Then `~/.config/canvas-mcp/run.sh --test` and restart Claude Code.
+6. **Revoke the old token** in Canvas → Account → Settings → Approved
+   Integrations → trash icon on the stale row. An expired token can't
+   authenticate, but leaving dead grants listed makes the real one harder to
+   spot later.
 
 ### How to use
 ```bash
@@ -260,7 +280,7 @@ Handy endpoints:
 Known IDs: **Linalg** "Matrices and Linear Transformations" (21241-A5) = `53809`.
 
 Idea parked (not built): a small tool that syncs Canvas due dates →
-`google-calendar`. Max deferred it; he just wanted to confirm access works.
+`google-workspace-cmu` calendar. Max deferred it.
 
 ### Gradescope (open question, not wired)
 No official/public API. CMU Gradescope is almost certainly behind CMU SSO
@@ -269,14 +289,16 @@ Gradescope password (email+password login, bypassing SSO) *might* exist — note
 there's already a `cmu-pass` sops secret. If Max wants Gradescope: test whether a
 native login works at gradescope.com, and if so build a scraper the same shape as
 the Canvas flow. Otherwise rely on Gradescope's email notifications (they land in
-`gmail-cmu`, already triaged).
+the CMU inbox, already triaged via `google-workspace-cmu`).
 
 ---
 
-## 7. Related declarative pieces (where to look)
+## 5. Related declarative pieces (where to look)
 
-- `modules/home_manager/claude.nix` — Claude Code pkg, `~/.claude/CLAUDE.md`
-  (symlinked from `artifacts/claude/CLAUDE.md`), Gmail server build + entry merge.
+- `modules/home_manager/claude.nix` — Claude Code pkg + `~/.claude/CLAUDE.md`
+  (symlinked from `artifacts/claude/CLAUDE.md`). It no longer builds any MCP
+  server; the old Gmail `buildNpmPackage` and its `~/.claude.json` entry merge
+  were removed on 2026-07-23.
 - `modules/nixos/sops.nix` — every secret: `cmu-pass`, `canvas-token`,
   `bluebubbles-password`, wireguard keys, navidrome lastfm keys.
 - `artifacts/sops/.sops.yaml` — age recipient (public key `age17p9…`). Private
@@ -284,11 +306,14 @@ the Canvas flow. Otherwise rely on Gradescope's email notifications (they land i
 - `artifacts/claude/CLAUDE.md` — the "Admin desk" secretary playbook + operating
   rules (the canonical source; the `~/.claude/CLAUDE.md` is a read-only symlink).
 
-## 8. Fast health check (all integrations)
-- Gmail: `mcp__gmail-home__search_emails` with `newer_than:1d` returns results.
-- Calendar: `mcp__google-calendar__list-calendars` lists calendars.
-- Sheets: `mcp__google-sheets__list_spreadsheets` returns sheets.
+## 6. Fast health check (all integrations)
+- Workspace (home): `mcp__google-workspace-home__search_gmail_messages` with
+  `newer_than:1d` returns results.
+- Workspace (cmu): `mcp__google-workspace-cmu__list_calendars` lists calendars.
+  A `ModuleNotFoundError: platformdirs` at startup → see the §1 gotcha.
 - Beeper: `mcp__beeper__get_accounts` — **fails if Beeper Desktop isn't running.**
 - Drive: `mcp__claude_ai_Google_Drive__list_recent_files`.
-- Canvas: the courses curl above returns a JSON list (not an `errors` object).
-  An `Expired access token` error → regenerate the token (see §6).
+- Canvas: `~/.config/canvas-mcp/run.sh --test` prints `✓ API connection
+  successful!`. For the REST path, the courses curl above returns a JSON list
+  (not an `errors` object). An `Expired access token` error → regenerate the
+  token and update **both** `.env` and sops (see §4).
