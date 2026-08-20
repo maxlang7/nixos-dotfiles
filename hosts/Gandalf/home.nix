@@ -39,16 +39,15 @@
   xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
 
   xdg.desktopEntries = {
-      international-relations = {
-        name = "International Relations";
-        genericName = "Textbook";
-        exec = ''${pkgs.kdePackages.okular}/bin/okular "/home/${user}/Documents/School/CMU/26_Freshman_Spring/84226 (International Relations)/Essentials of International Relations (Ninth Edition) (Karen A. Mingst Heather Elko McKibben) (Z-Library).pdf"'';
-        icon = "okular";
-        categories = [ "Education" ];
-        settings = {
-          Keywords = "Politics;Study;IR";
-        };
-      };
+      # international-relations = {
+      #   name = "International Relations";
+      #   genericName = "Textbook";
+      #   exec = ''${pkgs.kdePackages.okular}/bin/okular "/home/${user}/Documents/School/CMU/26_Freshman_Spring/84226 (International Relations)/Essentials of International Relations (Ninth Edition) (Karen A. Mingst Heather Elko McKibben) (Z-Library).pdf"'';
+      #   icon = "okular";
+      #   categories = [ "Education" ];
+      #   settings = {
+      #     Keywords = "Politics;Study;IR";
+      #   };
     };
   xdg.configFile.".config/kwalletrc".text = ''
       [Wallet]
