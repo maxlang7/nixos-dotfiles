@@ -46,35 +46,24 @@
         nil
         dconf-editor # For Gnome Theming
         gruvbox-dark-gtk
-        # (lib.hiPrio pkgs.uutils-coreutils-noprefix)
         sway-audio-idle-inhibit
         libreoffice
         ffmpeg
         uair # timer utility
         upower
         easyeffects
-        # bitwarden-desktop moved to the pkgs-unstable list below — see there.
-        nicotine-plus
         vesktop
         shtris
         sops
-        # whatsie
         imagemagick
         yubikey-manager
         ghostty
-        # moneydance — removed 2026-08-12. It pulls
-        # `openjdk25.override { enableJavaFX = true; }`, a derivation no
-        # binary cache has ever built, so every nixpkgs bump that moves the
-        # JDK forced a full from-source OpenJDK+OpenJFX compile locally.
-        # zenity
         qdirstat
         opustags
         # obs-studio
         bluebubbles
         kdePackages.okular
         pymol
-        # `python314Full` was removed in 25.11 — the "Full" variants existed to
-        # add bluetooth/tkinter, both of which the base package now covers.
         python314
         foliate
         wl-clipboard
@@ -90,6 +79,8 @@
         parted
         discord
         gh
+        slack
+        kiro-fhs
       ])
 
 
