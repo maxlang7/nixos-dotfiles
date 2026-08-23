@@ -9,6 +9,7 @@
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
       # ../../modules/nixos/sddm.nix
+      ../../modules/nixos/regreet.nix
       #../../modules/nixos/firefox.nix
       ../../modules/nixos/brave.nix
       ../../modules/nixos/hyprland.nix
