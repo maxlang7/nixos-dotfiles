@@ -130,7 +130,7 @@
   "network": {
     "format-wifi": " {essid} ({signalStrength}%)",
     "format-disconnected": "󰖪",
-    "on-click": "bash /etc/nixos/artifacts/scripts/network-manager.sh",
+    "on-click": "hyprctl dispatch togglespecialworkspace network",
     "on-click-right": "kitty nmtui",
     "on-click-middle": "bash /etc/nixos/artifacts/scripts/switch-connections.sh"
   },
