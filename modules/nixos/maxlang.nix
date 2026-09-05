@@ -102,6 +102,7 @@
       yazi
       picard
       beeper
+      codex
       # t3code
     ]);
 }

@@ -54,6 +54,15 @@
     "on-click": "pkill -SIGRTMIN+8 waybar",
     "on-click-right": "ghostty -e bash -c 'printf \"/exit\\n\" | timeout 10 claude; pkill -SIGRTMIN+8 waybar 2>/dev/null'"
   },
+  "custom/codex-usage": {
+    "exec": "/etc/nixos/artifacts/scripts/codex-usage.sh",
+    "return-type": "json",
+    "interval": 60,
+    "signal": 10,
+    "tooltip": true,
+    "on-click": "pkill -SIGRTMIN+10 waybar",
+    "on-click-right": "ghostty -e codex"
+  },
   "custom/hypridle": {
     "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
     "on-click": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh toggle && pkill -SIGRTMIN+9 waybar",
