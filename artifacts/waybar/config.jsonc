@@ -3,6 +3,7 @@
 {
   "layer": "top",
   "position": "top",
+  "height": 24,
   "modules-left": [
     "custom/powerbutton",
     "custom/hypridle",
@@ -10,7 +11,7 @@
     // "custom/tree",
     // "custom/nixos",
     "hyprland/workspaces",
-    "custom/timer",
+    // "custom/timer",
     "custom/claude-usage",
     "custom/codex-usage"
     // "mpris"
@@ -36,17 +37,17 @@
   //    "format": "󰐅",
   // 	"on-click": "ghostty -e cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'"
   // },
-  "custom/timer": {
-    "format": "{}",
-    "tooltip": false,
-    "return-type": "json",
-    "interval": 10,
-    "on-click": "uairctl toggle",
-    "on-click-middle": "uairctl prev",
-    "on-click-right": "uairctl next",
-    "exec-if": "which uairctl",
-    "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'"
-  },
+  // "custom/timer": {
+  //   "format": "{}",
+  //   "tooltip": false,
+  //   "return-type": "json",
+  //   "interval": 10,
+  //   "on-click": "uairctl toggle",
+  //   "on-click-middle": "uairctl prev",
+  //   "on-click-right": "uairctl next",
+  //   "exec-if": "which uairctl",
+  //   "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'"
+  // },
   "custom/claude-usage": {
     "exec": "/etc/nixos/artifacts/scripts/claude-usage.sh",
     "return-type": "json",
