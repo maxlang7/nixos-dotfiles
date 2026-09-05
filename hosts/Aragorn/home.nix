@@ -1,4 +1,7 @@
 {pkgs, user, ... }:
+let
+  msga = pkgs.callPackage ../../packages/msga.nix { };
+in
 {
   imports =
     [
@@ -45,6 +48,25 @@
   xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
   # Beeper Desktop watches this file and live-injects it as custom CSS.
   xdg.configFile."BeeperTexts/custom.css".source = ../../artifacts/beeper/gruvbox.css;
+
+  # MsgA writes its own user-level launcher on startup. Its generated Exec line
+  # points past the Nix wrapper at the raw static binary, which then crashes
+  # because it cannot find xkeyboard-config. Own the higher-priority launcher
+  # here so app launches keep going through the wrapper.
+  home.file.".local/share/applications/msga.desktop" = {
+    force = true;
+    text = ''
+      [Desktop Entry]
+      Name=MSGA
+      Comment=Fast native Slack client
+      Exec=${msga}/bin/msga %u
+      Icon=msga
+      Type=Application
+      Categories=Network;InstantMessaging;
+      StartupWMClass=msga
+      MimeType=x-scheme-handler/msga;
+    '';
+  };
 
   xdg.desktopEntries = {
       reading = {

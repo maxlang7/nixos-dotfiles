@@ -55,6 +55,33 @@
   environment.sessionVariables = {
     TERMINAL = "ghostty"; # Replace with your terminal
     EDITOR = "zeditor";
+    # libnewt applications such as nmtui use the terminal's Gruvbox ANSI
+    # palette, with green for focused controls and headings.
+    NEWT_COLORS = lib.concatStringsSep ";" [
+      "root=lightgray,black"
+      "border=green,black"
+      "window=lightgray,black"
+      "shadow=black,black"
+      "title=green,black"
+      "button=lightgray,black"
+      "actbutton=black,green"
+      "checkbox=lightgray,black"
+      "actcheckbox=green,black"
+      "entry=lightgray,black"
+      "label=lightgray,black"
+      "listbox=lightgray,black"
+      "actlistbox=black,green"
+      "textbox=lightgray,black"
+      "acttextbox=black,green"
+      "helpline=black,lightgray"
+      "roottext=green,black"
+      "emptyscale=gray,black"
+      "fullscale=green,black"
+      "disentry=gray,black"
+      "compactbutton=lightgray,black"
+      "sellistbox=lightgray,black"
+      "actsellistbox=black,green"
+    ];
   };
 
   # Framework firmware

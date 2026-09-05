@@ -81,6 +81,7 @@
         gh
         slack
         kiro-fhs
+        (pkgs.callPackage ../../packages/msga.nix {})
       ])
 
 
