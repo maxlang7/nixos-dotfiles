@@ -80,6 +80,7 @@
         discord
         gh
         slack
+        rclone
         kiro-fhs
         (pkgs.callPackage ../../packages/msga.nix {})
       ])

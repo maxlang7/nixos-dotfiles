@@ -86,6 +86,32 @@ in
       First Use=false
   '';
 
+  systemd.user.services.rclone-cmu-drive = {
+    Unit = {
+      Description = "Mount CMU Google Drive for 15-112 grading";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
+
+    Service = {
+      Type = "notify";
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/${user}/Documents/112/grading";
+      ExecStart = ''
+        ${pkgs.rclone}/bin/rclone mount cmu-drive: /home/${user}/Documents/112/grading \
+          --config=/home/${user}/.config/rclone/rclone.conf \
+          --cache-dir=/home/${user}/.cache/rclone \
+          --vfs-cache-mode=writes \
+          --dir-cache-time=5m \
+          --poll-interval=1m
+      '';
+      ExecStop = "${pkgs.fuse3}/bin/fusermount3 -u /home/${user}/Documents/112/grading";
+      Restart = "on-failure";
+      RestartSec = "10s";
+    };
+
+    Install.WantedBy = [ "default.target" ];
+  };
+
   # For USB Drive autodetection
   services.udiskie = {
       enable = true;
