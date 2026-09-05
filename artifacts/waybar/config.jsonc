@@ -10,7 +10,7 @@
     "hyprland/workspaces",
     "custom/timer",
     "custom/claude-usage",
-    "custom/hypridle"
+    "custom/codex-usage"
     // "mpris"
   ],
   "modules-center": ["clock#2", "clock#1", "clock#3", "custom/run-streak"],
