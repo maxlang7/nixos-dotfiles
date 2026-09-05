@@ -20,7 +20,7 @@
     "pulseaudio",
     "memory",
     "cpu",
-    "battery"
+    "custom/battery"
   ],
   "custom/powerbutton": {
     "format": "󰐥",
@@ -155,13 +155,12 @@
     "format": "CPU{usage:2}%",
     "on-click": "hyprctl dispatch togglespecialworkspace top"
   },
-  "battery": {
-    "states": {
-      "good": 95,
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "{icon} {capacity}%",
-    "format-icons": ["", "", "", "", ""]
+  "custom/battery": {
+    "exec": "/etc/nixos/artifacts/scripts/battery-info.sh",
+    "return-type": "json",
+    "interval": 5,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "hyprctl dispatch togglespecialworkspace top"
   }
 }
