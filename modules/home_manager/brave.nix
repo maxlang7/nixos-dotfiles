@@ -30,7 +30,7 @@ in
 
   # Ladybird — independent from-scratch browser engine, just to try out.
   # As of 2026-05 it has NO extension support yet; re-check upstream later.
-  home.packages = [ pkgs-unstable.ladybird ];
+  # home.packages = [ pkgs-unstable.ladybird ];
 
   # Seed bookmarks into the profile ONLY on a fresh profile (no existing
   # Bookmarks file). This restores the 82-bookmark snapshot on a new machine
