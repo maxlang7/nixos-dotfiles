@@ -5,6 +5,8 @@
   "position": "top",
   "modules-left": [
     "custom/powerbutton",
+    "custom/hypridle",
+    "custom/notifications",
     // "custom/tree",
     // "custom/nixos",
     "hyprland/workspaces",
@@ -68,6 +70,15 @@
     "on-click": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh toggle && pkill -SIGRTMIN+9 waybar",
     "interval": 10,
     "signal": 9,
+    "format": "{}",
+    "return-type": "json",
+    "tooltip": true
+  },
+  "custom/notifications": {
+    "exec": "/etc/nixos/artifacts/scripts/notification-toggle.sh",
+    "on-click": "/etc/nixos/artifacts/scripts/notification-toggle.sh toggle && pkill -SIGRTMIN+11 waybar",
+    "interval": 5,
+    "signal": 11,
     "format": "{}",
     "return-type": "json",
     "tooltip": true
