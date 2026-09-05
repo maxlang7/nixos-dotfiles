@@ -5,43 +5,43 @@ sort_by = "mtime"
 
 [opener]
 text = [
-  { run = 'zeditor -n "$@"', orphan = true, for = "unix" },
+  { run = 'zeditor -n %s', orphan = true, for = "unix" },
 ]
 bulk-rename = [
-  { run = 'zeditor -n --wait "$@"', block = true, for = "unix" },
+  { run = 'zeditor -n --wait %s', block = true, for = "unix" },
 ]
 gimp = [
-  { run = 'gimp "$@"', orphan = true, for = "unix" },
+  { run = 'gimp %s', orphan = true, for = "unix" },
 ]
 image-viewer = [
-  { run = 'imv "$@"', orphan = true, for = "unix" },
+  { run = 'imv %s', orphan = true, for = "unix" },
 ]
 obsidian = [
-  { run = 'obsidian "$@"', orphan = true, for = "unix" },
+  { run = 'obsidian %s', orphan = true, for = "unix" },
 ]
 pymol = [
-  { run = 'pymol "$@"', orphan = true, for = "unix" },
+  { run = 'pymol %s', orphan = true, for = "unix" },
 ]
 okular = [
-  { run = 'okular "$@"', orphan = true, for = "unix" },
+  { run = 'okular %s', orphan = true, for = "unix" },
 ]
 browser = [
-  { run = 'brave --new-window "$@"', orphan = true, for = "unix" },
+  { run = 'brave --new-window %s', orphan = true, for = "unix" },
 ]
 inkscape = [
-  { run = 'inkscape "$@"', orphan = true, for = "unix" },
+  { run = 'inkscape %s', orphan = true, for = "unix" },
 ]
 libreoffice = [
-  { run = 'libreoffice "$@"', orphan = true, for = "unix" },
+  { run = 'libreoffice %s', orphan = true, for = "unix" },
 ]
 unzip = [
-  { run = 'unzip "$@"', for = "unix" },
+  { run = 'unzip %s', for = "unix" },
 ]
 media-player = [
-  { run = 'mpv -player-operation-mode=pseudo-gui "$@"', orphan = true, for = "unix" },
+  { run = 'mpv -player-operation-mode=pseudo-gui %s', orphan = true, for = "unix" },
 ]
 open = [
-  { run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "unix" }
+  { run = 'xdg-open %s', orphan = true, desc = "Open", for = "unix" }
 ]
 
 [open]
