@@ -1,4 +1,35 @@
 {pkgs, pkgs-unstable, lib, user, hostName, ... }:
+let
+  wacomUsbPower = pkgs.writeShellApplication {
+    name = "wacom-usb-power";
+    text = ''
+      set -euo pipefail
+
+      case "''${1:-}" in
+        enable) authorized=1 ;;
+        disable) authorized=0 ;;
+        *)
+          echo "usage: wacom-usb-power enable|disable" >&2
+          exit 2
+          ;;
+      esac
+
+      found=false
+      for device in /sys/bus/usb/devices/*; do
+        [[ -r "$device/idVendor" && -r "$device/idProduct" ]] || continue
+        [[ $(<"$device/idVendor") == 056a ]] || continue
+        [[ $(<"$device/idProduct") == 03c7 ]] || continue
+        printf '%s\n' "$authorized" >"$device/authorized"
+        found=true
+      done
+
+      [[ $found == true ]] || {
+        echo "Wacom Intuos USB device not found" >&2
+        exit 1
+      }
+    '';
+  };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -148,6 +179,26 @@
     enable = true;
     touchpad.naturalScrolling = true;
   };
+
+  # A newly connected Wacom starts deauthorized. Waybar is the only control
+  # allowed to authorize this exact USB vendor/product pair.
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="056a", ATTR{idProduct}=="03c7", ATTR{authorized}="0"
+    ACTION=="add|change", SUBSYSTEM=="input", KERNEL=="event*", ENV{ID_VENDOR_ID}=="056a", ENV{ID_MODEL_ID}=="03c7", ENV{ID_INPUT_TABLET}=="1", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 -1 1 1 0 0"
+  '';
+
+  environment.systemPackages = [ wacomUsbPower ];
+  security.sudo.extraRules = [
+    {
+      users = [ user ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/wacom-usb-power";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 
   # Fingerprint Sensor
   services.fprintd.enable = true;

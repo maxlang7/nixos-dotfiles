@@ -13,7 +13,8 @@
     "hyprland/workspaces",
     // "custom/timer",
     "custom/claude-usage",
-    "custom/codex-usage"
+    "custom/codex-usage",
+    "custom/wacom-pointer"
     // "mpris"
   ],
   "modules-center": ["clock#2", "clock#1", "clock#3", "custom/run-streak"],
@@ -65,6 +66,14 @@
     "tooltip": true,
     "on-click": "pkill -SIGRTMIN+10 waybar",
     "on-click-right": "ghostty -e codex"
+  },
+  "custom/wacom-pointer": {
+    "exec": "/etc/nixos/artifacts/scripts/wacom-pointer-toggle.sh status",
+    "on-click": "/etc/nixos/artifacts/scripts/wacom-pointer-toggle.sh toggle",
+    "return-type": "json",
+    "interval": 1,
+    "signal": 12,
+    "tooltip": true
   },
   "custom/hypridle": {
     "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",
