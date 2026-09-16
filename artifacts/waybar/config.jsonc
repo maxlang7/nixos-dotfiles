@@ -164,7 +164,7 @@
       "car": "",
       "default": ["", ""]
     },
-    // "on-click": "bash /etc/nixos/artifacts/scripts/rofi-mixer.sh",
+    "on-click": "hyprctl dispatch togglespecialworkspace audio",
     "on-click-right": "pavucontrol"
   },
   "memory": {
