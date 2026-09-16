@@ -2,7 +2,8 @@
 {
   # Enable WireGuard
   networking.wireguard.interfaces = {
-    strange = {
+    seltsam = {
+      autoStart = true;
       # Determines the IP address and subnet of the client's end of the tunnel interface.
       ips = [ "192.168.99.8/32" ];
       listenPort = 51820; # to match firewall allowedUDPPorts (without this wg uses random port numbers)
@@ -30,11 +31,11 @@
       ];
 
       postUp = ''
-        resolvectl dns strange 192.168.1.2
-        resolvectl domain strange ~langhorst.com
+        resolvectl dns seltsam 192.168.1.2
+        resolvectl domain seltsam ~langhorst.com
       '';
       preDown = ''
-        resolvectl revert strange
+        resolvectl revert seltsam
       '';
     };
   };
