@@ -26,11 +26,11 @@ let
 in
 stdenvNoCC.mkDerivation {
   pname = "msga";
-  version = "24";
+  version = "2026-09-05";
 
   src = fetchurl {
     url = "https://msga.app/download/msga-linux-x86_64";
-    hash = "sha256-k1YpWUVsP8NoDj+Mat71oBEHR/8rTM47MEUUTAHAwv4=";
+    hash = "sha256-kAIdlpMiTkCg1qNW+qaux2VyGErY4rxaLWqfiOOjtHQ=";
   };
 
   icon = fetchurl {
