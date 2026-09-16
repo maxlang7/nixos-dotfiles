@@ -16,6 +16,7 @@
   ];
 
   environment.shellAliases = {
+    mountusb = "bash /etc/nixos/artifacts/scripts/mountusb.sh";
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
