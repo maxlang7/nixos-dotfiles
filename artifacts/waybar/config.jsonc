@@ -87,6 +87,7 @@
   "custom/notifications": {
     "exec": "/etc/nixos/artifacts/scripts/notification-toggle.sh",
     "on-click": "/etc/nixos/artifacts/scripts/notification-toggle.sh toggle && pkill -SIGRTMIN+11 waybar",
+    "on-click-right": "/etc/nixos/artifacts/scripts/notification-toggle.sh history",
     "interval": 5,
     "signal": 11,
     "format": "{}",

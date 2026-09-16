@@ -1,9 +1,8 @@
-{pkgs, user, ...}:
+{pkgs, user, hostName, lib, ...}:
 {
   users.users.${user}.packages = with pkgs; [
       # Desktop Environment Stuff
       waybar
-      dunst #notifications
       libnotify #notifications
       rofi #launcher — `rofi-wayland` was merged into `rofi` in 25.11
       rofimoji
@@ -22,5 +21,5 @@
       powertop
       batsignal
       grimblast #Screenshot
-    ];
+    ] ++ lib.optionals (hostName != "Aragorn") [ pkgs.dunst ];
 }

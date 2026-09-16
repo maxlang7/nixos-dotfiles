@@ -1,0 +1,60 @@
+{
+  "$schema": "./configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "control-center-layer": "overlay",
+  "layer-shell-cover-screen": false,
+  "cssPriority": "user",
+  "ignore-gtk-theme": true,
+  "control-center-margin-top": 8,
+  "control-center-margin-bottom": 8,
+  "control-center-margin-right": 8,
+  "control-center-width": 400,
+  "control-center-height": -1,
+  "fit-to-screen": false,
+  "notification-window-width": 360,
+  "notification-window-height": 360,
+  "timeout": 6,
+  "timeout-low": 4,
+  "timeout-critical": 0,
+  "transition-time": 100,
+  "notification-grouping": true,
+  "relative-timestamps": true,
+  "image-visibility": "never",
+  "notification-inline-replies": false,
+  "notification-2fa-action": false,
+  "hide-on-action": true,
+  "hide-on-clear": false,
+  "text-empty": "No notifications",
+  "widgets": [
+    "title",
+    "dnd",
+    "notifications"
+  ],
+  "widget-config": {
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "Clear"
+    },
+    "dnd": {
+      "text": "Quiet mode"
+    },
+    "notifications": {
+      "vexpand": false
+    }
+  },
+  "notification-visibility": {
+    "00-battery": {
+      "app-name": "^batsignal$",
+      "state": "enabled"
+    },
+    "10-critical-apps": {
+      "app-name": ".*",
+      "urgency": "Critical",
+      "state": "enabled",
+      "override-urgency": "normal"
+    }
+  }
+}

@@ -11,6 +11,7 @@ in
       ../../modules/home_manager/hyprland.nix
       ../../modules/home_manager/minecraft.nix
       ../../modules/home_manager/waybar.nix
+      ../../modules/home_manager/notifications.nix
       ../../modules/home_manager/rofi.nix
       ../../modules/home_manager/brave.nix
       ../../modules/home_manager/hypridle.nix

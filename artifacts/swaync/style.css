@@ -1,0 +1,53 @@
+:root {
+  --cc-bg: #282828;
+  --noti-border-color: #504945;
+  --noti-bg: 50, 48, 47;
+  --noti-bg-alpha: 1;
+  --noti-bg-darker: #282828;
+  --noti-bg-hover: #3c3836;
+  --noti-bg-focus: #504945;
+  --noti-close-bg: #504945;
+  --noti-close-bg-hover: #665c54;
+  --text-color: #ebdbb2;
+  --text-color-disabled: #a89984;
+  --bg-selected: #d79921;
+  --border-radius: 6px;
+  --notification-shadow: none;
+  --notification-icon-size: 32px;
+  --notification-app-icon-size: 16px;
+  --notification-group-icon-size: 24px;
+  --font-size-body: 13px;
+  --font-size-summary: 14px;
+  --hover-transition: background 100ms ease;
+  --group-collapse-transition: opacity 100ms ease;
+}
+
+* { font-family: monospace; }
+.control-center {
+  background: #282828;
+  color: #ebdbb2;
+  border: 1px solid #504945;
+  border-radius: 8px;
+}
+.notification-row .notification-background { padding: 4px 8px; }
+.notification-row .notification-background .notification.critical {
+  border-color: #fb4934;
+}
+.notification-content .summary { color: #ebdbb2; }
+.notification-content .body { color: #ebdbb2; }
+.notification-content .time { color: #a89984; }
+.widget-title, .widget-dnd { margin: 10px 12px; }
+.widget-title > label { font-size: 16px; font-weight: bold; }
+.widget-dnd label { font-size: 13px; }
+button {
+  color: #ebdbb2;
+  background: #3c3836;
+  border: 1px solid #504945;
+  box-shadow: none;
+  text-shadow: none;
+}
+button:hover { background: #504945; }
+switch { background: #504945; border: none; }
+switch:checked { background: #d79921; }
+switch slider { background: #ebdbb2; box-shadow: none; }
+.widget-title > button { padding: 4px 10px; font-size: 12px; }
