@@ -1,4 +1,4 @@
-{pkgs-unstable, config, lib, ...}:
+{pkgs, pkgs-unstable, config, lib, ...}:
 let
   braveDir = "${config.home.homeDirectory}/.config/BraveSoftware/Brave-Browser";
   profile = "${braveDir}/Default";
@@ -27,6 +27,16 @@ in
     # Extensions" hints. This module only owns the package + launch flags.
     # commandLineArgs is intentionally NOT used here — see braveWrapped above.
   };
+
+  # Keep the existing MIME database intact while enforcing Brave for browser
+  # links and web documents on every Home Manager activation.
+  home.activation.setBraveMimeDefaults =
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run ${pkgs.xdg-utils}/bin/xdg-mime default brave-browser.desktop application/xhtml+xml
+      run ${pkgs.xdg-utils}/bin/xdg-mime default brave-browser.desktop text/html
+      run ${pkgs.xdg-utils}/bin/xdg-mime default brave-browser.desktop x-scheme-handler/http
+      run ${pkgs.xdg-utils}/bin/xdg-mime default brave-browser.desktop x-scheme-handler/https
+    '';
 
   # Ladybird — independent from-scratch browser engine, just to try out.
   # As of 2026-05 it has NO extension support yet; re-check upstream later.
