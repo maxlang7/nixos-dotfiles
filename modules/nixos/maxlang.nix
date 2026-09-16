@@ -36,7 +36,7 @@
         #activitywatch
         #aw-watcher-window-wayland
         #awatcher
-        wineWowPackages.waylandFull
+        wineWow64Packages.waylandFull
         winetricks
         evince #pdf
         fastfetch
