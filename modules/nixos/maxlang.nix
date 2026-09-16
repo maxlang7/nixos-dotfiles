@@ -1,4 +1,15 @@
 {pkgs, pkgs-unstable, user, inputs, ...}:
+let
+  xournalppGruvbox = pkgs.symlinkJoin {
+    name = "xournalpp-gruvbox";
+    paths = [ pkgs-unstable.xournalpp ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/xournalpp --set GTK_THEME Gruvbox-Dark
+      wrapProgram $out/bin/xournalpp-wrapper --set GTK_THEME Gruvbox-Dark
+    '';
+  };
+in
 {
   imports =
     [
@@ -98,6 +109,7 @@
       rclone
       nixd
       nil
+      xournalppGruvbox
       # t3code
     ]);
 }
