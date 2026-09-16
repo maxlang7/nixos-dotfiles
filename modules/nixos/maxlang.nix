@@ -84,6 +84,8 @@ in
         zathura
         (pkgs.callPackage ../../packages/msga.nix {})
         qbittorrent
+        google-chrome
+
       ])
 
 
@@ -111,6 +113,7 @@ in
       rclone
       nixd
       nil
+      vscode
       xournalppGruvbox
       # t3code
     ]);
