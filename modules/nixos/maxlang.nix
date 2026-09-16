@@ -81,7 +81,9 @@ in
         at
         parted
         bitwarden-desktop
+        zathura
         (pkgs.callPackage ../../packages/msga.nix {})
+        qbittorrent
       ])
 
 

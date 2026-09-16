@@ -4,6 +4,7 @@
 		enable = true;
 		package = pkgs-unstable.yazi;
 		enableZshIntegration = true;
+		shellWrapperName = "y";
 	};
 	xdg.configFile."yazi/yazi.toml".source = ../../artifacts/yazi/yazi.toml;
 	xdg.configFile."yazi/keymap.toml".source = ../../artifacts/yazi/keymap.toml;

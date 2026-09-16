@@ -25,6 +25,12 @@ pymol = [
 okular = [
   { run = 'okular %s', orphan = true, for = "unix" },
 ]
+zathura = [
+  { run = 'zathura %s', orphan = true, for = "unix" },
+]
+xournalpp = [
+  { run = 'xournalpp %s', orphan = true, for = "unix" },
+]
 browser = [
   { run = 'brave --new-window %s', orphan = true, for = "unix" },
 ]
@@ -39,6 +45,9 @@ unzip = [
 ]
 media-player = [
   { run = 'mpv -player-operation-mode=pseudo-gui %s', orphan = true, for = "unix" },
+]
+torrent-client = [
+  { run = 'qbittorrent %s', orphan = true, for = "unix" },
 ]
 open = [
   { run = 'xdg-open %s', orphan = true, desc = "Open", for = "unix" }
@@ -55,25 +64,43 @@ prepend_rules = [
   { url = "*.jpg", use = ["image-viewer", "gimp"] },
   { url = "*.jpeg", use = ["image-viewer", "gimp"] },
   { url = "*.gif", use = ["image-viewer", "gimp"] },
+  { url = "*.webp", use = ["image-viewer", "gimp"] },
+  { url = "*.avif", use = ["image-viewer", "gimp"] },
+  { url = "*.heic", use = ["image-viewer", "gimp"] },
+  { url = "*.tif", use = ["image-viewer", "gimp"] },
+  { url = "*.tiff", use = ["image-viewer", "gimp"] },
+  { url = "*.bmp", use = ["image-viewer", "gimp"] },
+  { url = "*.ico", use = ["image-viewer", "gimp"] },
 
   # 3. Media Catch-Alls (Replaces 14 individual extension lines)
   { mime = "video/*", use = "media-player" },
   { mime = "audio/*", use = "media-player" },
 
   # 4. Text Catch-All (Catches JSON, TOML, Nix, Py, Conf, Txt, etc.)
+  { url = "*.html", use = "browser" },
+  { url = "*.htm", use = "browser" },
+  { url = "*.xhtml", use = "browser" },
+  { url = "*.typ", use = "text" },
   { mime = "text/*", use = "text" },
   { url = "*.json", use = "text" }, # Extra fallback for environments where JSON lacks MIME headers
   { url = "*.jsonc", use = "text" },
 
   # 5. Specialized Formats
   { url = "*.pse", use = "pymol" },
-  { url = "*.pdf", use = "okular" },
+  { url = "*.pdf", use = ["okular", "zathura"] },
+  { url = "*.djvu", use = "okular" },
+  { url = "*.xopp", use = "xournalpp" },
   { url = "*.pub", use = "text" },
   { url = "*.docx", use = "libreoffice" },
   { url = "*.xlsx", use = "libreoffice" },
+  { url = "*.odt", use = "libreoffice" },
+  { url = "*.ods", use = "libreoffice" },
+  { url = "*.pptx", use = "libreoffice" },
   { url = "*.csv", use = ["text", "libreoffice"] },
+  { url = "*.xcf", use = "gimp" },
+  { url = "*.torrent", use = "torrent-client" },
   { url = "*.zip", use = "unzip" },
 
   # 6. Global Catch-All Fallback
-  { url = "*", use = ["open", "browser"] }
+  { url = "*", use = ["open", "browser", "text"] }
 ]
