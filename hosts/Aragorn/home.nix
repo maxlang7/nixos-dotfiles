@@ -88,23 +88,23 @@ in
 
   systemd.user.services.rclone-cmu-drive = {
     Unit = {
-      Description = "Mount CMU Google Drive for 15-112 grading";
+      Description = "Mount the 15-112 shared Google Drive folder";
       After = [ "network-online.target" ];
       Wants = [ "network-online.target" ];
     };
 
     Service = {
       Type = "notify";
-      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/${user}/Documents/112/grading";
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/${user}/Documents/112/shared_drive";
       ExecStart = ''
-        ${pkgs.rclone}/bin/rclone mount cmu-drive: /home/${user}/Documents/112/grading \
+        ${pkgs.rclone}/bin/rclone mount "cmu-drive:15-112 F26 Shared" /home/${user}/Documents/112/shared_drive \
           --config=/home/${user}/.config/rclone/rclone.conf \
           --cache-dir=/home/${user}/.cache/rclone \
           --vfs-cache-mode=writes \
           --dir-cache-time=5m \
           --poll-interval=1m
       '';
-      ExecStop = "${pkgs.fuse3}/bin/fusermount3 -u /home/${user}/Documents/112/grading";
+      ExecStop = "${pkgs.fuse3}/bin/fusermount3 -u /home/${user}/Documents/112/shared_drive";
       Restart = "on-failure";
       RestartSec = "10s";
     };
