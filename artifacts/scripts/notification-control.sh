@@ -32,15 +32,13 @@ case "${1:-status}" in
             printf '%s\n' '{"text":"","tooltip":"Notification center is not running","class":"error"}'
             exit 0
         fi
-        count=$(swaync-client --skip-wait --count)
         icon=''; class=enabled; label='Notifications on'
         if [[ "$state" == true ]]; then
             icon=''; class=disabled; label='Quiet mode'
         fi
         text="$icon"
-        if (( count > 0 )); then text="$icon $count"; fi
         jq -nc --arg text "$text" --arg class "$class" \
-            --arg tooltip "$label · $count retained\nLeft-click: quiet mode\nRight-click: history" \
+            --arg tooltip "$label\nLeft-click: quiet mode\nRight-click: history" \
             '{text:$text, class:$class, tooltip:($tooltip | gsub("\\\\n"; "\n"))}'
         ;;
     *) printf 'Usage: notification-control {toggle|history|status|start|session-start}\n' >&2; exit 2 ;;

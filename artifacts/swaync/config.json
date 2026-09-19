@@ -11,7 +11,7 @@
   "control-center-margin-bottom": 8,
   "control-center-margin-right": 8,
   "control-center-width": 400,
-  "control-center-height": -1,
+  "control-center-height": 600,
   "fit-to-screen": false,
   "notification-window-width": 360,
   "notification-window-height": 360,
@@ -20,7 +20,7 @@
   "timeout-critical": 0,
   "transition-time": 100,
   "notification-grouping": true,
-  "relative-timestamps": true,
+  "relative-timestamps": false,
   "image-visibility": "never",
   "notification-inline-replies": false,
   "notification-2fa-action": false,
@@ -29,32 +29,21 @@
   "text-empty": "No notifications",
   "widgets": [
     "title",
-    "dnd",
     "notifications"
   ],
   "widget-config": {
     "title": {
       "text": "Notifications",
-      "clear-all-button": true,
-      "button-text": "Clear"
-    },
-    "dnd": {
-      "text": "Quiet mode"
+      "clear-all-button": false
     },
     "notifications": {
-      "vexpand": false
+      "vexpand": true
     }
   },
   "notification-visibility": {
     "00-battery": {
       "app-name": "^batsignal$",
       "state": "enabled"
-    },
-    "10-critical-apps": {
-      "app-name": ".*",
-      "urgency": "Critical",
-      "state": "enabled",
-      "override-urgency": "normal"
     }
   }
 }

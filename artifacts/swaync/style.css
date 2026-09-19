@@ -30,15 +30,46 @@
   border-radius: 8px;
 }
 .notification-row .notification-background { padding: 4px 8px; }
+.notification-row .notification-background .notification.low {
+  background: #282828;
+  border-color: #504945;
+}
+.notification-row .notification-background .notification.low .summary,
+.notification-row .notification-background .notification.low .body {
+  color: #a89984;
+}
+.notification-row .notification-background .notification.normal {
+  background: #32302f;
+  border-color: #d3869b;
+}
 .notification-row .notification-background .notification.critical {
-  border-color: #fb4934;
+  background: #3c2424;
+  border: 2px solid #fb4934;
+}
+.notification-row .notification-background .notification.critical .summary {
+  color: #fb4934;
 }
 .notification-content .summary { color: #ebdbb2; }
 .notification-content .body { color: #ebdbb2; }
-.notification-content .time { color: #a89984; }
-.widget-title, .widget-dnd { margin: 10px 12px; }
+.notification-content .time {
+  color: #fbf1c7;
+  font-size: 12px;
+  font-weight: bold;
+  opacity: 1;
+}
+.close-button,
+.notification-group-close-button {
+  opacity: 0;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.widget-title { margin: 10px 12px; }
 .widget-title > label { font-size: 16px; font-weight: bold; }
-.widget-dnd label { font-size: 13px; }
 button {
   color: #ebdbb2;
   background: #3c3836;
@@ -47,7 +78,3 @@ button {
   text-shadow: none;
 }
 button:hover { background: #504945; }
-switch { background: #504945; border: none; }
-switch:checked { background: #d79921; }
-switch slider { background: #ebdbb2; box-shadow: none; }
-.widget-title > button { padding: 4px 10px; font-size: 12px; }
