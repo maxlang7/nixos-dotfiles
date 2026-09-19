@@ -39,7 +39,7 @@ in
   users.users.${user}.packages =
       (with pkgs; [
         kitty
-        wiremix
+        (pkgs.callPackage ../../packages/audio-select {})
         audacity
         mpv
         inkscape
