@@ -346,18 +346,21 @@ def init_theme():
     curses.curs_set(0)
     curses.use_default_colors()
     if curses.COLORS >= 256:
-        # Gruvbox dark: cream on dark gray, with purple, blue, and green accents.
-        curses.init_pair(1, 223, 235)
-        curses.init_pair(2, 235, 66)
-        curses.init_pair(3, 132, 235)
-        curses.init_pair(4, 235, 106)
-        curses.init_pair(5, 245, 235)
+        # Match btop's gruvbox_dark theme: muted body text, cream titles,
+        # yellow selection, green state, and an almost-black background.
+        curses.init_pair(1, 248, 234)
+        curses.init_pair(2, 214, 235)
+        curses.init_pair(3, 223, 234)
+        curses.init_pair(4, 142, 234)
+        curses.init_pair(5, 172, 234)
+        curses.init_pair(7, 175, 234)
     else:
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_BLUE)
         curses.init_pair(3, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
         curses.init_pair(4, curses.COLOR_BLACK, curses.COLOR_GREEN)
         curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_BLACK)
+        curses.init_pair(7, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
 
 
 class AudioSelect:
@@ -412,21 +415,21 @@ class AudioSelect:
     def draw_box(self, y, x, height, width, title, nodes, selected, focused):
         if height < 3 or width < 5:
             return
-        style = curses.color_pair(3) | (curses.A_BOLD if focused else 0)
-        self.add(y, x, "+" + "-" * (width - 2) + "+", style)
+        border_style = curses.color_pair(3 if focused else 1)
+        self.add(y, x, "╭" + "─" * (width - 2) + "╮", border_style)
         for row in range(y + 1, y + height - 1):
-            self.add(row, x, "|", style)
-            self.add(row, x + width - 1, "|", style)
-        self.add(y + height - 1, x, "+" + "-" * (width - 2) + "+", style)
-        self.add(y, x + 2, f" {title} ", style | curses.A_BOLD)
+            self.add(row, x, "│", border_style)
+            self.add(row, x + width - 1, "│", border_style)
+        self.add(y + height - 1, x, "╰" + "─" * (width - 2) + "╯", border_style)
+        self.add(y, x + 2, f" {title} ", curses.color_pair(3) | curses.A_BOLD)
 
         visible = max(0, height - 2)
         start = max(0, selected - visible + 1)
         for row, node in enumerate(nodes[start : start + visible], start=y + 1):
             index = start + row - y - 1
-            marker = "(*)" if node.default else "( )"
+            marker = "●" if node.default else "○"
             label = f" {marker} {node.name}"
-            item_style = curses.color_pair(1)
+            item_style = curses.color_pair(4 if node.default else 1)
             if focused and index == selected:
                 item_style = curses.color_pair(2) | curses.A_BOLD
             self.add(row, x + 1, clipped(label, width - 2).ljust(width - 2), item_style)
@@ -435,8 +438,8 @@ class AudioSelect:
             self.add(y + 1, x + 2, "No devices found", curses.color_pair(1))
 
     def draw_button(self, y, x, label, focused):
-        style = curses.color_pair(2 if focused else 4) | curses.A_BOLD
-        text = f"[ {label} ]"
+        style = curses.color_pair(2 if focused else 1) | (curses.A_BOLD if focused else 0)
+        text = f"‹ {label} ›" if focused else f"  {label}  "
         self.add(y, x, text, style)
         return len(text)
 
@@ -452,7 +455,7 @@ class AudioSelect:
             return
 
         title = " Audio devices "
-        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(3))
+        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(7))
 
         pane_y = 3
         pane_height = height - 9
@@ -648,7 +651,7 @@ class NetworkSelect(AudioSelect):
             return
 
         title = " Network connections "
-        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(3))
+        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(7))
 
         pane_y = 3
         pane_height = height - 9
@@ -830,7 +833,7 @@ class BluetoothSelect(AudioSelect):
             return
 
         title = " Bluetooth devices "
-        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(3))
+        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(7))
         self.draw_box(3, 2, height - 10, width - 4, "Devices", self.devices, self.device_index, self.focus == 0)
 
         power_label = "Turn off" if self.powered else "Turn on"
@@ -971,7 +974,7 @@ class PowerSelect(AudioSelect):
             self.screen.refresh()
             return
         title = " Session and power "
-        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(3))
+        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(7))
         self.draw_box(3, 2, height - 8, width - 4, "Actions", self.actions, self.action_index, True)
         self.add(height - 3, 2, clipped(self.status, width - 4), curses.color_pair(1))
         help_text = "↑/↓ move   Enter choose/confirm   Esc/q cancel"

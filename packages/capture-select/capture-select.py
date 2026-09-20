@@ -72,12 +72,13 @@ def init_theme():
     curses.curs_set(0)
     curses.use_default_colors()
     if curses.COLORS >= 256:
-        curses.init_pair(1, 223, 235)
-        curses.init_pair(2, 235, 66)
-        curses.init_pair(3, 132, 235)
-        curses.init_pair(4, 235, 106)
-        curses.init_pair(5, 245, 235)
-        curses.init_pair(6, 167, 235)
+        curses.init_pair(1, 248, 234)
+        curses.init_pair(2, 214, 235)
+        curses.init_pair(3, 223, 234)
+        curses.init_pair(4, 142, 234)
+        curses.init_pair(5, 172, 234)
+        curses.init_pair(6, 167, 234)
+        curses.init_pair(7, 175, 234)
     else:
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_BLUE)
@@ -85,6 +86,7 @@ def init_theme():
         curses.init_pair(4, curses.COLOR_BLACK, curses.COLOR_GREEN)
         curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(6, curses.COLOR_RED, curses.COLOR_BLACK)
+        curses.init_pair(7, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
 
 
 def clipped(text, width):
@@ -180,17 +182,17 @@ class CaptureSelect:
 
     def row_marker(self, row):
         if row.kind == "video":
-            return "(*)" if self.video_mode == row.key else "( )"
+            return "●" if self.video_mode == row.key else "○"
         if row.kind == "microphone":
             selected = (row.key == "none" and self.microphone is None) or row.key == self.microphone
-            return "(*)" if selected else "( )"
+            return "●" if selected else "○"
         if row.kind == "output":
-            return "[x]" if self.all_output else "[ ]"
+            return "●" if self.all_output else "○"
         if row.kind == "application":
-            return "[x]" if row.key in self.selected_apps else "[ ]"
+            return "●" if row.key in self.selected_apps else "○"
         if row.kind == "action":
-            return " > "
-        return "   "
+            return "›"
+        return " "
 
     def draw(self):
         self.screen.erase()
@@ -204,15 +206,15 @@ class CaptureSelect:
             return
 
         title = " Screen recorder "
-        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(3))
+        self.add(1, max(0, (width - len(title)) // 2), title, curses.A_BOLD | curses.color_pair(7))
         border_width = width - 4
         top = 3
         bottom = height - 5
-        self.add(top, 2, "+" + "-" * (border_width - 2) + "+", curses.color_pair(3) | curses.A_BOLD)
+        self.add(top, 2, "╭" + "─" * (border_width - 2) + "╮", curses.color_pair(1))
         for y in range(top + 1, bottom):
-            self.add(y, 2, "|", curses.color_pair(3))
-            self.add(y, width - 3, "|", curses.color_pair(3))
-        self.add(bottom, 2, "+" + "-" * (border_width - 2) + "+", curses.color_pair(3) | curses.A_BOLD)
+            self.add(y, 2, "│", curses.color_pair(1))
+            self.add(y, width - 3, "│", curses.color_pair(1))
+        self.add(bottom, 2, "╰" + "─" * (border_width - 2) + "╯", curses.color_pair(1))
 
         visible = bottom - top - 1
         if self.index < self.scroll:
@@ -229,6 +231,8 @@ class CaptureSelect:
             marker = self.row_marker(row)
             text = f" {marker} {row.label}"
             style = curses.color_pair(1)
+            if marker == "●":
+                style = curses.color_pair(4)
             if actual_index == self.index and not self.process:
                 style = curses.color_pair(2) | curses.A_BOLD
             self.add(y, 3, clipped(text, width - 6).ljust(width - 6), style)
