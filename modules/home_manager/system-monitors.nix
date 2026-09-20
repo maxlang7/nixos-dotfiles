@@ -26,8 +26,12 @@
       background_update = true;
     };
   };
+  xdg.configFile."btop/btop.conf".force = true;
 
   # htop uses the terminal's ANSI palette. Ghostty already supplies Gruvbox,
   # so the default htop scheme matches the rest of the popup suite.
-  xdg.configFile."htop/htoprc".source = ../../artifacts/system-monitors/htoprc;
+  xdg.configFile."htop/htoprc" = {
+    source = ../../artifacts/system-monitors/htoprc;
+    force = true;
+  };
 }
