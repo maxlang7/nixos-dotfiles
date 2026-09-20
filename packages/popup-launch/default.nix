@@ -1,4 +1,4 @@
-{ lib, writeShellApplication, hyprland, ghostty }:
+{ lib, writeShellApplication, hyprland, ghostty, jq }:
 
 writeShellApplication {
   name = "popup-launch";
@@ -6,6 +6,7 @@ writeShellApplication {
   runtimeInputs = [
     hyprland
     ghostty
+    jq
   ];
 
   text = builtins.readFile ./popup-launch.sh;
