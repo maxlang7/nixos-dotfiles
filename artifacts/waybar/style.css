@@ -8,6 +8,7 @@ window#waybar {
     color: #282828;
 }
 #custom-powerbutton,
+#custom-capture,
 #custom-resolution,
 #custom-nixos,
 #custom-tree,
@@ -33,6 +34,10 @@ window#waybar {
 #custom-powerbutton {
     padding: 0 6px;
     color: #fbf1c7;
+}
+#custom-capture {
+    padding: 0 6px;
+    color: #b16286;
 }
 #custom-resolution button {
     color: #fbf1c7;

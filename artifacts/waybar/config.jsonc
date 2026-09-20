@@ -6,14 +6,15 @@
   "height": 24,
   "modules-left": [
     "custom/powerbutton",
+    "hyprland/workspaces",
     "custom/hypridle",
     "custom/notifications",
     // "custom/tree",
     // "custom/nixos",
-    "hyprland/workspaces",
     // "custom/timer",
     "custom/claude-usage",
     "custom/codex-usage",
+    "custom/capture",
     "custom/wacom-pointer"
     // "mpris"
   ],
@@ -28,7 +29,15 @@
   ],
   "custom/powerbutton": {
     "format": "󰐥",
-    "on-click": "rofi -show power-menu -modi power-menu:rofi-power-menu"
+    "tooltip": true,
+    "tooltip-format": "Session and power",
+    "on-click": "popup-launch power 700 520 audio-select power"
+  },
+  "custom/capture": {
+    "format": "󰑋",
+    "tooltip": true,
+    "tooltip-format": "Record screen, window, microphone, or application audio",
+    "on-click": "popup-launch recorder 1000 700 capture-select"
   },
   // "custom/nixos": {
   //    "format": "󱄅",
@@ -140,8 +149,8 @@
   "network": {
     "format-wifi": " {essid} ({signalStrength}%)",
     "format-disconnected": "󰖪",
-    "on-click": "hyprctl dispatch togglespecialworkspace network",
-    "on-click-right": "kitty nmtui",
+    "on-click": "popup-launch network 1100 700 audio-select network",
+    "on-click-right": "popup-launch network 1100 700 audio-select network",
     "on-click-middle": "bash /etc/nixos/artifacts/scripts/switch-connections.sh"
   },
 
@@ -149,7 +158,7 @@
     "format": " {status}",
     "format-connected": " {device_alias}",
     "format-connected-battery": " {device_battery_percentage}%",
-    "on-click": "bash /etc/nixos/artifacts/scripts/rofi-bluetooth.sh"
+    "on-click": "popup-launch bluetooth 900 650 audio-select bluetooth"
   },
   "pulseaudio": {
     //"scroll-step": 1,
@@ -164,18 +173,20 @@
       "car": "",
       "default": ["", ""]
     },
-    "on-click": "hyprctl dispatch togglespecialworkspace audio",
-    "on-click-right": "pavucontrol"
+    "on-click": "popup-launch audio 1000 700 audio-select audio",
+    "on-click-right": "popup-launch audio 1000 700 audio-select audio"
   },
   "memory": {
     "interval": 5,
     "format": "Mem {}%",
-    "on-click": "hyprctl dispatch togglespecialworkspace top"
+    "on-click": "popup-launch btop 1200 760 btop",
+    "on-click-right": "popup-launch htop 1200 760 htop"
   },
   "cpu": {
     "interval": 5,
     "format": "CPU{usage:2}%",
-    "on-click": "hyprctl dispatch togglespecialworkspace top"
+    "on-click": "popup-launch btop 1200 760 btop",
+    "on-click-right": "popup-launch htop 1200 760 htop"
   },
   "custom/battery": {
     "exec": "/etc/nixos/artifacts/scripts/battery-info.sh",
@@ -183,6 +194,7 @@
     "interval": 5,
     "format": "{}",
     "tooltip": true,
-    "on-click": "hyprctl dispatch togglespecialworkspace top"
+    "on-click": "popup-launch btop 1200 760 btop",
+    "on-click-right": "popup-launch htop 1200 760 htop"
   }
 }

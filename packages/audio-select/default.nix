@@ -1,4 +1,16 @@
-{ lib, writeShellApplication, python3, wireplumber, pipewire, ffmpeg }:
+{
+  lib,
+  writeShellApplication,
+  python3,
+  wireplumber,
+  pipewire,
+  ffmpeg,
+  networkmanager,
+  bluez,
+  systemd,
+  hyprland,
+  hyprlock,
+}:
 
 writeShellApplication {
   name = "audio-select";
@@ -8,6 +20,11 @@ writeShellApplication {
     wireplumber
     pipewire
     ffmpeg
+    networkmanager
+    bluez
+    systemd
+    hyprland
+    hyprlock
   ];
 
   text = ''
@@ -15,7 +32,7 @@ writeShellApplication {
   '';
 
   meta = {
-    description = "Small terminal selector and test utility for PipeWire devices";
+    description = "Gruvbox terminal controls for audio, networking, Bluetooth, and power";
     license = lib.licenses.mit;
     platforms = lib.platforms.linux;
     mainProgram = "audio-select";

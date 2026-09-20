@@ -6,8 +6,6 @@
       libnotify #notifications
       rofi #launcher — `rofi-wayland` was merged into `rofi` in 25.11
       rofimoji
-      rofi-power-menu
-      rofi-bluetooth
       bibata-cursors
       hyprcursor
       brightnessctl

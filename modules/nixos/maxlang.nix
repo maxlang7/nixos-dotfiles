@@ -42,10 +42,13 @@ in
   environment.variables.EDITOR = "zeditor";
 
   programs.steam.enable = true;
+  programs.gpu-screen-recorder.enable = true;
   users.users.${user}.packages =
       (with pkgs; [
         kitty
         (pkgs.callPackage ../../packages/audio-select {})
+        (pkgs.callPackage ../../packages/capture-select {})
+        (pkgs.callPackage ../../packages/popup-launch {})
         audacity
         mpv
         inkscape

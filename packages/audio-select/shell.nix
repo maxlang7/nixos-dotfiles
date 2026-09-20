@@ -6,6 +6,11 @@ pkgs.mkShell {
     pkgs.wireplumber
     pkgs.pipewire
     pkgs.ffmpeg
+    pkgs.networkmanager
+    pkgs.bluez
+    pkgs.systemd
+    pkgs.hyprland
+    pkgs.hyprlock
   ];
 
   shellHook = ''

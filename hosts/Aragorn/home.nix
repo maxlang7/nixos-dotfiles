@@ -18,6 +18,7 @@ in
       ../../modules/home_manager/zed.nix
       ../../modules/home_manager/filepicker.nix
       ../../modules/home_manager/ghostty.nix
+      ../../modules/home_manager/system-monitors.nix
       ../../modules/home_manager/gc.nix
       # ../../modules/home_manager/claude.nix
     ];
