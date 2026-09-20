@@ -165,7 +165,20 @@ in
 
   security.rtkit.enable = true;
   services.pipewire = {
-    wireplumber.enable = true;
+    wireplumber = {
+      enable = true;
+      extraConfig."90-silent-notifications"."stream.rules" = [
+        {
+          matches = [
+            { "media.role" = "~(?i)^(notification|event)$"; }
+          ];
+          actions.update-props = {
+            "state.restore-props" = false;
+            "state.default-volume" = 0.0;
+          };
+        }
+      ];
+    };
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
