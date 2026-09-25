@@ -1,9 +1,8 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   # Enable WireGuard
   networking.wireguard.interfaces = {
     seltsam = {
-      autoStart = true;
       # Determines the IP address and subnet of the client's end of the tunnel interface.
       ips = [ "192.168.99.8/32" ];
       listenPort = 51820; # to match firewall allowedUDPPorts (without this wg uses random port numbers)
@@ -23,19 +22,18 @@
           allowedIPs = [ "192.168.9.0/24" "192.168.99.0/24" "192.168.1.0/24" ];
 
           # Set this to the server IP and port.
-          endpoint = "strange.langhorst.com:51820";
+          endpoint = "seltsam.langhorst.com:51820";
 
           # Send keepalives every 25 seconds. Important to keep NAT tables alive.
           persistentKeepalive = 25;
         }
       ];
 
-      postUp = ''
-        resolvectl dns seltsam 192.168.1.2
-        resolvectl domain seltsam ~langhorst.com
-      '';
-      preDown = ''
-        resolvectl revert seltsam
+      # Send *.langhorst.com lookups to up's DNS over the tunnel. resolved drops
+      # these per-link settings by itself when the interface goes away.
+      postSetup = ''
+        ${pkgs.systemd}/bin/resolvectl dns seltsam 192.168.1.2
+        ${pkgs.systemd}/bin/resolvectl domain seltsam ~langhorst.com
       '';
     };
   };

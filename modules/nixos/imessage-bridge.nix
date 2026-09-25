@@ -9,7 +9,7 @@
 #  to it and relays into Beeper, so iMessage shows up on every Beeper client.
 #
 #  Reachability: `bluebubblesUrl` is the Mac's home-LAN address. On the LAN we
-#  reach it directly; off-LAN it is routed via the `strange` WireGuard tunnel
+#  reach it directly; off-LAN it is routed via the `seltsam` WireGuard tunnel
 #  (see wireguard.nix — allowedIPs includes 192.168.1.0/24).
 #
 #  One-time imperative prerequisite (per-user, NOT declarative):
