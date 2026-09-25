@@ -20,6 +20,7 @@ in
       # ./spicetify.nix
       ./navidrome.nix
       ./imessage-bridge.nix
+      ./wireguard.nix
       ./syncthing.nix
       ./autoupgrade.nix
       # ./ampache.nix
@@ -95,13 +96,15 @@ in
         (pkgs.callPackage ../../packages/msga.nix {})
         qbittorrent
         google-chrome
-
+        anki
+        cloudflared
       ])
 
 
     ++
 
     (with pkgs-unstable; [
+      obs-studio
       claude-code
       yt-dlp-light
       feishin
