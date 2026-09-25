@@ -20,6 +20,7 @@ in
       ../../modules/home_manager/ghostty.nix
       ../../modules/home_manager/system-monitors.nix
       ../../modules/home_manager/gc.nix
+      ../../modules/home_manager/topspin.nix
       # ../../modules/home_manager/claude.nix
     ];
 
