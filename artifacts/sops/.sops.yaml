@@ -3,6 +3,10 @@
 keys:
   - &primary age17p9rfxqmxdscf2n0v5eadht43u03z3vxsg6vtqum4v23y002rs6swyex3k
 creation_rules:
+  - path_regex: .*secrets/blueferry\.yaml$
+    key_groups:
+    - age:
+      - *primary
   - path_regex: secrets/secrets\.yaml$
     key_groups:
     - age:

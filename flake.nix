@@ -69,8 +69,8 @@
     nixosConfigurations = {
       Aragorn = mkNixosSystem {
         hostName = "Aragorn";
-        modules = [ ./hosts/Aragorn/configuration.nix ];
-        homeModules = [ ./hosts/Aragorn/home.nix ];
+        modules = [ ./hosts/Aragorn/configuration.nix ./modules/nixos/blueferry.nix ];
+        homeModules = [ ./hosts/Aragorn/home.nix ./modules/home_manager/blueferry.nix ];
       };
       Gandalf = mkNixosSystem {
         hostName = "Gandalf";

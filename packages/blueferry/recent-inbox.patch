@@ -1,0 +1,362 @@
+diff --git a/src/blueferry/daemon.py b/src/blueferry/daemon.py
+index 2c407eb..a02d5d4 100644
+--- a/src/blueferry/daemon.py
++++ b/src/blueferry/daemon.py
+@@ -67,8 +67,10 @@ from blueferry.events import SmsEvent
+ from blueferry.glib_timers import schedule_periodic
+ from blueferry.group_routes import GroupRoutesStore
+ from blueferry.history import (
++    append_events,
+     history_count,
+     mark_event_handles_read,
++    read_events,
+ )
+ from blueferry.media import MediaController, MediaControlSettings
+ from blueferry.notification_policy import (
+@@ -76,7 +78,7 @@ from blueferry.notification_policy import (
+     NotificationPolicyStore,
+ )
+ from blueferry.obex.map_events import MapEventListener
+-from blueferry.obex.map_query import lookup_otp_metadata
++from blueferry.obex.map_query import list_recent_messages, lookup_otp_metadata
+ from blueferry.obex.mns_watch import MnsWatch
+ from blueferry.obex.sessions import SessionManager
+ from blueferry.obex.worker import ObexWorker
+@@ -95,6 +97,7 @@ from blueferry.proximity_lock import (
+     presence_from_bearers,
+ )
+ from blueferry.read_receipts import ReadReceiptQueue
++from blueferry.recent_history import inbox_events
+ from blueferry.setup_verification import (
+     CONTACTS,
+     MESSAGE_NOTIFICATIONS,
+@@ -199,6 +202,8 @@ class Daemon:
+         )
+         self.listener: MapEventListener | None = None
+         self.mns_watch: MnsWatch | None = None
++        self._recent_history_seeded = False
++        self._recent_history_seed_pending = False
+         # One MAP reconnect per MNS outage; seeing MNS again rearms it.
+         self._mns_reconnect_spent = False
+         self.ancs: AncsClient | None = None
+@@ -1328,6 +1333,79 @@ class Daemon:
+                 on_present=self._mns_present,
+             )
+             self.mns_watch.start()
++        self._seed_recent_inbox()
++
++    def _seed_recent_inbox(self) -> None:
++        """Give a fresh install an initial conversation list from MAP inbox."""
++        session = self.sessions.map
++        if session is None or not getattr(session, "path", None):
++            return
++        if (
++            self._recent_history_seeded
++            or self._recent_history_seed_pending
++            or not self.storage.status.can_write
++        ):
++            return
++        if read_events(
++            kinds={"sms_received", "sms_sent"}, limit=1, storage=self.storage,
++        ):
++            # Existing local history already represents this phone's active
++            # conversations; this bootstrap is for a fresh local installation.
++            self._recent_history_seeded = True
++            return
++
++        self._recent_history_seed_pending = True
++        storage_revision = self.storage.revision
++
++        def imported(messages: list[dict]) -> None:
++            self._recent_history_seed_pending = False
++            if (
++                self.sessions.map is not session
++                or self.storage.revision != storage_revision
++                or not self.storage.status.can_write
++            ):
++                return
++            existing = {
++                str(event.get("handle") or "")
++                for event in read_events(
++                    kinds={"sms_received", "sms_sent"}, limit=500,
++                    storage=self.storage,
++                )
++            }
++            events = inbox_events(messages, self.contacts)
++            imported_events = []
++            for event in events:
++                if event.handle in existing:
++                    continue
++                imported_events.append(event.to_dict())
++                existing.add(event.handle)
++            append_events(imported_events, storage=self.storage)
++            added = len(imported_events)
++            self._recent_history_seeded = True
++            if added:
++                log.info("imported %d recent inbox messages into local conversations", added)
++                if self._dbus_service is not None:
++                    self._dbus_service.operations.invalidate_conversations()
++                    self._dbus_service.emit_history_changed()
++
++        def failed(error: Exception) -> None:
++            self._recent_history_seed_pending = False
++            log.info("could not import recent inbox messages (%s)", type(error).__name__)
++
++        def complete(messages: list[dict]) -> None:
++            try:
++                imported(messages)
++            except Exception as error:
++                failed(error)
++
++        try:
++            self.obex_worker.submit(
++                lambda: list_recent_messages(session.path, limit=20),
++                on_success=complete,
++                on_error=failed,
++            )
++        except Exception as error:
++            failed(error)
+ 
+     def _mns_present(self) -> None:
+         self._mns_reconnect_spent = False
+diff --git a/src/blueferry/history.py b/src/blueferry/history.py
+index 15b86cd..a8e50c8 100644
+--- a/src/blueferry/history.py
++++ b/src/blueferry/history.py
+@@ -129,6 +129,19 @@ def append_event(
+         _insert(database, event, storage)
+ 
+ 
++
++def append_events(
++    events: Iterable[EventRecord],
++    *,
++    path: Path | None = None,
++    storage: StorageSecurity | None = None,
++) -> None:
++    """Commit a bounded imported batch atomically, including serialization."""
++    with closing(_open_database(path)) as database, database:
++        for event in events:
++            _insert(database, event, storage)
++
++
+ def read_events(
+     *,
+     kinds: set[str] | None = None,
+diff --git a/src/blueferry/recent_history.py b/src/blueferry/recent_history.py
+new file mode 100644
+index 0000000..bf4c829
+--- /dev/null
++++ b/src/blueferry/recent_history.py
+@@ -0,0 +1,43 @@
++"""Convert bounded MAP inbox summaries into retained conversation events."""
++from __future__ import annotations
++
++from collections.abc import Mapping, Sequence
++from datetime import datetime
++from typing import Any
++
++from blueferry.events import SmsEvent
++
++
++def inbox_events(
++    messages: Sequence[Mapping[str, Any]], contacts,
++) -> list[SmsEvent]:
++    """Build history records from MAP's recent inbox without dispatching them.
++
++    This is an initial-history import, not a new-message notification path:
++    old one-time codes must never be copied and historical messages must not
++    generate desktop notifications.
++    """
++    events: list[SmsEvent] = []
++    for message in messages:
++        handle = str(message.get("handle") or "").strip()
++        if not handle:
++            continue
++        raw_timestamp = str(message.get("timestamp") or "")
++        try:
++            timestamp = datetime.fromisoformat(raw_timestamp) if raw_timestamp else None
++        except (ValueError, OverflowError):
++            timestamp = None
++        sender = str(message.get("sender") or "").strip() or None
++        normalized = str(message.get("sender_phone_norm") or "").strip() or None
++        events.append(SmsEvent(
++            kind="sms_received",
++            handle=handle,
++            sender_address=sender,
++            sender_phone_norm=normalized,
++            contact_name=contacts.resolve(sender or normalized),
++            body=str(message.get("body") or ""),
++            timestamp=timestamp,
++            is_read=bool(message.get("read", True)),
++            message_path=None,
++        ))
++    return events
+diff --git a/tests/test_recent_history.py b/tests/test_recent_history.py
+new file mode 100644
+index 0000000..752148c
+--- /dev/null
++++ b/tests/test_recent_history.py
+@@ -0,0 +1,162 @@
++from datetime import datetime
++
++from blueferry.recent_history import inbox_events
++from blueferry.threads import build_threads
++
++
++class Contacts:
++    def resolve(self, address):
++        return "Contact" if address else None
++
++
++def test_inbox_events_keep_recent_messages_without_notification_metadata():
++    events = inbox_events([{
++        "handle": "message123",
++        "sender": "+1 555 123 4567",
++        "sender_phone_norm": "15551234567",
++        "body": "hello",
++        "timestamp": "2026-10-12T01:00:00-04:00",
++        "read": False,
++    }], Contacts())
++
++    assert len(events) == 1
++    event = events[0]
++    assert event.kind == "sms_received"
++    assert event.handle == "message123"
++    assert event.contact_name == "Contact"
++    assert event.body == "hello"
++    assert event.timestamp == datetime.fromisoformat("2026-10-12T01:00:00-04:00")
++    assert event.message_path is None
++    assert event.is_read is False
++
++
++def test_inbox_events_skip_missing_handles_and_tolerate_bad_timestamps():
++    events = inbox_events([
++        {"sender": "no handle"},
++        {"handle": "message456", "timestamp": "invalid"},
++    ], Contacts())
++
++    assert len(events) == 1
++    assert events[0].timestamp is None
++    assert events[0].is_read is True
++
++
++def test_recent_inbox_events_populate_conversation_projection():
++    events = inbox_events([{
++        "handle": "message789",
++        "sender": "+1 555 123 4567",
++        "sender_phone_norm": "15551234567",
++        "body": "recent",
++        "timestamp": "2026-10-12T01:00:00-04:00",
++    }], Contacts())
++
++    threads = build_threads([event.to_dict() for event in events], Contacts())
++
++    assert len(threads) == 1
++    assert threads[0]["messages"][0]["body"] == "recent"
++
++
++def bootstrap(monkeypatch):
++    from types import SimpleNamespace
++
++    from blueferry import daemon
++
++    value = object.__new__(daemon.Daemon)
++    value.sessions = SimpleNamespace(map=SimpleNamespace(path="/session"))
++    value.storage = SimpleNamespace(revision=0, status=SimpleNamespace(can_write=True))
++    value.contacts = Contacts()
++    value._recent_history_seeded = False
++    value._recent_history_seed_pending = False
++    notifications = []
++    value._dbus_service = SimpleNamespace(
++        operations=SimpleNamespace(invalidate_conversations=lambda: notifications.append("invalidate")),
++        emit_history_changed=lambda: notifications.append("history"),
++    )
++    callbacks = {}
++    value.obex_worker = SimpleNamespace(submit=lambda work, **kwargs: callbacks.update(kwargs))
++    records = []
++    monkeypatch.setattr(daemon, "read_events", lambda **kwargs: list(records))
++    monkeypatch.setattr(daemon, "append_events", lambda events, **kwargs: records.extend(events))
++    return value, callbacks, records, notifications
++
++
++def test_bootstrap_updates_gtk_projection_and_deduplicates_live_arrivals(monkeypatch):
++    value, callbacks, records, notifications = bootstrap(monkeypatch)
++    value._seed_recent_inbox()
++    value._seed_recent_inbox()
++    assert value._recent_history_seed_pending
++    # A push can arrive while the bounded inbox query is in flight.
++    records.append({"handle": "message1"})
++    callbacks["on_success"]([
++        {"handle": "message1", "sender": "15551234567"},
++        {"handle": "message2", "sender": "15551234567", "body": "recent"},
++        {"handle": "message2", "sender": "15551234567"},
++    ])
++    assert [row["handle"] for row in records] == ["message1", "message2"]
++    assert notifications == ["invalidate", "history"]
++    assert value._recent_history_seeded
++    assert not value._recent_history_seed_pending
++
++
++def test_bootstrap_discards_results_after_storage_policy_changes(monkeypatch):
++    value, callbacks, records, notifications = bootstrap(monkeypatch)
++    value._seed_recent_inbox()
++    value.storage.revision += 1
++    callbacks["on_success"]([{"handle": "message1"}])
++    assert records == notifications == []
++    assert not value._recent_history_seeded
++    assert not value._recent_history_seed_pending
++
++
++def test_bootstrap_discards_replaced_phone_session(monkeypatch):
++    value, callbacks, records, notifications = bootstrap(monkeypatch)
++    value._seed_recent_inbox()
++    value.sessions.map = None
++    callbacks["on_success"]([{"handle": "message1"}])
++    assert records == notifications == []
++
++
++def test_bootstrap_write_failure_allows_retry(monkeypatch):
++    from blueferry import daemon
++
++    value, callbacks, _records, notifications = bootstrap(monkeypatch)
++    value._seed_recent_inbox()
++
++    def fail(*args, **kwargs):
++        raise OSError("disk full")
++    monkeypatch.setattr(daemon, "append_events", fail)
++    callbacks["on_success"]([{"handle": "message1"}])
++    assert not value._recent_history_seed_pending
++    assert not value._recent_history_seeded
++    assert notifications == []
++
++
++def test_bootstrap_preserves_existing_history(monkeypatch):
++    value, callbacks, records, _notifications = bootstrap(monkeypatch)
++    records.append({"handle": "old"})
++    value._seed_recent_inbox()
++    assert callbacks == {}
++    assert value._recent_history_seeded
++
++
++
++def test_import_batch_rolls_back_if_any_record_cannot_be_stored(monkeypatch, tmp_path):
++    import pytest
++
++    from blueferry import history
++
++    path = tmp_path / "events.sqlite"
++    insert = history._insert
++
++    def fail_second(database, event, storage):
++        if event["handle"] == "second":
++            raise OSError("storage failure")
++        insert(database, event, storage)
++
++    monkeypatch.setattr(history, "_insert", fail_second)
++    with pytest.raises(OSError, match="storage failure"):
++        history.append_events([
++            {"kind": "sms_received", "handle": "first"},
++            {"kind": "sms_received", "handle": "second"},
++        ], path=path)
++    assert history.read_events(path=path) == []
