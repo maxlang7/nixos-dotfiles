@@ -69,7 +69,16 @@
     nixosConfigurations = {
       Aragorn = mkNixosSystem {
         hostName = "Aragorn";
-        modules = [ ./hosts/Aragorn/configuration.nix ./modules/nixos/blueferry.nix ];
+        modules = [
+          ./hosts/Aragorn/configuration.nix
+          ./modules/nixos/blueferry.nix
+          # Pause the old Mac/BlueBubbles bridge while retaining its data.
+          ({ lib, ... }: {
+            systemd.services.imessage-bridge.enable = lib.mkForce false;
+            systemd.services.imessage-bridge-watchdog.enable = lib.mkForce false;
+            systemd.timers.imessage-bridge-watchdog.enable = lib.mkForce false;
+          })
+        ];
         homeModules = [ ./hosts/Aragorn/home.nix ./modules/home_manager/blueferry.nix ];
       };
       Gandalf = mkNixosSystem {
