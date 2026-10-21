@@ -55,6 +55,7 @@ let
         'BLUEFERRY_ANCS_ENABLED=false' \
         'BLUEFERRY_CONTACT_PHOTOS=true' \
         'BLUEFERRY_MEDIA_CONTROL_ENABLED=true' \
+        'BLUEFERRY_KEEP_PHONE_AUDIO_ON_PHONE=false' \
         'BLUEFERRY_OTP_AUTOCOPY=true' \
         'BLUEFERRY_OTP_CLEAR_SECONDS=60'
     } > "$temporary"
@@ -65,6 +66,15 @@ let
   '';
 in
 {
+  # Override legacy BlueFerry fragments without restricting headphone audio.
+  # Phone devices are excluded separately by the BlueZ monitor rule.
+  xdg.configFile."wireplumber/wireplumber.conf.d/zzzz-blueferry-source-only.conf".text = ''
+    monitor.bluez.properties = {
+      override.bluez5.roles = [ a2dp_sink a2dp_source bap_sink bap_source hfp_ag ]
+      bluez5.hfphsp-backend = "native"
+    }
+  '';
+
   # Adopt only the exact unit created during initial setup. Unknown local
   # edits remain a Home Manager collision, and the old files are retained.
   home.activation.blueferryAdoptLegacyUnit = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
@@ -127,5 +137,7 @@ in
     Install.WantedBy = [ "default.target" ];
   };
 
-  home.packages = [ blueferry ];
+  home.packages = [ blueferry (pkgs.writeShellScriptBin "waybar-bluetooth" ''
+    exec ${pkgs.python3}/bin/python ${../../artifacts/scripts/waybar-bluetooth.py} ${pkgs.systemd}/bin/busctl
+  '') ];
 }

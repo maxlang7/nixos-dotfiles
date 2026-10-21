@@ -19,6 +19,38 @@ let
   };
 in
 {
+  # BlueZ also has its own hands-free profile, independent of WirePlumber.
+  # Disable that audio/call service while retaining MAP/PBAP and A2DP source.
+  hardware.bluetooth.disabledPlugins = [ "hfp" ];
+
+  # BlueZ's monitor in WirePlumber 0.5 does not honor device.disabled itself.
+  # Add the same early exit used by the ALSA monitor, before any audio device
+  # is created. Keep this small and fail the build if upstream changes it.
+  services.pipewire.wireplumber.configPackages = [
+    (pkgs.runCommand "wireplumber-blueferry-no-phone-audio" {
+      nativeBuildInputs = [ pkgs.python3 ];
+    } ''
+      mkdir -p "$out/share/wireplumber/scripts/monitors"
+      python ${../../packages/blueferry/disable-phone-audio.py} \
+        ${pkgs.wireplumber}/share/wireplumber/scripts/monitors/bluez.lua \
+        "$out/share/wireplumber/scripts/monitors/bluez.lua"
+    '')
+  ];
+  services.pipewire.wireplumber.extraConfig."zzzz-blueferry-no-phone-audio" = {
+    "monitor.bluez.rules" = [
+      {
+        matches = [
+          { "device.name" = "~bluez_card.*"; "device.icon-name" = "~^(phone|audio-card-phone)(-bluetooth)?$"; }
+          { "device.name" = "~bluez_card.*"; "device.form-factor" = "handset"; }
+        ];
+        actions."update-props" = {
+          "device.disabled" = true;
+          "bluez5.auto-connect" = [ ];
+        };
+      }
+    ];
+  };
+
   environment.systemPackages = [ blueferrySetCod ];
 
   # The paired phone address stays encrypted at rest and out of the Nix store.
