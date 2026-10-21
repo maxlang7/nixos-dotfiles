@@ -1,5 +1,5 @@
 diff --git a/src/blueferry/daemon.py b/src/blueferry/daemon.py
-index 2c407eb..a02d5d4 100644
+index 2c407eb..375427b 100644
 --- a/src/blueferry/daemon.py
 +++ b/src/blueferry/daemon.py
 @@ -67,8 +67,10 @@ from blueferry.events import SmsEvent
@@ -30,40 +30,30 @@ index 2c407eb..a02d5d4 100644
  from blueferry.setup_verification import (
      CONTACTS,
      MESSAGE_NOTIFICATIONS,
-@@ -199,6 +202,8 @@ class Daemon:
+@@ -199,6 +202,7 @@ class Daemon:
          )
          self.listener: MapEventListener | None = None
          self.mns_watch: MnsWatch | None = None
-+        self._recent_history_seeded = False
 +        self._recent_history_seed_pending = False
          # One MAP reconnect per MNS outage; seeing MNS again rearms it.
          self._mns_reconnect_spent = False
          self.ancs: AncsClient | None = None
-@@ -1328,6 +1333,79 @@ class Daemon:
+@@ -1328,6 +1332,69 @@ class Daemon:
                  on_present=self._mns_present,
              )
              self.mns_watch.start()
 +        self._seed_recent_inbox()
 +
 +    def _seed_recent_inbox(self) -> None:
-+        """Give a fresh install an initial conversation list from MAP inbox."""
++        """Catch up the bounded recent inbox whenever MAP becomes available."""
 +        session = self.sessions.map
 +        if session is None or not getattr(session, "path", None):
 +            return
 +        if (
-+            self._recent_history_seeded
-+            or self._recent_history_seed_pending
++            self._recent_history_seed_pending
 +            or not self.storage.status.can_write
 +        ):
 +            return
-+        if read_events(
-+            kinds={"sms_received", "sms_sent"}, limit=1, storage=self.storage,
-+        ):
-+            # Existing local history already represents this phone's active
-+            # conversations; this bootstrap is for a fresh local installation.
-+            self._recent_history_seeded = True
-+            return
-+
 +        self._recent_history_seed_pending = True
 +        storage_revision = self.storage.revision
 +
@@ -91,7 +81,6 @@ index 2c407eb..a02d5d4 100644
 +                existing.add(event.handle)
 +            append_events(imported_events, storage=self.storage)
 +            added = len(imported_events)
-+            self._recent_history_seeded = True
 +            if added:
 +                log.info("imported %d recent inbox messages into local conversations", added)
 +                if self._dbus_service is not None:
@@ -194,10 +183,10 @@ index 0000000..bf4c829
 +    return events
 diff --git a/tests/test_recent_history.py b/tests/test_recent_history.py
 new file mode 100644
-index 0000000..752148c
+index 0000000..da3e49d
 --- /dev/null
 +++ b/tests/test_recent_history.py
-@@ -0,0 +1,162 @@
+@@ -0,0 +1,164 @@
 +from datetime import datetime
 +
 +from blueferry.recent_history import inbox_events
@@ -265,7 +254,6 @@ index 0000000..752148c
 +    value.sessions = SimpleNamespace(map=SimpleNamespace(path="/session"))
 +    value.storage = SimpleNamespace(revision=0, status=SimpleNamespace(can_write=True))
 +    value.contacts = Contacts()
-+    value._recent_history_seeded = False
 +    value._recent_history_seed_pending = False
 +    notifications = []
 +    value._dbus_service = SimpleNamespace(
@@ -294,7 +282,6 @@ index 0000000..752148c
 +    ])
 +    assert [row["handle"] for row in records] == ["message1", "message2"]
 +    assert notifications == ["invalidate", "history"]
-+    assert value._recent_history_seeded
 +    assert not value._recent_history_seed_pending
 +
 +
@@ -304,7 +291,6 @@ index 0000000..752148c
 +    value.storage.revision += 1
 +    callbacks["on_success"]([{"handle": "message1"}])
 +    assert records == notifications == []
-+    assert not value._recent_history_seeded
 +    assert not value._recent_history_seed_pending
 +
 +
@@ -327,16 +313,21 @@ index 0000000..752148c
 +    monkeypatch.setattr(daemon, "append_events", fail)
 +    callbacks["on_success"]([{"handle": "message1"}])
 +    assert not value._recent_history_seed_pending
-+    assert not value._recent_history_seeded
 +    assert notifications == []
 +
 +
-+def test_bootstrap_preserves_existing_history(monkeypatch):
-+    value, callbacks, records, _notifications = bootstrap(monkeypatch)
++def test_reconnect_catches_up_existing_history_without_duplicates(monkeypatch):
++    value, callbacks, records, notifications = bootstrap(monkeypatch)
 +    records.append({"handle": "old"})
 +    value._seed_recent_inbox()
-+    assert callbacks == {}
-+    assert value._recent_history_seeded
++    callbacks["on_success"]([{"handle": "old"}, {"handle": "offline"}])
++    assert [row["handle"] for row in records] == ["old", "offline"]
++    assert notifications == ["invalidate", "history"]
++    notifications.clear()
++    value._seed_recent_inbox()
++    callbacks["on_success"]([{"handle": "old"}, {"handle": "offline"}])
++    assert [row["handle"] for row in records] == ["old", "offline"]
++    assert notifications == []
 +
 +
 +
