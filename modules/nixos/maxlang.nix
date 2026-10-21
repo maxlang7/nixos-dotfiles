@@ -80,6 +80,7 @@ in
         kdePackages.okular
         pymol
         python314
+        typst
         foliate
         wl-clipboard
         video-trimmer
