@@ -6,6 +6,7 @@
   makeWrapper,
   writeShellScriptBin,
   xkeyboard_config,
+  dejavu_fonts,
 }:
 
 let
@@ -26,11 +27,11 @@ let
 in
 stdenvNoCC.mkDerivation {
   pname = "msga";
-  version = "2026-09-23";
+  version = "2026-10-17";
 
   src = fetchurl {
     url = "https://msga.app/download/msga-linux-x86_64";
-    hash = "sha256-jNOqiOqi+98zC829Eldpn3skfcdqgsHXCxoGPgYa4QQ=";
+    hash = "sha256-uJYm5OfAdPiVOlc3IDmvCEILM/3reAlr3k87e3K6OJQ=";
   };
 
   icon = fetchurl {
@@ -51,6 +52,7 @@ stdenvNoCC.mkDerivation {
 
     wrapProgram "$out/bin/msga" \
       --set XKB_CONFIG_ROOT "${xkeyboard_config}/share/X11/xkb" \
+      --prefix MSGA_NEXT_FONT_DIRS : "${dejavu_fonts}/share/fonts/truetype" \
       --prefix PATH : "${braveBrowserShim}/bin"
 
     runHook postInstall
