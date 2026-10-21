@@ -37,9 +37,16 @@ let
 
   policies = {
     ExtensionInstallForcelist = forcelist;
+    URLBlocklist = [ "instagram.com" ];
   };
 in
 {
   environment.etc."brave/policies/managed/policies.json".text =
     builtins.toJSON policies;
+
+  # Replace the previous live override so it no longer allows Instagram.
+  environment.etc."brave/policies/managed/site-blocks.json".text =
+    builtins.toJSON {
+      URLAllowlist = [ "youtube.com" "reddit.com" ];
+    };
 }
