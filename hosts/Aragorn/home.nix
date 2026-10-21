@@ -1,4 +1,4 @@
-{pkgs, user, ... }:
+{pkgs, lib, user, ... }:
 let
   msga = pkgs.callPackage ../../packages/msga.nix { };
   phoneSync = pkgs.writeShellScript "sync-from-phone" ''
@@ -194,6 +194,8 @@ in
   # For USB Drive autodetection
   services.udiskie = {
       enable = true;
+      automount = true;
+      tray = "never";
       settings = {
           # workaround for
           # https://github.com/nix-community/home-manager/issues/632
@@ -202,5 +204,13 @@ in
               file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
           };
       };
+  };
+
+  # This Hyprland session does not start graphical-session.target.
+  systemd.user.services.udiskie = {
+    Install.WantedBy = lib.mkForce [ "default.target" ];
+    Unit.After = lib.mkForce [ ];
+    Unit.PartOf = lib.mkForce [ ];
+    Service.Restart = "on-failure";
   };
 }
