@@ -25,6 +25,8 @@
     nrsu = "sudo nix flake update --flake /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
     ns = "nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history";
     c = "claude";
+    pg = "/home/maxlang/Projects/polyglot/target/release/polyglot";
+    polyglot = "/home/maxlang/Projects/polyglot/target/release/polyglot";
   };
 
   programs.zsh.enable = true;

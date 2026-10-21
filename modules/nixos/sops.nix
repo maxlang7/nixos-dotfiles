@@ -33,6 +33,9 @@
   # canvas tool that runs as ${user}.
   sops.secrets."canvas-token".owner = config.users.users.${user}.name;
 
+  # OpenRouter API key — read by polyglot (runs as ${user}).
+  sops.secrets."openrouter-key".owner = config.users.users.${user}.name;
+
   sops.secrets."navidrome-lastfm-apikey" = { };
   sops.secrets."navidrome-lastfm-secret" = { };
 

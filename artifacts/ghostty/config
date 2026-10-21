@@ -21,3 +21,25 @@ theme = Gruvbox Dark Hard
 # Not a Ghostty default either — upstream ships ctrl+shift+t for new_tab,
 # which is left intact below rather than replaced.
 keybind = super+alt+k=new_tab
+
+# alt+1..9 are Ghostty's default goto_tab/last_tab binds. They are released so
+# terminal apps receive them (polyglot uses alt+1-9 to switch favorite models).
+# Each default exists twice (physical `digit_N` and the character), so both go.
+keybind = alt+digit_1=unbind
+keybind = alt+1=unbind
+keybind = alt+digit_2=unbind
+keybind = alt+2=unbind
+keybind = alt+digit_3=unbind
+keybind = alt+3=unbind
+keybind = alt+digit_4=unbind
+keybind = alt+4=unbind
+keybind = alt+digit_5=unbind
+keybind = alt+5=unbind
+keybind = alt+digit_6=unbind
+keybind = alt+6=unbind
+keybind = alt+digit_7=unbind
+keybind = alt+7=unbind
+keybind = alt+digit_8=unbind
+keybind = alt+8=unbind
+keybind = alt+digit_9=unbind
+keybind = alt+9=unbind
