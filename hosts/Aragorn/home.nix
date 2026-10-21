@@ -1,6 +1,35 @@
 {pkgs, user, ... }:
 let
   msga = pkgs.callPackage ../../packages/msga.nix { };
+  phoneSync = pkgs.writeShellScript "sync-from-phone" ''
+    set -euo pipefail
+    export RCLONE_CONFIG_PHONE_DRIVE_TYPE=drive
+    export RCLONE_CONFIG_PHONE_DRIVE_ROOT_FOLDER_ID=13NxTA0yoxUXGmt-ezCHy83irvEwOnVPZ
+    local_dir="/home/${user}/Downloads/Sync from Phone"
+    state_dir="/home/${user}/.local/state/rclone-phone"
+    ${pkgs.coreutils}/bin/mkdir -p "$local_dir" "$state_dir"
+    args=(
+      "$local_dir" "phone-drive:"
+      --config "/home/${user}/.config/rclone/rclone.conf"
+      --workdir "$state_dir/bisync"
+      --check-access --check-filename .rclone-phone-access
+      --drive-use-trash=true --drive-skip-gdocs
+      --resilient --recover --max-lock 2m --max-delete 50
+      --backup-dir1 "$state_dir/backups/$(${pkgs.coreutils}/bin/date -u +%Y%m%dT%H%M%S)"
+      --verbose
+    )
+    # Initialize once. Missing state on later runs must fail rather than
+    # silently resync and restore files the user deliberately deleted.
+    if [[ ! -e "$state_dir/initialized" ]]; then
+      ${pkgs.coreutils}/bin/touch "$local_dir/.rclone-phone-access"
+      ${pkgs.rclone}/bin/rclone touch "phone-drive:.rclone-phone-access" \
+        --config "/home/${user}/.config/rclone/rclone.conf"
+      ${pkgs.rclone}/bin/rclone bisync "''${args[@]}" --resync-mode path2
+      ${pkgs.coreutils}/bin/touch "$state_dir/initialized"
+    else
+      ${pkgs.rclone}/bin/rclone bisync "''${args[@]}"
+    fi
+  '';
 in
 {
   # Connect headphone control for battery reports while keeping playback stereo.
@@ -132,6 +161,34 @@ in
     };
 
     Install.WantedBy = [ "default.target" ];
+  };
+
+  # Only the OAuth credentials live privately in rclone.conf. The script
+  # declares the remote type and exact personal Drive folder ID.
+  systemd.user.tmpfiles.rules = [
+    "d '/home/${user}/Downloads/Sync from Phone' 0700 - - -"
+  ];
+  systemd.user.services.rclone-phone-sync = {
+    Unit = {
+      Description = "Two-way sync Downloads/Sync from Phone with personal Google Drive";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${phoneSync}";
+      TimeoutStartSec = "infinity";
+      UMask = "0077";
+    };
+  };
+  systemd.user.timers.rclone-phone-sync = {
+    Unit.Description = "Sync phone files every two minutes";
+    Timer = {
+      OnStartupSec = "30s";
+      OnUnitInactiveSec = "2m";
+      Unit = "rclone-phone-sync.service";
+    };
+    Install.WantedBy = [ "timers.target" ];
   };
 
   # For USB Drive autodetection
