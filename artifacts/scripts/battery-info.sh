@@ -4,7 +4,7 @@
 # energy_*/power_now (µWh/µW) instead, so handle both.
 
 BAT=${BAT_OVERRIDE:-$(echo /sys/class/power_supply/BAT*)}
-[ -d "$BAT" ] || { jq -cn '{"text":"󰂑","tooltip":"No battery found"}'; exit 0; }
+[ -d "$BAT" ] || { jq -cn '{"text":"<span size=\"130%\" rise=\"-1.5pt\">󰂑</span>","tooltip":"No battery found"}'; exit 0; }
 
 r() { cat "$BAT/$1" 2>/dev/null; }
 
@@ -98,5 +98,5 @@ tip=$(printf '%s\n' \
   "$(printf '%-11s %s' 'Cycles' "${cyc:-?}")" \
   "$(printf '%-11s %s %s' 'Cell' "${tech:-?}" "${model:-?}")")
 
-jq -cn --arg t "$icon $cap%" --arg tt "$tip" --arg c "$class" --argjson p "${cap:-0}" \
+jq -cn --arg t "<span size=\"130%\" rise=\"-1.5pt\">$icon</span> $cap%" --arg tt "$tip" --arg c "$class" --argjson p "${cap:-0}" \
   '{"text":$t,"tooltip":$tt,"class":$c,"percentage":$p}'

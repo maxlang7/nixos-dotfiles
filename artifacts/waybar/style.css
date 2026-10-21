@@ -1,147 +1,128 @@
 * {
     font-size: 15px;
-    font-family: monospace;
+    font-family: "0xProto Nerd Font Mono";
 }
 
 window#waybar {
     background: #282828;
-    color: #282828;
-}
-#custom-powerbutton,
-#custom-capture,
-#custom-resolution,
-#custom-nixos,
-#custom-tree,
-/*#custom-timer,*/
-#custom-claude-usage,
-#custom-codex-usage,
-#custom-wacom-pointer,
-#mpris,
-#custom-hypridle,
-#custom-notifications,
-#workspaces,
-#clock.1,
-#clock.2,
-#clock.3,
-#custom-run-streak,
-#network
-#bluetooth
-#pulseaudio,
-#memory,
-#cpu,
-#custom-battery,
-
-#custom-powerbutton {
-    padding: 0 6px;
     color: #fbf1c7;
-}
-#custom-capture {
     padding: 0 6px;
+}
+
+#custom-capture {
     color: #b16286;
 }
-#custom-resolution button {
-    color: #fbf1c7;
-    padding: 4px 4px;
+
+#custom-codex-usage,
+#custom-hypridle {
+    margin-left: 5px;
 }
-/*#custom-nixos button {
+
+#custom-wlsunset,
+#custom-notifications,
+#custom-nixos-rebuild,
+#custom-powerbutton,
+#custom-resolution,
+#custom-run-streak {
     color: #fbf1c7;
-    padding: 4px 4px;
-}*/
-/* #custom-tree button {
-    color: #98971a;
-    padding: 0 8px;
-} */
-/*#custom-timer {
-    color: #fbf1c7;
-    padding: 0 6px;
-}*/
-#custom-claude-usage {
-    padding: 0 6px;
-    color: #fbf1c7;
-    margin-top: -2px;
 }
-#custom-codex-usage {
-    padding: 0 6px;
-    color: #fbf1c7;
-    margin-top: -2px;
+
+#custom-nixos-rebuild.idle {
+    color: #ffffff;
 }
+
 #custom-codex-usage.warning {
     color: #fe8019;
 }
+
 #custom-codex-usage.critical,
-#custom-codex-usage.error {
-    color: #fb4934;
-}
-#custom-wacom-pointer {
-    padding: 0 6px;
-    color: #ffffff;
-}
-#custom-run-streak {
-    padding: 4px 4px;
-    color: #fbf1c7;
-}
-#custom-hypridle {
-    padding: 0 6px;
-    color: #fbf1c7;
-}
-#custom-notifications {
-    padding: 0 6px;
-    color: #fbf1c7;
-}
+#custom-codex-usage.error,
 #custom-notifications.disabled,
 #custom-notifications.error {
     color: #cc241d;
 }
-#mpris button {
-    color: #fbf1c7;
-    padding: 4px 4px;
+
+#custom-wlsunset.disabled {
+    color: #928374;
 }
-#workspaces button {
-    padding: 0;
-    color: #fbf1c7;
+
+#custom-wacom-pointer {
+    color: #ffffff;
 }
-#clock.1 {
-    padding: 0 5px;
-    color: #fbf1c7;
+
+#custom-powerbutton {
+    margin-left: 6px;
 }
-#clock.2 {
-    padding: 0 5px;
-    color: #fbf1c7;
+
+#custom-nixos-rebuild {
+    margin-left: 7px;
 }
-#clock.3 {
-    padding: 0 5px;
-    color: #fbf1c7;
+
+#custom-nixos-rebuild.running {
+    color: #83a598;
 }
-#custom-run-streak {
-    padding: 0 5px;
-    color: #fbf1c7;
-    margin-top: 2px;
-}
-#network {
-    padding: 0 8px;
-    color: #cc241d;
-}
-#bluetooth {
-    padding: 0 8px;
-    color: #d65d0e;
-}
-#pulseaudio {
-    padding: 0 8px;
+
+#custom-nixos-rebuild.authenticating {
     color: #d79921;
 }
-#memory {
-    color: #98971a;
+
+#custom-codex-usage {
+    margin-top: -2px;
 }
+
+#workspaces {
+    margin-left: 3px;
+}
+
+#custom-hypridle,
+#custom-wlsunset,
+#custom-notifications,
+#custom-codex-usage,
+#custom-capture,
+#custom-wacom-pointer,
+#clock,
+#custom-run-streak {
+    margin-left: 7px;
+}
+
+#bluetooth,
+#custom-bluetooth,
+#pulseaudio,
+#cpu,
+#custom-battery {
+    margin-left: 9px;
+}
+
+#workspaces button {
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0 1px;
+    color: #fbf1c7;
+}
+
+#custom-network {
+    color: #cc241d;
+}
+
+#custom-network.vpn {
+    color: #cc241d;
+}
+
+#bluetooth, #custom-bluetooth {
+    color: #d65d0e;
+}
+
+#pulseaudio {
+    color: #d79921;
+}
+
 #cpu {
     color: #458588;
 }
+
 #custom-battery {
     color: #b16286;
-}
-#clock,
-#pulseaudio,
-#memory,
-#cpu,
-#custom-battery {
-    padding: 0 10px;
+    margin-top: 2px;
+    margin-right: 10px;
 }

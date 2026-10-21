@@ -90,7 +90,7 @@ if [ -n "$five_pct" ]; then
 fi
 
 jq -cn \
-  --arg text "󰆍 $five_str" \
+  --arg text "<span size=\"120%\">󱙺</span> <span rise=\"0.5pt\">$five_str</span>" \
   --arg tooltip "$tooltip" \
   --arg class "$class" \
   '{text:$text,tooltip:$tooltip,class:$class}'

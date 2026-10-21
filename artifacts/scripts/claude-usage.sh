@@ -4,7 +4,7 @@ SESSION_FILE="$HOME/.config/claude-session-key"
 ORG="b7bd8c6b-87db-4377-8a93-3fc3b7dac255"
 
 if [ ! -f "$SESSION_FILE" ]; then
-  jq -cn '{"text":"󱙺 no key","tooltip":"Save session key to ~/.config/claude-session-key"}'
+  jq -cn '{"text":"<span size=\"120%\">󱙺</span> <span rise=\"0.5pt\">no key</span>","tooltip":"Save session key to ~/.config/claude-session-key"}'
   exit 0
 fi
 
@@ -21,7 +21,7 @@ response=$(curl -sf \
   "https://claude.ai/api/organizations/${ORG}/usage" 2>/dev/null)
 
 if [ -z "$response" ]; then
-  jq -cn '{"text":"󱙺 error","tooltip":"Failed to reach claude.ai — check network or session key"}'
+  jq -cn '{"text":"<span size=\"120%\">󱙺</span> <span rise=\"0.5pt\">error</span>","tooltip":"Failed to reach claude.ai — check network or session key"}'
   exit 0
 fi
 
@@ -35,7 +35,7 @@ five_str="${five_str:---%}"
 week_str="${week_pct:+$(printf '%.0f' "$week_pct")%}"
 week_str="${week_str:---%}"
 
-text="󱙺 ${five_str}"
+text="<span size=\"120%\">󱙺</span> <span rise=\"0.5pt\">${five_str}</span>"
 
 if [ -n "$five_resets_at" ]; then
   reset_time=$(date -d "$five_resets_at" +"%I:%M %p" 2>/dev/null)
