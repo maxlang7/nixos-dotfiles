@@ -57,6 +57,7 @@ class VpnProfile:
     profile_name: str
     kind: str
     active: bool
+    nm_unmanaged: bool = False
 
     @property
     def id(self):
@@ -201,6 +202,23 @@ def get_connection_rows():
     return rows
 
 
+def wireguard_interface_up(name):
+    flags_path = Path("/sys/class/net") / name / "flags"
+    try:
+        flags = int(flags_path.read_text().strip(), 16)
+    except (OSError, ValueError):
+        return False
+    return bool(flags & 1)  # IFF_UP
+
+
+def networkmanager_unmanages_device(name):
+    result = run(
+        ["nmcli", "-g", "GENERAL.NM-MANAGED", "device", "show", name],
+        check=False,
+    )
+    return result.returncode == 0 and result.stdout.strip().lower() == "no"
+
+
 def get_saved_wifi_profiles(connection_rows):
     profiles = {}
     for _, uuid, kind, _, active in connection_rows:
@@ -227,11 +245,22 @@ def get_networks(*, rescan=False):
         ]
     ).stdout
     wifi = parse_wifi_rows(wifi_output, profiles)
-    vpns = [
-        VpnProfile(uuid=uuid, profile_name=name, kind=kind, active=active == "yes")
-        for name, uuid, kind, _, active in connection_rows
-        if kind in ("vpn", "wireguard")
-    ]
+    vpns = []
+    for name, uuid, kind, _, active in connection_rows:
+        if kind not in ("vpn", "wireguard"):
+            continue
+        wireguard_up = kind == "wireguard" and wireguard_interface_up(name)
+        vpns.append(
+            VpnProfile(
+                uuid=uuid,
+                profile_name=name,
+                kind=kind,
+                active=active == "yes" or wireguard_up,
+                nm_unmanaged=(
+                    kind == "wireguard" and networkmanager_unmanages_device(name)
+                ),
+            )
+        )
     vpns.sort(key=lambda item: (not item.active, item.profile_name.lower()))
     return wifi, vpns
 
@@ -737,6 +766,13 @@ class NetworkSelect(AudioSelect):
         vpn = self.selected_vpn
         if vpn is None:
             self.status = "No VPN profiles are configured."
+            return
+        if vpn.nm_unmanaged:
+            state = "up" if vpn.active else "down"
+            self.status = (
+                f"{vpn.profile_name} is {state} and managed outside NetworkManager; "
+                "this menu is status-only for it."
+            )
             return
 
         action = "Disconnecting" if vpn.active else "Connecting"
