@@ -5,56 +5,92 @@ sort_by = "mtime"
 
 [opener]
 text = [
-  { run = 'zeditor -n %s', orphan = true, for = "unix" },
+  { run = 'zeditor -n %s', orphan = true, desc = "Zed", for = "unix" },
 ]
 bulk-rename = [
-  { run = 'zeditor -n --wait %s', block = true, for = "unix" },
+  { run = 'zeditor -n --wait %s', block = true, desc = "Bulk rename with Zed", for = "unix" },
 ]
 gimp = [
-  { run = 'gimp %s', orphan = true, for = "unix" },
+  { run = 'gimp %s', orphan = true, desc = "GIMP", for = "unix" },
 ]
 image-viewer = [
-  { run = 'imv %s', orphan = true, for = "unix" },
+  { run = 'imv %s', orphan = true, desc = "imv", for = "unix" },
 ]
 obsidian = [
-  { run = 'obsidian %s', orphan = true, for = "unix" },
+  { run = 'obsidian %s', orphan = true, desc = "Obsidian", for = "unix" },
 ]
 pymol = [
-  { run = 'pymol %s', orphan = true, for = "unix" },
+  { run = 'pymol %s', orphan = true, desc = "PyMOL", for = "unix" },
 ]
 okular = [
-  { run = 'okular %s', orphan = true, for = "unix" },
+  { run = 'okular %s', orphan = true, desc = "Okular", for = "unix" },
 ]
 zathura = [
-  { run = 'zathura %s', orphan = true, for = "unix" },
+  { run = 'zathura %s', orphan = true, desc = "Zathura", for = "unix" },
 ]
 xournalpp = [
-  { run = 'xournalpp %s', orphan = true, for = "unix" },
+  { run = 'xournalpp %s', orphan = true, desc = "Xournal++", for = "unix" },
 ]
 browser = [
-  { run = 'brave --new-window %s', orphan = true, for = "unix" },
+  { run = 'brave --new-window %s', orphan = true, desc = "Brave", for = "unix" },
 ]
 inkscape = [
-  { run = 'inkscape %s', orphan = true, for = "unix" },
+  { run = 'inkscape %s', orphan = true, desc = "Inkscape", for = "unix" },
 ]
 libreoffice = [
-  { run = 'libreoffice %s', orphan = true, for = "unix" },
+  { run = 'libreoffice %s', orphan = true, desc = "LibreOffice", for = "unix" },
 ]
 unzip = [
-  { run = 'unzip %s', for = "unix" },
+  { run = 'unzip %s', desc = "Extract ZIP here", for = "unix" },
 ]
 media-player = [
-  { run = 'mpv -player-operation-mode=pseudo-gui %s', orphan = true, for = "unix" },
+  { run = 'mpv -player-operation-mode=pseudo-gui %s', orphan = true, desc = "mpv", for = "unix" },
 ]
 torrent-client = [
-  { run = 'qbittorrent %s', orphan = true, for = "unix" },
+  { run = 'qbittorrent %s', orphan = true, desc = "qBittorrent", for = "unix" },
 ]
 open = [
-  { run = 'xdg-open %s', orphan = true, desc = "Open", for = "unix" }
+  { run = 'xdg-open %s', orphan = true, desc = "Default application", for = "unix" }
+]
+
+edit = [
+  { run = 'zeditor -n %s', orphan = true, desc = "Zed", for = "unix" },
+]
+reveal = [
+  { run = 'xdg-open %d1', orphan = true, desc = "Open containing folder", for = "unix" },
+  { run = 'clear; exiftool %s1; echo "Press enter to exit"; read _', block = true, desc = "Show image metadata", for = "unix" },
+]
+play = [
+  { run = 'xdg-open %s1', orphan = true, desc = "Default media player", for = "unix" },
+  { run = 'mediainfo %s1; echo "Press enter to exit"; read _', block = true, desc = "Show media info", for = "unix" },
+]
+zip-folder = [
+  { run = '''
+for folder in %s; do
+  (
+    folder=${folder%/}
+    if [ ! -d "$folder" ] || [ -z "$folder" ]; then
+      echo "Not a folder: $folder" >&2
+      exit 1
+    fi
+    parent=$(dirname -- "$folder")
+    name=$(basename -- "$folder")
+    cd -- "$parent" || exit 1
+    archive="$PWD/$name.zip"
+    number=2
+    while [ -e "$archive" ] || [ -L "$archive" ]; do
+      archive="$PWD/$name ($number).zip"
+      number=$((number + 1))
+    done
+    zip -r -y "$archive" "./$name"
+  ) || { echo "ZIP creation failed. Press enter to return to Yazi." >&2; read _; exit 1; }
+done
+''', block = true, desc = "Zip folder", for = "unix" },
 ]
 
 [open]
 prepend_rules = [
+  { mime = "folder/*", use = ["text", "open", "reveal", "zip-folder"] },
   # 1. High-priority intercepts
   { url = "*.md", use = ["text", "obsidian"] },
 

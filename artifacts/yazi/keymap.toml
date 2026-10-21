@@ -1,16 +1,18 @@
 [mgr]
 prepend_keymap = [
-    { on = [ "g", "D" ],       run = "cd ~/Documents",   desc = "Go to ~/Documents" },
-    { on = [ "g", "S" ],       run = "cd ~/Documents/School/CMU/26_Fall",   desc = "Go to current Semester" },
-    { on = [ "g", "p" ],       run = "cd ~/Documents/poems",   desc = "Go to poems folder" },
+    { on = [ "g", "D" ],       run = "cd ~/Documents",   desc = "Go to Documents" },
+    { on = [ "g", "S" ],       run = "cd ~/Documents/School/CMU/26_Fall",   desc = "Go to Fall 2026 coursework" },
+    { on = [ "g", "p" ],       run = "cd ~/Documents/poems",   desc = "Go to poems" },
 
-    { on = [ "g", "m" ],       run = "cd ~/Music/navidrome",   desc = "Go to Navidrome Music Folder" },
-    { on = [ "g", "b" ],       run = "cd ~/Documents/books",   desc = "Go to books folder" },
-    { on = [ "g", "l" ],       run = "cd '/home/maxlang/Documents/IGB Lab/'",   desc = "Go to IGB Lab folder" },
-    { on = [ "g", "1" ],       run = "cd '/home/maxlang/Documents/112/'",   desc = "Go to 112 folder" },
+    { on = [ "g", "m" ],       run = "cd ~/Music/navidrome",   desc = "Go to Navidrome music" },
+    { on = [ "g", "b" ],       run = "cd ~/Documents/books",   desc = "Go to books" },
+    { on = [ "g", "M" ],       run = "cd ~/Documents/movies",   desc = "Go to movies" },
+    { on = [ "g", "l" ],       run = "cd '/home/maxlang/Documents/IGB Lab/'",   desc = "Go to IGB Lab" },
+    { on = [ "g", "1" ],       run = "cd '/home/maxlang/Documents/112/'",   desc = "Go to 15-112" },
 
     { on = [ "g", "t" ],       run = "cd '/home/maxlang/.local/share/Trash'",   desc = "Go to Trash" },
 
-    { on = [ "<Enter>" ], run = [ "open" ], desc = "Open and exit" },
+    { on = [ "<Enter>" ], run = "plugin open-exit", desc = "Open and exit" },
+    { on = [ "<S-Enter>" ], run = "open", desc = "Open" },
     { on = [ "R" ], run = 'shell --block "ya emit rename; zeditor -n --wait bulk-rename.txt"', desc = "Bulk rename with Zed" }
 ]
