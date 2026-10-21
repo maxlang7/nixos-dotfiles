@@ -3,11 +3,15 @@
 # On Windows the entry point is topspin.cmd at the install root, not an .exe —
 # that is what Bruker's own installer/etc/shortcuts.yaml points its shortcut at.
 
-WINEPREFIX="${TOPSPIN_WINEPREFIX:-${XDG_DATA_HOME:-$HOME/.local/share}/topspin-wine}"
+# ~/.wine-topspin-5 is the prefix the working TopSpin 5 install lives in.
+WINEPREFIX="${TOPSPIN_WINEPREFIX:-$HOME/.wine-topspin-5}"
 export WINEPREFIX
 export WINEARCH=win64
 export WINEDEBUG="${WINEDEBUG:--all}"
-export WINEDLLOVERRIDES="mscoree,mshtml,winemenubuilder.exe="
+export WINEDLLOVERRIDES="winemenubuilder.exe="
+# wineWow64Packages.waylandFull ships only the Wayland driver (no winex11), so
+# WAYLAND_DISPLAY must stay as the session set it — clearing it leaves TopSpin
+# running with no window at all.
 
 # The login-time unit normally has this ready; build it here if it skipped or
 # has not run yet. Stages are stamped, so this is a no-op once done.
@@ -30,14 +34,9 @@ if [ -z "$install_root" ] || [ ! -f "$install_root/topspin.cmd" ]; then
   exit 1
 fi
 
-# CodeMeter holds the license. Bruker's installer bundles it; on Windows it runs as
-# a service, which Wine does not start on its own.
-if ! pgrep -f 'CodeMeter\.exe' >/dev/null 2>&1; then
-  codemeter=$(find "$WINEPREFIX/drive_c" -maxdepth 6 -type f -name CodeMeter.exe 2>/dev/null | head -n1 || true)
-  if [ -n "$codemeter" ]; then
-    wine start /unix "$codemeter" || echo "warning: CodeMeter did not start" >&2
-  fi
-fi
+# The license comes from the native CodeMeter service (modules/nixos/codemeter.nix),
+# which the Windows client reaches on localhost:22350. Do not start the bundled
+# Windows CodeMeter.exe: it would fight the native one for that port.
 
 cd "$install_root"
 exec wine cmd /c topspin.cmd "$@"

@@ -11,7 +11,7 @@
 #   topspin-wine-setup --prefix-only        prefix + deps only (what the user unit runs)
 #   topspin-wine-setup --redo deps          forget a stage's stamp and run it again
 
-WINEPREFIX="${TOPSPIN_WINEPREFIX:-${XDG_DATA_HOME:-$HOME/.local/share}/topspin-wine}"
+WINEPREFIX="${TOPSPIN_WINEPREFIX:-$HOME/.wine-topspin-5}"
 export WINEPREFIX
 export WINEARCH=win64
 export WINEDEBUG="${WINEDEBUG:--all}"

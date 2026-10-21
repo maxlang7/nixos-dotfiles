@@ -37,6 +37,7 @@ in
       ../../modules/nixos/battery_management.nix
       ../../modules/nixos/graphics.nix
       ../../modules/nixos/terminal_utils.nix
+      ../../modules/nixos/codemeter.nix
       #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
       # ../../modules/nixos/sddm.nix
