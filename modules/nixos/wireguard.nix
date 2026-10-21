@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+  # NixOS manages this tunnel and peer; NetworkManager must not overwrite them.
+  networking.networkmanager.unmanaged = [ "interface-name:seltsam" ];
+
   # Enable WireGuard
   networking.wireguard.interfaces = {
     seltsam = {
@@ -13,6 +16,7 @@
 
       peers = [
         {
+          name = "up";
           # Public key of the server (not a file path).
           publicKey = "fLSyzuBDLomN37RSqIz1TQNNHLud5HjafYd6xVto8gU=";
           # ── sops secret (requires ./sops.nix). Plaintext fallback below. ──
@@ -28,13 +32,16 @@
           persistentKeepalive = 25;
         }
       ];
-
-      # Send *.langhorst.com lookups to up's DNS over the tunnel. resolved drops
-      # these per-link settings by itself when the interface goes away.
-      postSetup = ''
-        ${pkgs.systemd}/bin/resolvectl dns seltsam 192.168.1.2
-        ${pkgs.systemd}/bin/resolvectl domain seltsam ~langhorst.com
-      '';
     };
+  };
+
+  # The endpoint is under langhorst.com. Resolve it normally before routing
+  # that domain's DNS through the tunnel, including on peer restarts.
+  systemd.services.wireguard-seltsam-peer-up = {
+    preStart = "${pkgs.systemd}/bin/resolvectl revert seltsam";
+    postStart = ''
+      ${pkgs.systemd}/bin/resolvectl dns seltsam 192.168.1.2
+      ${pkgs.systemd}/bin/resolvectl domain seltsam '~langhorst.com'
+    '';
   };
 }
