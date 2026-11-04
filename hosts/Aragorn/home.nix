@@ -56,6 +56,7 @@ in
     [
       ../../modules/home_manager/yazi.nix
       ../../modules/home_manager/zsh.nix
+      ../../modules/home_manager/taskwarrior.nix
       #../../modules/home_manager/fish.nix
       ../../modules/home_manager/hyprland.nix
       ../../modules/home_manager/minecraft.nix

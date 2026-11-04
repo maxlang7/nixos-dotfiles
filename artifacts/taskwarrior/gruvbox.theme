@@ -1,0 +1,47 @@
+# Gruvbox Dark, using the conventional 256-color palette.
+# The terminal supplies its existing Gruvbox Dark Hard background.
+# Keep the main view focused on the list, without the task metadata pane.
+uda.taskwarrior-tui.task-report.info-show=false
+
+color.label=color223
+color.label.sort=bold color214
+color.header=color142
+color.footnote=color109
+color.active=bold color142
+color.alternate=on color237
+color.completed=color108
+color.deleted=color245
+color.overdue=bold color167
+color.due.today=bold color214
+color.due=color214
+color.blocked=color245
+color.blocking=color208
+color.recurring=color175
+color.scheduled=color109
+color.tagged=color108
+color.uda.priority.H=bold color167
+color.uda.priority.M=color214
+color.uda.priority.L=color109
+color.error=bold color167
+color.warning=color208
+color.sync.added=color142
+color.sync.changed=color214
+color.sync.rejected=color167
+
+uda.taskwarrior-tui.selection.bold=true
+uda.taskwarrior-tui.selection.reverse=false
+uda.taskwarrior-tui.style.report.selection=color223 on color239
+uda.taskwarrior-tui.style.navbar=color234 on color142
+uda.taskwarrior-tui.style.command=color223 on color237
+uda.taskwarrior-tui.style.command.error=bold color167 on color237
+uda.taskwarrior-tui.style.context.active=bold color214
+uda.taskwarrior-tui.style.report-menu.active=bold color214
+uda.taskwarrior-tui.style.title=bold color214
+uda.taskwarrior-tui.style.title.border=color239
+uda.taskwarrior-tui.style.calendar.title=bold color214
+uda.taskwarrior-tui.style.calendar.today=bold color234 on color214
+uda.taskwarrior-tui.style.report.scrollbar=color142
+uda.taskwarrior-tui.style.report.scrollbar.area=color237
+uda.taskwarrior-tui.style.report.completion-pane=color223 on color237
+uda.taskwarrior-tui.style.report.completion-pane-highlight=bold color234 on color142
+uda.taskwarrior-tui.style.help.gauge=color108
