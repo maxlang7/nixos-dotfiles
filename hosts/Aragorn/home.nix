@@ -170,14 +170,16 @@ in
       Type = "notify";
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/${user}/Documents/112/shared_drive";
       ExecStart = ''
-        ${pkgs.rclone}/bin/rclone mount "cmu-drive:15-112 F26 Shared" /home/${user}/Documents/112/shared_drive \
+        ${pkgs.rclone}/bin/rclone mount "cmu-drive:" /home/${user}/Documents/112/shared_drive \
+          --drive-root-folder-id=1-0siBJgE3zioxyWbGkq813KqcWpW2PBF \
           --config=/home/${user}/.config/rclone/rclone.conf \
           --cache-dir=/home/${user}/.cache/rclone \
           --vfs-cache-mode=writes \
           --dir-cache-time=5m \
           --poll-interval=1m
       '';
-      ExecStop = "${pkgs.fuse3}/bin/fusermount3 -u /home/${user}/Documents/112/shared_drive";
+      # NixOS's privileged wrapper can detach the mount even if a file manager holds it open.
+      ExecStop = "/run/wrappers/bin/fusermount3 -uz /home/${user}/Documents/112/shared_drive";
       Restart = "on-failure";
       RestartSec = "10s";
     };
@@ -209,6 +211,38 @@ in
       OnStartupSec = "30s";
       OnUnitInactiveSec = "2m";
       Unit = "rclone-phone-sync.service";
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  # Download the CMU Drive School folder. Never upload or delete local files.
+  systemd.user.services.rclone-school-pull = {
+    Unit = {
+      Description = "Download CMU Google Drive School folder";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      UMask = "0077";
+      TimeoutStartSec = "infinity";
+      ExecStart = pkgs.writeShellScript "pull-school-drive" ''
+        set -euo pipefail
+        ${pkgs.rclone}/bin/rclone copy cmu-drive: "/home/${user}/Documents/School/Google Drive" \
+          --config "/home/${user}/.config/rclone/rclone.conf" \
+          --drive-root-folder-id 1Gj2adTp4jIGuwrV9gvSDfFK3PYNvvblA \
+          --drive-export-formats docx,xlsx,pptx,svg \
+          --backup-dir "/home/${user}/.local/state/rclone-school/backups/$(${pkgs.coreutils}/bin/date -u +%Y%m%dT%H%M%S%N)" \
+          --create-empty-src-dirs --verbose
+      '';
+    };
+  };
+  systemd.user.timers.rclone-school-pull = {
+    Unit.Description = "Download School files every five minutes";
+    Timer = {
+      OnStartupSec = "1m";
+      OnUnitInactiveSec = "5m";
+      Unit = "rclone-school-pull.service";
     };
     Install.WantedBy = [ "timers.target" ];
   };
