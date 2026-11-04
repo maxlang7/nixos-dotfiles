@@ -55,7 +55,8 @@ in
   # Distrust roots involved in the eMudhra intermediate CA compromise.
   security.pki.caCertificateBlacklist = [
     "Comodo AAA Services root"
-    "emSign ECC Root CA - G3"
+    # emSign ECC Root CA - G3 is absent from NSS 3.131.1.
+    # Listing an absent root makes buildcatrust fail.
   ];
 
   nix = {
