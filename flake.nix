@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    crane.url = "github:ipetkov/crane";
 
     # ── secrets (sops-nix) — comment these two lines to fully disable ──
     # (also comment ./sops.nix in modules/nixos/maxlang.nix)
@@ -59,13 +60,17 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = { inherit pkgs-unstable user hostName; };
+              extraSpecialArgs = { inherit pkgs-unstable inputs user hostName; };
               users.${user} = { imports = homeModules; };
             };
           }
         ];
       };
   in {
+    packages.${system}.calendar-tui = let
+      pkgs = import nixpkgs { inherit system; };
+    in pkgs.callPackage ./packages/calendar-tui { craneLib = inputs.crane.mkLib pkgs; };
+
     nixosConfigurations = {
       Aragorn = mkNixosSystem {
         hostName = "Aragorn";

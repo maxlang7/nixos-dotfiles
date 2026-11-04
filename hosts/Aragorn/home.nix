@@ -1,5 +1,6 @@
-{pkgs, lib, user, ... }:
+{pkgs, lib, user, inputs, ... }:
 let
+  calendarTui = pkgs.callPackage ../../packages/calendar-tui { craneLib = inputs.crane.mkLib pkgs; };
   msga = pkgs.callPackage ../../packages/msga.nix { };
   phoneSync = pkgs.writeShellScript "sync-from-phone" ''
     set -euo pipefail
@@ -92,9 +93,29 @@ in
     # networks
   home.stateVersion = "25.05";
   home.packages = with pkgs; [
+    calendarTui
       hello
       wtype
   ];
+  # One wake-up every five minutes; the app refreshes the full cache hourly.
+  systemd.user.services.calendar-tui-sync = {
+    Unit.Description = "Sync CMU Google Calendar cache";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${calendarTui}/bin/calendar-tui --sync";
+      TimeoutStartSec = "10min";
+      UMask = "0077";
+    };
+  };
+  systemd.user.timers.calendar-tui-sync = {
+    Unit.Description = "Refresh CMU calendar every five minutes";
+    Timer = {
+      OnCalendar = "*-*-* *:0/5:00";
+      Persistent = true;
+      AccuracySec = "15s";
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
   xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
   xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
   # Beeper Desktop watches this file and live-injects it as custom CSS.
