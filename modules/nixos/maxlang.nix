@@ -116,7 +116,7 @@ in
       vesktop
       discord
       slack
-      bluebubbles
+      # bluebubbles
       lunar-client
       obsidian
       remnote
@@ -128,7 +128,8 @@ in
       nixd
       nil
       vscode
-      xournalppGruvbox
-      # t3code
+      # xournalppGruvbox
+      opencode
+      t3code
     ]);
 }

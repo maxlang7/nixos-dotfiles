@@ -52,7 +52,7 @@ let
       printf 'BLUEFERRY_MAC=%s\n' "$(< /run/secrets/blueferry-mac)"
       printf '%s\n' \
         'BLUEFERRY_ADAPTER=hci0' \
-        'BLUEFERRY_ANCS_ENABLED=false' \
+        'BLUEFERRY_ANCS_ENABLED=true' \
         'BLUEFERRY_CONTACT_PHOTOS=true' \
         'BLUEFERRY_MEDIA_CONTROL_ENABLED=true' \
         'BLUEFERRY_KEEP_PHONE_AUDIO_ON_PHONE=false' \

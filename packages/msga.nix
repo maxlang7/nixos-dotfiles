@@ -7,6 +7,7 @@
   writeShellScriptBin,
   xkeyboard_config,
   dejavu_fonts,
+  noto-fonts-color-emoji,
 }:
 
 let
@@ -27,11 +28,11 @@ let
 in
 stdenvNoCC.mkDerivation {
   pname = "msga";
-  version = "2026-10-17";
+  version = "2026-11-01";
 
   src = fetchurl {
     url = "https://msga.app/download/msga-linux-x86_64";
-    hash = "sha256-uJYm5OfAdPiVOlc3IDmvCEILM/3reAlr3k87e3K6OJQ=";
+    hash = "sha256-AIKbbvvZ12W4JwTQ/7qi1g87nq6n1Bjhwx/PIsHihco=";
   };
 
   icon = fetchurl {
@@ -52,7 +53,7 @@ stdenvNoCC.mkDerivation {
 
     wrapProgram "$out/bin/msga" \
       --set XKB_CONFIG_ROOT "${xkeyboard_config}/share/X11/xkb" \
-      --prefix MSGA_NEXT_FONT_DIRS : "${dejavu_fonts}/share/fonts/truetype" \
+      --prefix MSGA_NEXT_FONT_DIRS : "${dejavu_fonts}/share/fonts/truetype:${noto-fonts-color-emoji}/share/fonts/noto" \
       --prefix PATH : "${braveBrowserShim}/bin"
 
     runHook postInstall
