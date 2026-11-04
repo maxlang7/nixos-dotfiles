@@ -14,7 +14,7 @@ is_active() {
 status() {
     local frame="${1:-0}" state="idle" text="󱄅" tooltip
     local frames=( '⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏' )
-    tooltip=$'Left-click: fingerprint and rebuild\nRight-click: update flake and rebuild'
+    tooltip=$'Left-click: fingerprint and rebuild\nRight-click: update flake and rebuild\nMiddle-click: show rebuild terminal'
     if is_active; then
         [[ -r "$state_file" ]] && IFS= read -r state < "$state_file"
         text="${frames[frame % ${#frames[@]}]}"
@@ -24,6 +24,9 @@ status() {
             state="running"
             tooltip="NixOS rebuild in progress. See the NixOS terminal for output."
         fi
+    fi
+    if [[ "$state" != idle ]]; then
+        tooltip+=$'\nMiddle-click: show rebuild terminal'
     fi
     jq -cn --arg text "$text" --arg tooltip "$tooltip" --arg class "$state" \
         '{text:$text,tooltip:$tooltip,class:$class}'
@@ -138,6 +141,23 @@ worker() {
     return "$result"
 }
 
+show_terminal() {
+    local window address workspace
+    window=$(hyprctl clients -j | jq -c '[.[] | select(.title == "NixOS-rebuild")][0] // {}')
+    address=$(jq -r '.address // empty' <<<"$window")
+    workspace=$(jq -r '.workspace.name // empty' <<<"$window")
+    if [[ -z "$address" ]]; then
+        notify-send "NixOS rebuild" "No rebuild terminal is open." || true
+        return 0
+    fi
+    if [[ "$workspace" == special:nixos-rebuild ]]; then
+        if ! hyprctl monitors -j | jq -e 'any(.[]; .specialWorkspace.name == "special:nixos-rebuild")' >/dev/null; then
+            hyprctl dispatch togglespecialworkspace nixos-rebuild >/dev/null || return
+        fi
+    fi
+    hyprctl dispatch focuswindow "address:$address" >/dev/null
+}
+
 start() {
     local mode="${1:-switch}"
     if is_active; then
@@ -153,7 +173,8 @@ case "${1:-status}" in
     watch) watch_status ;;
     start) start switch ;;
     update) start update ;;
+    show) show_terminal ;;
     worker) worker "${2:-switch}" ;;
     preview) draw_header "${2:-switch}"; read -r _ ;;
-    *) printf 'Usage: %s [status|watch|start|update|worker]\n' "$0" >&2; exit 2 ;;
+    *) printf 'Usage: %s [status|watch|start|update|show|worker]\n' "$0" >&2; exit 2 ;;
 esac

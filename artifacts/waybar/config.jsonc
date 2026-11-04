@@ -42,7 +42,8 @@
     "format": "<span size='120%'>{}</span>",
     "tooltip": true,
     "on-click": "/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh start",
-    "on-click-right": "/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh update"
+    "on-click-right": "/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh update",
+    "on-click-middle": "/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh show"
   },
   "custom/capture": {
     "format": "<span size='132%' rise='-2pt'>󰑋</span>",
