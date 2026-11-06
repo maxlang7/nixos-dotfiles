@@ -1,0 +1,86 @@
+{
+  "appearanceContrast": 100,
+  "boringSidebarEnabled": false,
+  "boringSidebarMultilineRows": false,
+  "browserAutoShowFloatingPreview": true,
+  "browserDefaultAppearance": "system",
+  "browserDefaultViewport": {
+    "_tag": "fill"
+  },
+  "browserDefaultZoomFactor": 1,
+  "browserLinkTarget": "app",
+  "browserRecordingFrameRate": 30,
+  "browserRecordingShowKeyPresses": false,
+  "browserRecordingShowMousePresses": false,
+  "browserSearchEngine": "google",
+  "chatWidth": "comfortable",
+  "composerRichTextEnabled": true,
+  "confirmQuit": "hold",
+  "confirmThreadArchive": false,
+  "confirmThreadDelete": true,
+  "confirmThreadUnpin": false,
+  "contextWindowMeterEnabled": false,
+  "diffColorScheme": "red-green",
+  "diffFilesCollapsed": true,
+  "diffIgnoreWhitespace": true,
+  "diffLayout": "stacked",
+  "effortDisplay": "label",
+  "environmentIdentificationMode": "artwork",
+  "favorites": [
+    {
+      "provider": "claudeAgent",
+      "model": "claude-opus-5"
+    }
+  ],
+  "followUpBehavior": "steer",
+  "fontFamilyCode": "",
+  "fontFamilyComposer": "",
+  "fontFamilySans": "",
+  "fontFamilyTerminal": "",
+  "fontSizeCode": 13,
+  "fontSizeInterface": 16,
+  "fontSizePrompt": 14,
+  "fontSizeTerminal": 12,
+  "fontSmoothing": true,
+  "glassOpacity": 80,
+  "inAppNotificationsEnabled": true,
+  "legacySidebarEnabled": false,
+  "loadBalancingEnabled": false,
+  "mathRenderingEnabled": true,
+  "notificationMode": "notifications",
+  "panelAnimationDurationMs": 0,
+  "persistComposerContextStrip": false,
+  "planModeEnabled": false,
+  "proactivePanelsEnabled": false,
+  "providerModelPreferences": {
+    "claudeAgent": {
+      "hiddenModels": [
+        "claude-opus-4-8",
+        "claude-opus-4-7",
+        "claude-opus-4-6",
+        "claude-sonnet-4-6",
+        "claude-opus-4-5"
+      ],
+      "modelOrder": []
+    }
+  },
+  "pullRequestLinksOpenInApp": true,
+  "sendShortcut": "enter",
+  "showSkillsInSlashMenu": true,
+  "sidebarProjectGroupingMode": "repository",
+  "sidebarProjectSortOrder": "updated_at",
+  "sidebarThreadSortOrder": "updated_at",
+  "sidebarWorkingShelfEnabled": true,
+  "snapShotAnimations": true,
+  "snapShotEnabled": false,
+  "snapShotFlash": true,
+  "snapShotIncludeAccessibility": true,
+  "snapShotPlaySound": true,
+  "snapShotShortcut": {
+    "kind": "both-shift-keys"
+  },
+  "snapShotSound": "soft-pop",
+  "threadDetailsUsageEnabled": false,
+  "timestampFormat": "locale",
+  "wordWrap": true
+}

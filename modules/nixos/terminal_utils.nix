@@ -17,12 +17,16 @@
 
   environment.shellAliases = {
     mountusb = "bash /etc/nixos/artifacts/scripts/mountusb.sh";
-    nrs = "sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
+    nrs = if hostName == "Aragorn"
+      then "/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh start"
+      else "sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
     tree = "cbonsai -l -m '\"I am at home among the trees\" - J.R.R Tolkien'";
     cat = "bat";
     ff = "clear && fastfetch";
     dm = "yt-dlp -x --audio-format m4a --download-archive \"/home/maxlang/Music/ytdl/archive.txt\" -o \"/home/maxlang/Music/ytdl/%(title)s.%(ext)s\" \"https://www.youtube.com/playlist?list=PLTIbe5JVteQdg_7yAHxcl-WcONflu1uEQ\"";
-    nrsu = "sudo nix flake update --flake /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
+    nrsu = if hostName == "Aragorn"
+      then "/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh update"
+      else "sudo nix flake update --flake /etc/nixos && sudo nixos-rebuild switch --flake /etc/nixos#${hostName}";
     ns = "nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history";
     c = "claude";
     pg = "/home/maxlang/Projects/polyglot/target/release/polyglot";

@@ -19,7 +19,7 @@
 #
 # Rollback: pick the previous generation in the boot menu, or
 # `nixos-rebuild switch --rollback`.
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, user, ... }:
 {
   system.autoUpgrade = {
     enable = true;
@@ -36,6 +36,14 @@
     persistent = true;
     allowReboot = false;
   };
+
+  # Run as the account that owns the settings and checkout, before the upgrade
+  # evaluates the flake. No Git staging, commits or pushes happen here.
+  systemd.services.nixos-upgrade.preStart = lib.mkBefore ''
+    ${pkgs.util-linux}/bin/runuser -u ${lib.escapeShellArg user} -- \
+      ${pkgs.python3}/bin/python3 ${../../artifacts/scripts/t3-settings-sync.py} sync \
+      --userdata ${lib.escapeShellArg "/home/${user}/.t3/userdata"} --if-present
+  '';
 
   # Every nightly run leaves another generation behind; without this the store
   # grows without bound. 30d keeps plenty of rollback targets.

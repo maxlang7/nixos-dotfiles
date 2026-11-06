@@ -107,6 +107,10 @@ worker() {
     draw_header "$mode"
     # Authenticate in this terminal, then reuse its sudo timestamp without prompts.
     if sudo -v; then
+        # Capture writable T3 preferences as the desktop user, before Nix reads
+        # the flake. An activation hook would be too late for this generation.
+        printf '\nSaving T3 settings to the Nix repository...\n'
+        python3 /etc/nixos/artifacts/scripts/t3-settings-sync.py sync --if-present || result=$?
         window=$(hyprctl clients -j | jq -c '[.[] | select(.title == "NixOS-rebuild")][0] // {}')
         address=$(jq -r '.address // empty' <<<"$window")
         workspace=$(jq -r '.workspace.name // empty' <<<"$window")
@@ -114,7 +118,9 @@ worker() {
             hyprctl dispatch movetoworkspacesilent "special:nixos-rebuild,address:$address" >/dev/null || true
         fi
         printf 'running\n' > "$state_file"
-        if [[ "$mode" == update ]]; then
+        if (( result != 0 )); then
+            printf 'T3 settings snapshot failed; rebuild stopped.\n' >&2
+        elif [[ "$mode" == update ]]; then
             sudo -n bash -c 'nix flake update --flake /etc/nixos && nixos-rebuild switch --flake /etc/nixos#Aragorn' || result=$?
         else
             sudo -n nixos-rebuild switch --flake /etc/nixos#Aragorn || result=$?
