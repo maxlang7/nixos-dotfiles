@@ -33,7 +33,8 @@ window#waybar {
 }
 
 #custom-codex-usage-cmu.warning,
-#custom-codex-usage-personal.warning {
+#custom-codex-usage-personal.warning,
+#custom-grok-usage.warning {
     color: #fe8019;
 }
 
@@ -41,6 +42,8 @@ window#waybar {
 #custom-codex-usage-cmu.error,
 #custom-codex-usage-personal.critical,
 #custom-codex-usage-personal.error,
+#custom-grok-usage.critical,
+#custom-grok-usage.error,
 #custom-notifications.disabled,
 #custom-notifications.error {
     color: #cc241d;
@@ -71,7 +74,8 @@ window#waybar {
 }
 
 #custom-codex-usage-cmu,
-#custom-codex-usage-personal {
+#custom-codex-usage-personal,
+#custom-grok-usage {
     margin-top: -2px;
 }
 
@@ -84,6 +88,7 @@ window#waybar {
 #custom-notifications,
 #custom-codex-usage-cmu,
 #custom-codex-usage-personal,
+#custom-grok-usage,
 #custom-capture,
 #custom-wacom-pointer,
 #clock,

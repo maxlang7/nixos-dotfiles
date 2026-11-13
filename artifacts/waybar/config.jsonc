@@ -17,6 +17,7 @@
     // "custom/timer",
     "custom/codex-usage-cmu",
     "custom/codex-usage-personal",
+    "custom/grok-usage",
     "custom/capture",
     "custom/wacom-pointer"
     // "mpris"
@@ -86,6 +87,15 @@
     "tooltip": true,
     "on-click": "pkill -SIGRTMIN+10 waybar",
     "on-click-right": "CODEX_HOME=/home/maxlang/.codex_personal ghostty -e codex"
+  },
+  "custom/grok-usage": {
+    "exec": "/etc/nixos/artifacts/scripts/grok-usage.sh '󰚩'",
+    "return-type": "json",
+    "escape": false,
+    "interval": 60,
+    "signal": 14,
+    "tooltip": true,
+    "on-click": "pkill -SIGRTMIN+14 waybar"
   },
   "custom/wacom-pointer": {
     "exec": "/etc/nixos/artifacts/scripts/wacom-pointer-toggle.sh status",
