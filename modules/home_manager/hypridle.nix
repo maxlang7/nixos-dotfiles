@@ -26,12 +26,6 @@ in
             on-timeout = "${idleControl} dim";
             on-resume = "${idleControl} restore-screen";
           }
-          # keyboard backlight when timout has passed, screen on when activity detected.
-          {
-            timeout = 150;
-            on-timeout = "${idleControl} keyboard-off";
-            on-resume = "${idleControl} restore-keyboard";
-          }
           # lock screen when timeout thas passed.
           {
             timeout = 180;

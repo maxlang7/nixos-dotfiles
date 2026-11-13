@@ -57,20 +57,14 @@ lighting() (
                 save_brightness intel_backlight
                 brightnessctl -d intel_backlight set 50%- >/dev/null
             fi ;;
-        keyboard-off|lid-close)
-            save_brightness chromeos::kbd_backlight
-            brightnessctl -d chromeos::kbd_backlight set 0 >/dev/null
-            if [[ "$action" == lid-close ]]; then
-                # Prevent compositor input wake from relighting a closed panel.
-                hyprctl keyword misc:key_press_enables_dpms false >/dev/null
-                hyprctl keyword misc:mouse_move_enables_dpms false >/dev/null
-                internal_off
-            fi ;;
+        lid-close)
+            # Prevent compositor input wake from relighting a closed panel.
+            hyprctl keyword misc:key_press_enables_dpms false >/dev/null
+            hyprctl keyword misc:mouse_move_enables_dpms false >/dev/null
+            internal_off ;;
         display-off) hyprctl dispatch dpms off >/dev/null ;;
         restore-screen)
             if ! lid_closed; then restore_brightness intel_backlight; fi ;;
-        restore-keyboard)
-            if ! lid_closed; then restore_brightness chromeos::kbd_backlight; fi ;;
         wake|lid-open)
             hyprctl dispatch dpms on >/dev/null
             if lid_closed; then
@@ -79,7 +73,6 @@ lighting() (
                 hyprctl keyword misc:key_press_enables_dpms true >/dev/null
                 hyprctl keyword misc:mouse_move_enables_dpms true >/dev/null
                 restore_brightness intel_backlight
-                restore_brightness chromeos::kbd_backlight
             fi
             # Do not hold the callback lock while Waybar settles.
             flock -u 9
@@ -93,12 +86,22 @@ status_json() {
     if ! systemctl --user --quiet is-active hypridle.service; then
         echo '{"text":"!","tooltip":"Hypridle is not running; idle handling unavailable","class":"error"}'
     elif is_caffeinated; then
-        echo '{"text":"󰅶","tooltip":"Caffeinated: screen and keyboard sleep; work continues with lid closed. Click for normal idle.","class":"disabled"}'
+        echo '{"text":"󰅶","tooltip":"Caffeinated: screen sleeps; work continues with lid closed. Click for normal idle.","class":"disabled"}'
     else
         echo '{"text":"󰒲","tooltip":"Normal idle: lock at 3 min, screen off at 5.5 min, suspend at 8 min 20 sec. Click to caffeinate.","class":"enabled"}'
     fi
 }
 case "${1:-status}" in
+    session-start)
+        # This session does not start graphical-session.target. Import the
+        # compositor environment before starting the systemd-managed daemon.
+        systemctl --user import-environment WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE DISPLAY
+        brightnessctl -d chromeos::kbd_backlight set 0 >/dev/null
+        systemctl --user start hypridle.service
+        pkill -RTMIN+9 -x waybar || true
+        exit ;;
+    # Old installed listeners remain harmless until the next rebuild.
+    keyboard-off|restore-keyboard) exit ;;
     toggle) if is_caffeinated; then uncaffeinate; else caffeinate; fi ;;
     caffeinate) caffeinate ;;
     uncaffeinate) uncaffeinate ;;
@@ -110,7 +113,7 @@ case "${1:-status}" in
         exit ;;
     # Compatibility for the old installed timer until the next activation.
     schedule) ;;
-    dim|keyboard-off|display-off|restore-screen|restore-keyboard|wake|lid-open)
+    dim|display-off|restore-screen|wake|lid-open)
         lighting "$1"; exit ;;
     lid-close)
         # Also darken docked normal-mode sessions, where logind ignores the lid.
