@@ -2,9 +2,12 @@
 
 set -u
 
+account_label=${1:-Codex}
+account_symbol=${2:-󱙺}
+
 error_json() {
-  jq -cn --arg message "$1" \
-    '{text:">_ error",tooltip:$message,class:"error"}'
+  jq -cn --arg account "$account_label" --arg message "$1" \
+    '{text:">_ error",tooltip:($account + ": " + $message),class:"error"}'
 }
 
 if ! command -v codex >/dev/null || ! command -v jq >/dev/null; then
@@ -77,7 +80,7 @@ if [ -n "$week_reset" ]; then
   [ -n "$reset_time" ] && tooltip_line2="$tooltip_line2 | Resets $reset_time"
 fi
 
-tooltip="$tooltip_line1"$'\n'"$tooltip_line2"
+tooltip="$account_label"$'\n'"$tooltip_line1"$'\n'"$tooltip_line2"
 [ -n "$plan" ] && tooltip="$tooltip"$'\n'"Plan: ${plan^}"
 
 class="normal"
@@ -90,7 +93,7 @@ if [ -n "$five_pct" ]; then
 fi
 
 jq -cn \
-  --arg text "<span size=\"120%\">󱙺</span> <span rise=\"0.5pt\">$five_str</span>" \
+  --arg text "<span size=\"120%\">$account_symbol</span> <span rise=\"0.5pt\">$five_str</span>" \
   --arg tooltip "$tooltip" \
   --arg class "$class" \
   '{text:$text,tooltip:$tooltip,class:$class}'

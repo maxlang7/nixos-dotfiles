@@ -15,7 +15,8 @@
     // "custom/tree",
     // "custom/nixos",
     // "custom/timer",
-    "custom/codex-usage",
+    "custom/codex-usage-cmu",
+    "custom/codex-usage-personal",
     "custom/capture",
     "custom/wacom-pointer"
     // "mpris"
@@ -66,8 +67,8 @@
   //   "exec-if": "which uairctl",
   //   "exec": "uairctl fetch '{\"text\":\"{time}\",\"class\":\"{state}\",\"percentage\":{percent}}'"
   // },
-  "custom/codex-usage": {
-    "exec": "/etc/nixos/artifacts/scripts/codex-usage.sh",
+  "custom/codex-usage-cmu": {
+    "exec": "CODEX_HOME=/home/maxlang/.codex /etc/nixos/artifacts/scripts/codex-usage.sh CMU '⚙'",
     "return-type": "json",
     "escape": false,
     "interval": 60,
@@ -75,6 +76,16 @@
     "tooltip": true,
     "on-click": "pkill -SIGRTMIN+10 waybar",
     "on-click-right": "ghostty -e codex"
+  },
+  "custom/codex-usage-personal": {
+    "exec": "CODEX_HOME=/home/maxlang/.codex_personal /etc/nixos/artifacts/scripts/codex-usage.sh Personal '⌂'",
+    "return-type": "json",
+    "escape": false,
+    "interval": 60,
+    "signal": 10,
+    "tooltip": true,
+    "on-click": "pkill -SIGRTMIN+10 waybar",
+    "on-click-right": "CODEX_HOME=/home/maxlang/.codex_personal ghostty -e codex"
   },
   "custom/wacom-pointer": {
     "exec": "/etc/nixos/artifacts/scripts/wacom-pointer-toggle.sh status",
