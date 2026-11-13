@@ -10,3 +10,9 @@ nohup.out
 /artifacts/sops/PLAINTEXT-REFERENCE.md
 
 /.Trash-1000
+
+# Generated caches and desktop metadata
+__pycache__/
+*.pyc
+Thumbs.db
+desktop.ini
