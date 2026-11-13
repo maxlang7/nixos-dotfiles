@@ -1,8 +1,6 @@
 # ❄️ nixos-config
 
-My personal NixOS setup, managed via **Flakes**. It's a modular configuration designed to keep my machines reproducible and consistent across different hardware.
-
-Originally based on Ryan Yin's config, now heavily customized. For a deeper tour of how it's wired together, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+My personal NixOS setup, managed via **Flakes**. It's a modular configuration designed to keep my machines reproducible and consistent across different hardware. For a deeper tour of how it's wired together, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ---
 
@@ -10,27 +8,28 @@ Originally based on Ryan Yin's config, now heavily customized. For a deeper tour
 
 I maintain configurations for three hosts, each with a specific purpose:
 
-- **`Aragorn`**: My daily driver, a **Framework Laptop 13**. Optimized for portability with battery management, hibernation support, and a full Hyprland desktop environment.
+- **`Aragorn`**: My daily driver, a **Framework Laptop 13**. Optimized for portability with battery management and a full, heaivly bespoke Hyprland desktop environment.
 - **`Gandalf`**: My home server. It runs a Minecraft server and other background services.
 - **`simple`**: A minimal fallback/testing host for trying things without the full stack.
 
 ---
 
-## 🛠️ The Tech Stack
+## 🛠️ The Stack
 
 I've curated a set of tools that prioritize speed, efficiency, and aesthetics (gruvbox everywhere):
 
 | Component | Choice | Why? |
 | :--- | :--- | :--- |
-| **Window Manager** | [Hyprland](https://hyprland.org/) | Modern, dynamic tiling with smooth Wayland performance. |
-| **Terminal** | [Ghostty](https://ghostty.org/) | Fast, GPU-accelerated, and it even runs my file-picker windows. |
-| **Editor** | [Zed](https://zed.dev/) | High-performance, multiplayer-ready code editor. |
-| **Shell** | Zsh | Powered by custom plugins for a better CLI experience. |
+| **Window Manager** | [Hyprland](https://hyprland.org/) | Modern, dynamic tiling and easy customizability. The bedrock of my system. |
+| **Terminal** | [Ghostty](https://ghostty.org/) | Fast, simple, configurable. |
+| **AI** | [T3Code](https://zed.dev/) | High-performance and no-frills editor. |
+| **Editor** | [Zed](https://t3.codes/) | Best designed AI editor I've ever used for both chat and work |
+<!--| **Shell** | Zsh | Powered by custom plugins for a better CLI experience. |-->
 | **File Manager** | Yazi | Terminal-based file management — also wired in as the system file picker. |
-| **Status Bar** | Waybar | Clean and informative, with custom modules (Claude usage meter, run-streak tracker). |
+| **Status Bar** | Waybar | Clean and informative, with custom modules (Codex usage meter, run-streak tracker, nixos rebuilder). |
 | **Launcher** | Rofi | App launching plus custom menus: bluetooth, audio mixer, timers, lofi beats. |
 | **Music** | [Feishin](https://github.com/jeffvli/feishin) + [Navidrome](https://www.navidrome.org/) | Feishin as the player, streaming from a self-hosted Navidrome server with Last.fm scrobbling. |
-| **Messaging** | Beeper | All IM apps in one place (with a declarative gruvbox theme), plus an iMessage bridge to my Mac. |
+| **Messaging** | [Chord](https://github.com/maxlang7/chord/) | Custom build way to have all my communication apps in one place (with a declarative gruvbox theme), plus an iMessage bridge to my phone through bluetooth. |
 | **Secrets** | [sops-nix](https://github.com/Mic92/sops-nix) | Encrypted secrets committed right in the repo (age-encrypted). |
 | **VPN** | WireGuard | Tunnel with DNS pushed via resolvectl. |
 | **Sync** | Syncthing | Keeps documents and books in sync across machines. |
@@ -70,17 +69,4 @@ nixos-rebuild dry-build --flake /etc/nixos#HOSTNAME
 
 > **Note on secrets:** `sops-nix` expects an age private key at `artifacts/sops/age/keys.txt` (gitignored — bring your own). To build without secrets entirely, comment out the two `sops-nix` input lines in `flake.nix` and the `./sops.nix` import in `modules/nixos/maxlang.nix`.
 
----
-
-## 📖 Useful Nix Resources
-
-If you're new to NixOS or just looking for documentation:
-
-- [NixOS Search](https://search.nixos.org/) - The best way to find packages and options.
-- [NixOS Wiki](https://nixos.wiki/) - Community-driven documentation.
-- [Zero to Nix](https://zero-to-nix.com/) - A great starting point for understanding Flakes.
-- [MyNixOS](https://mynixos.com/) - Visual browser for Nix modules and configurations.
-
----
-
-*“Even a simple config can be a powerful thing.”* 🛠️
+*“Brevity is the soul of wit”*
