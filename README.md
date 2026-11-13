@@ -22,16 +22,50 @@ I've curated a set of tools that prioritize speed, efficiency, and aesthetics (g
 | :--- | :--- | :--- |
 | **Window Manager** | [Hyprland](https://hyprland.org/) | Modern, dynamic tiling and easy customizability. The bedrock of my system. |
 | **Terminal** | [Ghostty](https://ghostty.org/) | Fast, simple, configurable. |
-| **AI** | [T3Code](https://zed.dev/) | High-performance and no-frills editor. |
-| **Editor** | [Zed](https://t3.codes/) | Best designed AI editor I've ever used for both chat and work |
-| **File Manager** | Yazi | Terminal-based file management — also wired in as the system file picker. |
-| **Status Bar** | Waybar | Clean and informative, with custom modules (Codex usage meter, run-streak tracker, nixos rebuilder). |
-| **Launcher** | Rofi | App launching plus custom menus: bluetooth, audio mixer, timers, lofi beats. |
+| **Browser** | [Brave](https://brave.com/) | My daily browser. |
+| **AI** | [T3Code](https://t3.codes/) | High-performance and no-frills editor. |
+| **Editor** | [Zed](https://zed.dev/) | Best designed AI editor I've ever used for both chat and work |
+| **File Manager** | [Yazi](https://yazi-rs.github.io/) | Terminal-based file management — also wired in as the system file picker. |
+| **Status Bar** | [Waybar](https://github.com/Alexays/Waybar) | Clean and informative, with custom modules (Codex usage meter, run-streak tracker, nixos rebuilder). |
+| **Launcher** | [Rofi](https://github.com/davatorium/rofi) | App launching plus custom menus: bluetooth, audio mixer, timers, lofi beats. |
 | **Music** | [Feishin](https://github.com/jeffvli/feishin) + [Navidrome](https://www.navidrome.org/) | Feishin as the player, streaming from a self-hosted Navidrome server with Last.fm scrobbling. |
 | **Messaging** | [Chord](https://github.com/maxlang7/chord/) | Custom build way to have all my communication apps in one place (with a declarative gruvbox theme), plus an iMessage bridge to my phone through bluetooth. |
 | **Secrets** | [sops-nix](https://github.com/Mic92/sops-nix) | Encrypted secrets committed right in the repo (age-encrypted). |
-| **VPN** | WireGuard | Tunnel with DNS pushed via resolvectl. |
-| **Sync** | Syncthing | Keeps documents and books in sync across machines. |
+| **VPN** | [WireGuard](https://www.wireguard.com/) | Tunnel with DNS pushed via resolvectl. |
+| **Sync** | [Syncthing](https://syncthing.net/) | Keeps documents and books in sync across machines. |
+
+---
+
+## Desktop workflow
+
+### Keyboard shortcuts
+
+`Super` is the Windows key. These are a few of the shortcuts I use most:
+
+| Shortcut | Action |
+| :--- | :--- |
+| `Super + Enter` | Open Ghostty |
+| `Super + Space` | Open the Rofi app launcher |
+| `Super + Y` | Open Yazi |
+| `Super + B` | Open Brave |
+| `Super + V` | Toggle clipboard history |
+| `Super + M`, `D`, `C`, `K`, or `L` | Toggle the music, Chord, calendar, terminal, or T3 Code scratchpad |
+| `Super + 1` through `0` | Switch workspaces |
+| `Print` / `Alt + Print` | Copy / save a selected screenshot area |
+
+### Clipboard
+
+[Clipse](https://github.com/savedra1/clipse) listens for clipboard changes when Hyprland starts. `Super + V` opens its floating history popup, and pressing the shortcut again closes it. Select an earlier entry to put it back on the clipboard, then paste it in the destination app.
+
+### Menus and file picker
+
+Rofi handles app launching and custom menus for Bluetooth, audio, timers, and music. `Super + Ctrl + Alt + M` opens the music menu.
+
+Application file dialogs use Yazi through `xdg-desktop-portal-termfilechooser`. The picker opens in a Ghostty window and uses the same Yazi configuration as the regular file manager.
+
+### Waybar
+
+The NixOS icon opens the rebuild popup on left click, opens the update action on right click, and shows the popup on middle click. Separate Codex meters track the CMU and personal profiles; clicking a meter refreshes it, and right-clicking opens Codex with that profile. The bar also displays Grok usage and my run streak.
 
 ---
 
