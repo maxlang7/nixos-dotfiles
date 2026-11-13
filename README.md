@@ -24,7 +24,6 @@ I've curated a set of tools that prioritize speed, efficiency, and aesthetics (g
 | **Terminal** | [Ghostty](https://ghostty.org/) | Fast, simple, configurable. |
 | **AI** | [T3Code](https://zed.dev/) | High-performance and no-frills editor. |
 | **Editor** | [Zed](https://t3.codes/) | Best designed AI editor I've ever used for both chat and work |
-<!--| **Shell** | Zsh | Powered by custom plugins for a better CLI experience. |-->
 | **File Manager** | Yazi | Terminal-based file management — also wired in as the system file picker. |
 | **Status Bar** | Waybar | Clean and informative, with custom modules (Codex usage meter, run-streak tracker, nixos rebuilder). |
 | **Launcher** | Rofi | App launching plus custom menus: bluetooth, audio mixer, timers, lofi beats. |
