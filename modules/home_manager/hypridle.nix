@@ -14,7 +14,7 @@ in
             # session, not in hypridle.service's cgroup. Otherwise any stop or
             # restart of hypridle (caffeine, home-manager switch) SIGTERMs the
             # locker while the session is locked, leaving a dead lock screen.
-            lock_cmd = "pidof hyprlock || hyprctl dispatch exec hyprlock";
+            lock_cmd = "pidof hyprlock || hyprctl dispatch exec '/etc/nixos/artifacts/scripts/keyboard-remap-toggle.sh lock'";
             before_sleep_cmd = "loginctl lock-session";    # lock before suspend.
             after_sleep_cmd = wakeDisplay;
           }

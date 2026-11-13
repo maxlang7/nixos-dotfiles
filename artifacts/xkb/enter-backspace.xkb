@@ -1,0 +1,13 @@
+// Same US layout as the normal Hyprland configuration.
+// Its compose:alt option is not a valid XKB option and has no effect.
+xkb_keymap {
+    xkb_keycodes { include "evdev+aliases(qwerty)" };
+    xkb_types { include "complete" };
+    xkb_compatibility { include "complete" };
+    xkb_symbols {
+        include "pc+us+inet(evdev)"
+        replace key <RTSH> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ Return ] };
+        modifier_map None { <RTSH> };
+        replace key <BKSL> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ BackSpace ] };
+    };
+};

@@ -67,6 +67,23 @@
   systemd.services.greetd.environment.XDG_DATA_DIRS =
     "${config.services.displayManager.sessionData.desktops}/share";
 
+  # Cage builds its own keymap before a user session exists. Keep these
+  # accessibility mappings enabled regardless of the desktop Waybar toggle.
+  systemd.services.greetd.environment = {
+    XKB_DEFAULT_LAYOUT = "login-remap";
+    XKB_DEFAULT_VARIANT = "";
+    XKB_DEFAULT_OPTIONS = "";
+    XKB_CONFIG_EXTRA_PATH = "${pkgs.writeTextDir "symbols/login-remap" ''
+      default partial alphanumeric_keys modifier_keys
+      xkb_symbols "basic" {
+        include "us(basic)"
+        replace key <RTSH> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ Return ] };
+        modifier_map None { <RTSH> };
+        replace key <BKSL> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ BackSpace ] };
+      };
+    ''}";
+  };
+
   # Preselect Hyprland (the old sddm module did this via General.DefaultSession).
   services.displayManager.defaultSession = lib.mkDefault "hyprland";
 }
