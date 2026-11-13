@@ -4,7 +4,6 @@
     [
       ../../modules/home_manager/yazi.nix
       ../../modules/home_manager/zsh.nix
-      #../../modules/home_manager/fish.nix
       ../../modules/home_manager/hyprland.nix
       ../../modules/home_manager/minecraft.nix
       ../../modules/home_manager/waybar.nix
@@ -13,28 +12,7 @@
       ../../modules/home_manager/hypridle.nix
       ../../modules/home_manager/ghostty.nix
     ];
-    # Things I want to configure more
-    # Minecraft server
-    # Browser
-    # Terminal
-    # Zed
-    # File Manager (yazi) DONE
-    # activitywatch
-    # obsidian
-    # waybar DONE
-    # hyprland DONE
-    # grimblast
-    # theming (cursors, gruvbox)
-    # rofi DONE
-    # wallpapers DONE
-    # hyprlock
-    # sddm (done)
-    # backups
-    # networks
   home.stateVersion = "25.05";
-  home.packages = with pkgs; [
-      hello
-  ];
   xdg.configFile."bat/config".source = ../../artifacts/bat.conf;
   xdg.configFile."com.github.johnfactotum.Foliate/themes/foliate-gruvbox.json".source = ../../artifacts/foliate-gruvbox.json;
 
@@ -49,7 +27,7 @@
       #     Keywords = "Politics;Study;IR";
       #   };
     };
-  xdg.configFile.".config/kwalletrc".text = ''
+  xdg.configFile."kwalletrc".text = ''
       [Wallet]
       Enabled=false
       First Use=false

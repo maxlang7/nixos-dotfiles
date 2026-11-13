@@ -5,14 +5,12 @@
 # desktop entry and its icons, and a login-time unit that makes sure the prefix
 # exists. What is not: the TopSpin installer itself, which is a multi-GB download
 # from a Bruker account — `topspin-wine-setup <installer>.exe` puts that in.
-{ pkgs, ... }:
+{ pkgs, userApps, ... }:
 
 let
-  topspin = pkgs.callPackage ../../packages/topspin { };
+  topspin = userApps.topspin;
 in
 {
-  home.packages = [ topspin ];
-
   xdg.dataFile."icons/hicolor/48x48/apps/topspin.png".source =
     ../../artifacts/topspin/topspin-48.png;
   xdg.dataFile."icons/hicolor/128x128/apps/topspin.png".source =

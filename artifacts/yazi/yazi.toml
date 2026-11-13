@@ -28,9 +28,6 @@ okular = [
 zathura = [
   { run = 'zathura %s', orphan = true, desc = "Zathura", for = "unix" },
 ]
-xournalpp = [
-  { run = 'xournalpp %s', orphan = true, desc = "Xournal++", for = "unix" },
-]
 browser = [
   { run = 'brave --new-window %s', orphan = true, desc = "Brave", for = "unix" },
 ]
@@ -125,7 +122,6 @@ prepend_rules = [
   { url = "*.pse", use = "pymol" },
   { url = "*.pdf", use = ["okular", "zathura"] },
   { url = "*.djvu", use = "okular" },
-  { url = "*.xopp", use = "xournalpp" },
   { url = "*.pub", use = "text" },
   { url = "*.docx", use = "libreoffice" },
   { url = "*.xlsx", use = "libreoffice" },

@@ -19,8 +19,7 @@
     "custom/codex-usage-personal",
     "custom/grok-usage",
     "custom/capture",
-    "custom/keyboard-remap",
-    "custom/wacom-pointer"
+    "custom/keyboard-remap"
     // "mpris"
   ],
   "modules-center": ["clock#2", "clock#1", "clock#3", "custom/run-streak"],
@@ -105,15 +104,6 @@
     "signal": 14,
     "tooltip": true,
     "on-click": "pkill -SIGRTMIN+14 waybar"
-  },
-  "custom/wacom-pointer": {
-    "exec": "/etc/nixos/artifacts/scripts/wacom-pointer-toggle.sh status",
-    "on-click": "/etc/nixos/artifacts/scripts/wacom-pointer-toggle.sh toggle",
-    "return-type": "json",
-    "format": "<span size='105%'>{}</span>",
-    "interval": 1,
-    "signal": 12,
-    "tooltip": true
   },
   "custom/hypridle": {
     "exec": "/etc/nixos/artifacts/scripts/hypridle-toggle.sh",

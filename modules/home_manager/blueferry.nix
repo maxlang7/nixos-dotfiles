@@ -1,6 +1,6 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, userApps, ... }:
 let
-  blueferry = pkgs.callPackage ../../packages/blueferry { };
+  blueferry = userApps.blueferry;
   storageSettings = pkgs.writeText "blueferry-storage-settings.py" ''
     import json
     import os
@@ -136,8 +136,4 @@ in
     };
     Install.WantedBy = [ "default.target" ];
   };
-
-  home.packages = [ blueferry (pkgs.writeShellScriptBin "waybar-bluetooth" ''
-    exec ${pkgs.python3}/bin/python ${../../artifacts/scripts/waybar-bluetooth.py} ${pkgs.systemd}/bin/busctl
-  '') ];
 }

@@ -53,9 +53,6 @@ window#waybar {
     color: #928374;
 }
 
-#custom-wacom-pointer {
-    color: #ffffff;
-}
 
 #custom-powerbutton {
     margin-left: 6px;
@@ -91,7 +88,6 @@ window#waybar {
 #custom-grok-usage,
 #custom-capture,
 #custom-keyboard-remap,
-#custom-wacom-pointer,
 #clock,
 #custom-run-streak {
     margin-left: 7px;

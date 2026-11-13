@@ -3,9 +3,9 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/nixos/desktop-common.nix
       ../../modules/nixos/battery_management.nix
       ../../modules/nixos/terminal_utils.nix
-      #../../modules/nixos/bwlang.nix
       ../../modules/nixos/maxlang.nix
       ../../modules/nixos/sddm.nix
       #../../modules/nixos/firefox.nix
@@ -32,84 +32,8 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   environment.sessionVariables = {
-    TERMINAL = "ghostty"; # Replace with your terminal
+    TERMINAL = "ghostty";
   };
-
-  # Framework firmware
-  services.fwupd.enable = true;
-
-  # Timezone is resolved automatically by services.automatic-timezoned below.
-  time.timeZone = lib.mkForce null; # allow TZ to be set by desktop user
-  services.automatic-timezoned.enable = true;
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
-
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-color-emoji # renamed in 25.11
-    font-awesome
-    fira-code
-    fira-code-symbols
-    liberation_ttf
-    proggyfonts
-  ]
-  ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
-
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  # Enable sound with pulseaudio.
-  services.pulseaudio.enable = false;
-
-  security.rtkit.enable = true;
-  services.pipewire = {
-    wireplumber.enable = true;
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput = {
-    enable = true;
-    touchpad.naturalScrolling = true;
-  };
-
-  # Fingerprint Sensor
-  services.fprintd.enable = true;
-
-  # Setup portals (for interapplication workflows)
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Enable auto-detecting of usb drives
-  services.udisks2.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

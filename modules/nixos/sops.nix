@@ -42,19 +42,10 @@
   sops.secrets."wireguard-private-key" = { };
   sops.secrets."wireguard-preshared-key" = { };
 
-  # BlueBubbles server password — consumed as an EnvironmentFile by
-  # imessage-bridge.nix (BB_PASSWORD).
-  sops.secrets."bluebubbles-password" = { };
-
   # ── rendered env file for navidrome (combines two secrets into one file) ───
   # Used as systemd EnvironmentFile in navidrome.nix.
   sops.templates."navidrome.env".content = ''
     ND_LASTFM_APIKEY=${config.sops.placeholder."navidrome-lastfm-apikey"}
     ND_LASTFM_SECRET=${config.sops.placeholder."navidrome-lastfm-secret"}
-  '';
-
-  # ── rendered env file for the iMessage bridge (imessage-bridge.nix) ────────
-  sops.templates."imessage-bridge.env".content = ''
-    BB_PASSWORD=${config.sops.placeholder."bluebubbles-password"}
   '';
 }

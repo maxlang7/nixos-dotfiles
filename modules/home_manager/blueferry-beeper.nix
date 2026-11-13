@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, userApps, ... }:
 let
-  bridge = pkgs.callPackage ../../packages/blueferry-beeper { };
+  bridge = userApps.bridge;
   configure = pkgs.writeShellScript "blueferry-beeper-configure" ''
     set -euo pipefail
     umask 077
@@ -11,7 +11,6 @@ let
   '';
 in
 {
-  home.packages = [ bridge ];
   systemd.user.services.blueferry-beeper = {
     Unit = {
       Description = "BlueFerry encrypted text bridge to Beeper";

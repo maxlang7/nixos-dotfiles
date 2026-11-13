@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }: {
-  home.packages = [ pkgs.taskwarrior3 pkgs.taskwarrior-tui ];
   xdg.configFile."task/gruvbox.theme" = {
     source = ../../artifacts/taskwarrior/gruvbox.theme;
     force = true;
