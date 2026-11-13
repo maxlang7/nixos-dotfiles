@@ -46,6 +46,7 @@ in
       ../../modules/nixos/brave.nix
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/networking.nix
+      ../../modules/nixos/wifi-subatomic.nix
       ../../modules/nixos/roku-cast.nix
       ../../modules/nixos/bluetooth.nix
       # ../../modules/nixos/minecraft_server.nix
