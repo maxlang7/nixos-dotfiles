@@ -1,52 +1,57 @@
-# Nightly automatic flake update + rebuild, at 03:00 local time.
-#
-# Bumps the flake inputs (so `nixpkgs-unstable` actually moves — without
-# --update-input a flake rebuild just honours the existing lockfile and nothing
-# changes) and switches to the new generation.
-#
-# Deliberately conservative:
-#   - allowReboot = false. A kernel bump stages the new generation; it takes
-#     effect at your next manual reboot. The machine is never rebooted out from
-#     under a running session.
-#   - --commit-lock-file writes the updated flake.lock back as a local commit in
-#     /etc/nixos, so git stays the source of truth for what's actually running.
-#     These commits are NOT pushed; `git log` here will show root's nightly
-#     "flake.lock: Update" commits to push or squash at your leisure.
-#   - persistent = true so a run missed because the laptop was asleep at 03:00
-#     (the common case for Aragorn) fires on the next boot instead of vanishing.
-#   - randomizedDelaySec spreads the fetch instead of hitting cache.nixos.org at
-#     exactly 03:00:00 along with everyone else.
-#
-# Rollback: pick the previous generation in the boot menu, or
-# `nixos-rebuild switch --rollback`.
+# Update all flake inputs and activate daily. Never reboot automatically.
 { config, pkgs, lib, user, ... }:
-{
+let
+  updateInputs = pkgs.writeShellApplication {
+    name = "nixos-nightly-update-inputs";
+    runtimeInputs = [ config.nix.package pkgs.gitMinimal pkgs.python3 ];
+    text = ''
+      python3 /etc/nixos/artifacts/scripts/t3-settings-sync.py sync \
+        --userdata ${lib.escapeShellArg "/home/${user}/.t3/userdata"} --if-present
+      # Includes Brave and every other flake input. Explicit version pins in
+      # package expressions remain pinned until those expressions are updated.
+      nix flake update --flake /etc/nixos
+    '';
+  };
+in {
   system.autoUpgrade = {
     enable = true;
-    flake = "/etc/nixos";
-    flags = [
-      "--update-input" "nixpkgs"
-      "--update-input" "nixpkgs-unstable"
-      "--update-input" "home-manager"
-      "--commit-lock-file"
-      "-L" # full build logs, so journalctl -u nixos-upgrade is useful
-    ];
-    dates = "03:00";
-    randomizedDelaySec = "30min";
+    flake = "/run/nixos-upgrade/source#Aragorn";
+    upgrade = false;
+    flags = [ "-L" ];
+    dates = "04:00"; # system timezone is America/New_York
+    randomizedDelaySec = "0";
     persistent = true;
+    operation = "switch";
     allowReboot = false;
   };
 
-  # Run as the account that owns the settings and checkout, before the upgrade
-  # evaluates the flake. No Git staging, commits or pushes happen here.
-  systemd.services.nixos-upgrade.preStart = lib.mkBefore ''
-    ${pkgs.util-linux}/bin/runuser -u ${lib.escapeShellArg user} -- \
-      ${pkgs.python3}/bin/python3 ${../../artifacts/scripts/t3-settings-sync.py} sync \
-      --userdata ${lib.escapeShellArg "/home/${user}/.t3/userdata"} --if-present
-  '';
+  systemd.services.nixos-upgrade = {
+    # Update the lockfile as its owner, without staging, committing, or pushing.
+    preStart = lib.mkBefore ''
+      ${pkgs.util-linux}/bin/runuser -u ${lib.escapeShellArg user} -- \
+        ${updateInputs}/bin/nixos-nightly-update-inputs
+      # Archive as the checkout owner. Root only reads the resulting store path,
+      # which has no .git directory and is not subject to Git ownership checks.
+      source=$(${pkgs.util-linux}/bin/runuser -u ${lib.escapeShellArg user} -- \
+        ${config.nix.package}/bin/nix flake archive --json /etc/nixos \
+        | ${pkgs.jq}/bin/jq -er '.path')
+      test -f "$source/flake.nix"
+      ${pkgs.coreutils}/bin/ln -sfn "$source" /run/nixos-upgrade/source
+    '';
+    serviceConfig = {
+      RuntimeDirectory = "nixos-upgrade";
+      RuntimeDirectoryMode = "0700";
+      Nice = 10;
+      IOSchedulingClass = "idle";
+    };
+  };
 
-  # Every nightly run leaves another generation behind; without this the store
-  # grows without bound. 30d keeps plenty of rollback targets.
+  # Keep missed runs for the next wake/boot without waking the laptop at 4am.
+  systemd.timers.nixos-upgrade.timerConfig = {
+    AccuracySec = "1min";
+    WakeSystem = false;
+  };
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
