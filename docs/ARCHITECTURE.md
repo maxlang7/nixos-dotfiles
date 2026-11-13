@@ -1,7 +1,7 @@
 # NixOS config architecture
 
 Flake-based NixOS config for a Framework 13 laptop. Originally forked from Ryan
-Yin's config (see `flake.nix` description) and heavily customized.
+Yin's config and heavily customized.
 
 ## Top level
 
@@ -21,9 +21,9 @@ docs/              # this file
 `flake.nix` defines a `mkNixosSystem { hostName, modules, homeModules }` helper that
 calls `nixpkgs.lib.nixosSystem`. Key points:
 
-- Two nixpkgs inputs: pinned `nixpkgs` (nixos-25.05) and `nixpkgs-unstable`.
+- Two nixpkgs inputs: pinned `nixpkgs` (nixos-26.05) and `nixpkgs-unstable`.
   `pkgs-unstable` is passed through `specialArgs`/`extraSpecialArgs`, so modules can
-  pull individual packages from unstable (see `maxlang.nix` — codex, claude-code,
+  pull individual packages from unstable (see `personal-packages.nix` — codex, claude-code,
   obs-studio, etc. come from `pkgs-unstable`).
 - `specialArgs` injects `pkgs-unstable`, `inputs`, `user` ("maxlang"), `hostName`.
 - home-manager is wired as a NixOS module (`useGlobalPkgs`, `useUserPackages`); each
@@ -32,13 +32,23 @@ calls `nixpkgs.lib.nixosSystem`. Key points:
 
 ## Module composition
 
-`hosts/Aragorn/configuration.nix` imports a handful of `modules/nixos/*` plus
-`maxlang.nix`, which is the **main aggregator** — it imports the bulk of system
-modules (user, desktop apps, navidrome, syncthing, sops) and defines the big
-user-package list. `bwlang.nix` is an alternate user profile (currently not imported).
+`hosts/Aragorn/configuration.nix` selects laptop-specific modules and imports
+`desktop-common.nix` for shared desktop defaults. Gandalf uses those same defaults.
+Its hardware configuration is currently absent, so its output needs that file before
+it can build.
 
-Lots of imports are toggled by commenting/uncommenting single lines (the config is
-actively "tested in production"), e.g. in `maxlang.nix` and `Aragorn/configuration.nix`.
+`maxlang.nix` aggregates the personal desktop services and imports
+`personal-packages.nix`. Explicit user applications belong in
+`users.users.${user}.packages`, including custom helpers from `aragorn-packages.nix`.
+Home Manager owns configuration, desktop entries, and user services. Its native
+program modules may still contribute their own required packages through the
+Home Manager integration with `useUserPackages = true`.
+
+`packages/user-apps.nix` defines helper derivations shared by package lists and
+Home Manager service definitions. `overlays/desktop.nix` holds the Codex and T3
+package overrides and the Feishin patch. OpenCode has its own package definition.
+Aragorn's rclone workflows and headphone settings live in dedicated Home Manager
+modules. Calendar synchronization remains in the host's home configuration.
 
 Convention: anything that is a plain config file for some app (hyprland, rofi, yazi,
 waybar, scripts…) lives under `artifacts/` and is referenced from the relevant module,
@@ -78,9 +88,11 @@ Add a recipient: add its public key under `keys:` in `.sops.yaml`, then
 ## Apply changes
 
 ```
-sudo nixos-rebuild switch --flake /etc/nixos#Aragorn
-# validate only:
+# Validate without activation:
 nixos-rebuild dry-build --flake /etc/nixos#Aragorn
+
+# Only after explicit approval for this rebuild, open the local auth popup:
+/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh start
 ```
 
 ## Conventions & preferences
@@ -109,12 +121,11 @@ way of doing something.
   as a plain `home.file` (that would clobber other state on every write). Instead use a
   `home.activation` script that shells out to `jq` to deep-merge just the keys you own
   into the existing file, leaving the rest alone. (See the retired Gmail-MCP setup in
-  git history for `modules/home_manager/claude.nix` as the reference pattern — current
+  git history for the retired Claude module as the reference pattern — current
   MCP servers are managed imperatively instead, see `MCP-SETUP.md`.)
 - **Toggle by commenting, not deleting.** Modules and packages you're not currently
   using but might want back get a `#` in front of their import/package line rather than
-  being removed — see the commented imports in `maxlang.nix` and `Aragorn/configuration.nix`,
-  and `bwlang.nix` (an alternate user profile, fully written, just not imported). This
+  being removed — see the remaining commented imports in `Aragorn/configuration.nix`. This
   keeps working-but-unused config discoverable instead of lost to git blame.
 - **Pragmatism over reproducibility purity.** Full from-source reproducible builds
   (`buildNpmPackage`, pinned hashes) are used when they're cheap, but dropped in favor

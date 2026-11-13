@@ -93,13 +93,13 @@ To apply this configuration (assuming Nix is installed with flakes enabled):
 # Clone the repository
 git clone https://github.com/maxlang7/nixos-dotfiles /etc/nixos
 
-# Rebuild the system (replace HOSTNAME with Aragorn, Gandalf, or simple)
-sudo nixos-rebuild switch --flake /etc/nixos#HOSTNAME
+# Validate Aragorn without activation
+nixos-rebuild dry-build --flake /etc/nixos#Aragorn
 
-# Or just validate without switching
-nixos-rebuild dry-build --flake /etc/nixos#HOSTNAME
+# After explicit approval for this rebuild, authenticate locally in the popup
+/etc/nixos/artifacts/scripts/nixos-rebuild-waybar.sh start
 ```
 
-> **Note on secrets:** `sops-nix` expects an age private key at `artifacts/sops/age/keys.txt` (gitignored — bring your own). To build without secrets entirely, comment out the two `sops-nix` input lines in `flake.nix` and the `./sops.nix` import in `modules/nixos/maxlang.nix`.
+> **Note on secrets:** `sops-nix` expects an age private key at `artifacts/sops/age/keys.txt`, which is gitignored. Building without secrets requires disabling every module that consumes them as well as the sops module and flake input. Removing only the input and import is insufficient.
 
 *“Brevity is the soul of wit”*
