@@ -19,6 +19,33 @@ def selected_files(source, keys):
         if not isinstance(data, dict):
             raise ValueError("client-settings.json must be an object")
         result[client.name] = {key: data[key] for key in keys if key in data}
+    # Only the two reviewed Codex instances, never arbitrary provider secrets.
+    settings = source / "settings.json"
+    if settings.exists():
+        data = read_json(settings)
+        instances = {}
+        for name in ("codex", "codex-personal"):
+            instance = data.get("providerInstances", {}).get(name)
+            if instance is None:
+                continue
+            instances[name] = {
+                key: instance[key]
+                for key in ("driver", "displayName", "enabled") if key in instance
+            }
+            instances[name]["config"] = {
+                key: instance.get("config", {})[key]
+                for key in ("binaryPath", "homePath", "shadowHomePath")
+                if key in instance.get("config", {})
+            }
+        result[settings.name] = {
+            "providerInstances": instances,
+            "providerModelPreferences": {
+                name: {key: preferences[key]
+                       for key in ("hiddenModels", "modelOrder") if key in preferences}
+                for name, preferences in data.get("providerModelPreferences", {}).items()
+                if name in ("codex", "codex-personal")
+            },
+        }
     bindings = source / "keybindings.json"
     if bindings.exists():
         data = read_json(bindings)

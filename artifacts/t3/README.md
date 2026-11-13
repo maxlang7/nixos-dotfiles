@@ -1,7 +1,7 @@
 # T3 settings snapshot
 
 T3 owns the live writable files in `~/.t3/userdata/`. Home Manager seeds
-`client-settings.json` and `keybindings.json` only when each file is missing.
+`client-settings.json`, `keybindings.json`, and `settings.json` only when each file is missing.
 Rebuilds do not reset settings. The snapshot comes from the checked-out Nix
 configuration, so a new computer needs the repository's latest committed version.
 No additional Git fetch happens during activation.
@@ -30,12 +30,15 @@ python /etc/nixos/artifacts/scripts/t3-settings-sync.py sync
 
 `client-settings-keys.json` explicitly lists exported preferences. New T3
 preferences require review before adding them here. This repository is public.
-Do not add credentials, provider configuration, browser profiles, machine paths,
+The server settings snapshot includes only the reviewed Codex Work and Codex Home
+instances, their binary/home paths, and model visibility/order. Login credentials,
+launch arguments, and other provider configuration are excluded. These home paths
+currently target `/home/maxlang`. Do not add credentials, browser profiles,
 databases, attachments, or caches. Keybindings export only key/command/when fields.
 Custom themes are currently absent and are not exported by this command.
 
 Existing computers keep their local preferences even after a Git pull. To adopt
-the snapshot on an existing computer, quit T3, move the two live files to a backup
+the snapshot on an existing computer, quit T3, move the live files to a backup
 location, and activate Home Manager again. Do not replace settings while T3 runs.
 Direct `nixos-rebuild` commands bypass the snapshot step. Use the Waybar popup,
 `nrs`/`nrsu`, or run the sync command first when invoking a rebuild directly.

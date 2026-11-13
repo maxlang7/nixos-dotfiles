@@ -1,0 +1,58 @@
+{
+  "providerInstances": {
+    "codex": {
+      "driver": "codex",
+      "displayName": "Codex Work",
+      "enabled": true,
+      "config": {
+        "binaryPath": "codex",
+        "homePath": "/home/maxlang/.codex",
+        "shadowHomePath": ""
+      }
+    },
+    "codex-personal": {
+      "driver": "codex",
+      "displayName": "Codex Home",
+      "enabled": true,
+      "config": {
+        "binaryPath": "codex",
+        "homePath": "/home/maxlang/.codex",
+        "shadowHomePath": "/home/maxlang/.codex_personal"
+      }
+    }
+  },
+  "providerModelPreferences": {
+    "codex": {
+      "hiddenModels": [
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-5.6-luna",
+        "gpt-6-sol",
+        "gpt-6-astra",
+        "gpt-reserve",
+        "codex-auto-review"
+      ],
+      "modelOrder": [
+        "gpt-6.1-sol",
+        "gpt-6-luna",
+        "gpt-6.1-terra"
+      ]
+    },
+    "codex-personal": {
+      "hiddenModels": [
+        "gpt-6-astra",
+        "gpt-6-sol",
+        "gpt-reserve",
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-5.6-luna",
+        "codex-auto-review"
+      ],
+      "modelOrder": [
+        "gpt-6.1-sol",
+        "gpt-6-luna",
+        "gpt-6.1-terra"
+      ]
+    }
+  }
+}

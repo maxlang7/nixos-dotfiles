@@ -1,5 +1,20 @@
 [
   {
+    "key": "mod+alt+f",
+    "command": "composer.toggleFast",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "mod+alt+a",
+    "command": "composer.cycleAccount",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "mod+alt+m",
+    "command": "composer.cycleModel",
+    "when": "!terminalFocus"
+  },
+  {
     "key": "f6",
     "command": "workspace.focusNext"
   },
@@ -57,11 +72,6 @@
   {
     "key": "mod+u",
     "command": "usage.open",
-    "when": "!terminalFocus"
-  },
-  {
-    "key": "mod+alt+a",
-    "command": "theme.select",
     "when": "!terminalFocus"
   },
   {
